@@ -4,8 +4,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getCategory } from "@/app/actions";
-import { Badge } from "./ui/badge";
-import { Skeleton } from "./ui/skeleton";
 import { Utensils, Plane, Film, ShoppingCart, Fuel, HandCoins, Home, HeartPulse, MoreHorizontal } from "lucide-react";
 import { format } from 'date-fns';
 
@@ -31,18 +29,15 @@ const categoryIcons: { [key: string]: React.ElementType } = {
 
 export default function TransactionItem({ transaction }: { transaction: Transaction }) {
   const [category, setCategory] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCategory() {
       if (transaction.description) {
-        setIsLoading(true);
         const cat = await getCategory({
           transactionDescription: transaction.description,
           transactionAmount: transaction.amount,
         });
         setCategory(cat);
-        setIsLoading(false);
       }
     }
     fetchCategory();
@@ -52,7 +47,7 @@ export default function TransactionItem({ transaction }: { transaction: Transact
   const CategoryIcon = category ? (categoryIcons[category.toLowerCase()] || MoreHorizontal) : MoreHorizontal;
 
   return (
-    <div className="flex items-start gap-4">
+    <div className="flex items-center gap-4">
       <div className={cn(
           "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg",
           isIncome ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
@@ -62,13 +57,6 @@ export default function TransactionItem({ transaction }: { transaction: Transact
       <div className="flex-1 overflow-hidden">
         <p className="font-semibold truncate">{transaction.description}</p>
         <p className="text-xs text-muted-foreground">{format(new Date(transaction.date), "PPp")}</p>
-        <div className="text-sm text-muted-foreground mt-1">
-          {isLoading ? (
-            <Skeleton className="h-5 w-20" />
-          ) : (
-            <Badge variant="secondary" className="capitalize">{category}</Badge>
-          )}
-        </div>
       </div>
       <div className={cn("text-right font-semibold", isIncome ? "text-primary" : "text-destructive")}>
         {isIncome ? "+" : ""}${Math.abs(transaction.amount).toFixed(2)}
