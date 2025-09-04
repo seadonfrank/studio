@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import TransactionItem from "./transaction-item";
 import {
   Select,
@@ -55,7 +55,6 @@ export default function TransactionList() {
             <ArrowUpDown className="h-4 w-4" />
           </Button>
         </div>
-        <CardDescription>Your latest financial activities, categorized by AI.</CardDescription>
         <div className="flex items-center gap-2 pt-2">
             <Select value={filterCategory} onValueChange={setFilterCategory}>
               <SelectTrigger className="w-[180px]">
