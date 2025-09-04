@@ -11,16 +11,22 @@ interface BottomNavProps {
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   const navItems = [
     { id: "finance", label: "Finance", icon: Landmark },
+    { id: "scan", label: "Scan QR", icon: QrCode },
     { id: "identity", label: "Identity", icon: Fingerprint },
   ];
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-10 flex h-24 items-start justify-center p-2">
-       <div className="flex h-16 w-full items-center justify-around rounded-2xl bg-background/80 backdrop-blur-sm">
+    <div className="absolute bottom-0 left-0 right-0 z-10 flex h-20 items-end justify-center">
+       <div className="flex h-16 w-full items-center justify-around rounded-t-2xl bg-background/80 backdrop-blur-sm">
         {navItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => setActiveTab(item.id as Tab)}
+            onClick={() => {
+              if (item.id !== 'scan') {
+                setActiveTab(item.id as Tab)
+              }
+              // Potentially handle QR scan action here
+            }}
             aria-pressed={activeTab === item.id}
             className={cn(
               "flex flex-col items-center justify-center gap-1 rounded-lg px-6 py-2 text-muted-foreground transition-colors duration-200",
@@ -32,9 +38,6 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
           </button>
         ))}
        </div>
-        <button aria-label="Scan QR Code" className="absolute -top-6 flex h-16 w-16 items-center justify-center rounded-full border-4 border-background bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105">
-            <QrCode className="h-8 w-8" />
-        </button>
     </div>
   );
 }
