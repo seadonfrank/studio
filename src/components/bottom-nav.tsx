@@ -1,3 +1,5 @@
+"use client";
+
 import type { Dispatch, SetStateAction } from "react";
 import { Landmark, Fingerprint, QrCode } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,8 +18,8 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   ];
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-10 flex h-20 items-end justify-center">
-       <div className="flex h-16 w-full items-center justify-around rounded-t-2xl bg-background/80 backdrop-blur-sm">
+    <div className="absolute bottom-0 left-0 right-0 z-10 h-20 bg-transparent">
+       <div className="flex h-full items-center justify-around rounded-t-3xl bg-background/80 shadow-[0_-4px_16px_rgba(0,0,0,0.05)] backdrop-blur-sm">
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -27,14 +29,14 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
               }
               // Potentially handle QR scan action here
             }}
+            aria-label={item.label}
             aria-pressed={activeTab === item.id}
             className={cn(
-              "flex flex-col items-center justify-center gap-1 rounded-lg px-6 py-2 text-muted-foreground transition-colors duration-200",
-              activeTab === item.id && "text-primary"
+              "flex h-12 w-16 flex-col items-center justify-center rounded-lg text-muted-foreground transition-colors duration-200",
+              activeTab === item.id && "text-primary bg-primary/10"
             )}
           >
             <item.icon className="h-6 w-6" />
-            <span className="text-xs font-medium">{item.label}</span>
           </button>
         ))}
        </div>
