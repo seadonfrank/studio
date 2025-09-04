@@ -49,15 +49,10 @@ export default function TransactionList() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle className="font-headline">Recent Transactions</CardTitle>
-          <Button variant="ghost" size="icon" onClick={toggleSortOrder}>
-            <ArrowUpDown className="h-4 w-4" />
-          </Button>
-        </div>
+        <CardTitle className="font-headline">Recent Transactions</CardTitle>
         <div className="flex items-center gap-2 pt-2">
             <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Filter by category" />
               </SelectTrigger>
               <SelectContent>
@@ -68,6 +63,9 @@ export default function TransactionList() {
                 ))}
               </SelectContent>
             </Select>
+            <Button variant="outline" size="icon" onClick={toggleSortOrder} className="shrink-0">
+              <ArrowUpDown className="h-4 w-4" />
+            </Button>
           </div>
       </CardHeader>
       <CardContent>
