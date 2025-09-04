@@ -15,7 +15,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-muted p-4 sm:p-8">
       <div className="relative h-[844px] w-full max-w-[390px] overflow-hidden rounded-[40px] border-[8px] border-black bg-background shadow-2xl">
         <AppHeader />
-        <div className="h-full overflow-y-auto pb-20 pt-16">
+        <div className="h-full overflow-y-auto pb-16 pt-14">
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
         </div>
