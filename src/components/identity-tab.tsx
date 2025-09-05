@@ -29,18 +29,22 @@ export default function IdentityTab() {
   const CredentialList = ({ credentials }: { credentials: typeof activeCredentials }) => (
     <div className="space-y-4 pt-4">
       {credentials.map((cred) => (
-        <div key={cred.name} className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
-            <cred.icon className="h-5 w-5 text-secondary-foreground" />
-          </div>
-          <div className="flex-1">
-            <p className="font-semibold">{cred.name}</p>
-            <p className="text-sm text-muted-foreground">{cred.issuer}</p>
-          </div>
-          <Badge variant={cred.verified ? "accent" : "secondary"}>
-            {cred.verified ? "Verified" : "Pending"}
-          </Badge>
-        </div>
+        <Card key={cred.name}>
+          <CardHeader className="flex flex-row items-center gap-4 p-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary">
+              <cred.icon className="h-5 w-5 text-secondary-foreground" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold">{cred.name}</p>
+              <p className="text-sm text-muted-foreground">{cred.issuer}</p>
+            </div>
+          </CardHeader>
+          <CardContent className="p-4 pt-0">
+             <Badge variant={cred.verified ? "accent" : "secondary"}>
+              {cred.verified ? "Verified" : "Pending"}
+            </Badge>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );
