@@ -5,6 +5,7 @@ import ManageCardsDialog from "./manage-cards-dialog";
 import TransactionList from "./transaction-list";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import CurrencyCard from "./currency-card";
+import DepositCard from "./deposit-card";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -18,6 +19,11 @@ export default function FinanceTab() {
     { currency: "USD", symbol: "$", balance: "12,450.78", cardNumber: "1234", gradient: "from-primary via-purple-500 to-fuchsia-600" },
     { currency: "EUR", symbol: "€", balance: "8,230.45", cardNumber: "5678", gradient: "from-blue-500 via-sky-500 to-cyan-400" },
     { currency: "BTC", symbol: "₿", balance: "0.580000", cardNumber: "9012", gradient: "from-amber-500 via-orange-500 to-yellow-400" },
+  ];
+
+  const deposits = [
+    { currency: "USD", principalAmount: "$10,000", maturityAmount: "$10,500", interestRate: "5.00", tenure: "1 Year", startDate: "2023-08-01", endDate: "2024-08-01", gradient: "from-green-500 to-emerald-500" },
+    { currency: "EUR", principalAmount: "€5,000", maturityAmount: "€5,200", interestRate: "4.00", tenure: "1 Year", startDate: "2023-09-15", endDate: "2024-09-15", gradient: "from-teal-500 to-cyan-500" },
   ];
 
   return (
@@ -67,6 +73,24 @@ export default function FinanceTab() {
           <span className="text-xs">Receive</span>
         </Button>
       </div>
+
+      <section>
+        <h2 className="text-lg font-headline font-semibold mb-3">Deposits</h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {deposits.map((deposit, index) => (
+              <CarouselItem key={index}>
+                <DepositCard {...deposit} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
 
       <section>
         <h2 className="text-lg font-headline font-semibold mb-3">Products &amp; Services</h2>
