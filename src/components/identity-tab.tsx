@@ -59,7 +59,7 @@ export default function IdentityTab() {
             </Button>
           </div>
           <CardDescription>
-            Your unique and self-sovereign identity on the xIDFI ecosystem.
+            Your unique and self-sovereign.
           </CardDescription>
         </CardHeader>
         <CardContent>
