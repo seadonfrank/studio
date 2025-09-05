@@ -1,9 +1,10 @@
 import { ArrowDown, ArrowUp, Banknote, CreditCard, Landmark, LineChart, PiggyBank, Plus, Repeat } from "lucide-react";
 import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import TransactionList from "./transaction-list";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
+import TransactionList from "./transaction-list";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import CurrencyCard from "./currency-card";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -13,24 +14,29 @@ export default function FinanceTab() {
     { name: "Subscriptions", icon: Repeat, href: "#" },
   ];
 
+  const accounts = [
+    { currency: "USD", symbol: "$", balance: "12,450.78", cardNumber: "1234", gradient: "from-primary via-purple-500 to-fuchsia-600" },
+    { currency: "EUR", symbol: "€", balance: "8,230.45", cardNumber: "5678", gradient: "from-blue-500 via-sky-500 to-cyan-400" },
+    { currency: "BTC", symbol: "₿", balance: "0.580000", cardNumber: "9012", gradient: "from-amber-500 via-orange-500 to-yellow-400" },
+  ];
+
   return (
     <div className="space-y-6 p-4">
-      <Card className="overflow-hidden bg-gradient-to-br from-primary via-purple-500 to-fuchsia-600 text-primary-foreground shadow-lg">
-        <CardContent className="p-6">
-          <div className="flex justify-between items-start">
-            <span className="font-headline text-lg">xIDFI Pay</span>
-            <Banknote className="h-8 w-8 opacity-70" />
-          </div>
-          <div className="mt-8 mb-4">
-            <p className="text-sm opacity-80">Available Balance</p>
-            <p className="text-3xl font-bold font-headline">$12,450.78</p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="font-mono text-sm tracking-widest opacity-90">**** **** **** 1234</p>
-            <CreditCard className="h-6 w-6"/>
-          </div>
-        </CardContent>
-      </Card>
+      <Carousel
+        opts={{
+          align: "start",
+        }}
+        className="w-full"
+      >
+        <CarouselContent>
+          {accounts.map((account, index) => (
+            <CarouselItem key={index}>
+              <CurrencyCard {...account} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+
       <div className="grid grid-cols-3 gap-2">
         <Dialog>
           <DialogTrigger asChild>
