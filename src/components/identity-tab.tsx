@@ -1,3 +1,4 @@
+
 import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
@@ -59,7 +60,7 @@ export default function IdentityTab() {
             </Button>
           </div>
           <CardDescription>
-            Your unique and self-sovereign.
+            Your unique and self-sovereign identity.
           </CardDescription>
         </CardHeader>
         <CardContent>
