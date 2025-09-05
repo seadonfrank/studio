@@ -1,4 +1,4 @@
-import { Award, FileText, Fingerprint, GraduationCap, ShieldCheck, UserCheck, MoreHorizontal } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -48,10 +48,16 @@ export default function IdentityTab() {
     <div className="space-y-6 p-4">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline flex items-center gap-2">
-            <Fingerprint className="text-primary" />
-            Your Digital ID
-          </CardTitle>
+           <div className="flex items-center justify-between">
+            <CardTitle className="font-headline flex items-center gap-2">
+              <Fingerprint className="text-primary" />
+              Your Digital ID
+            </CardTitle>
+            <Button variant="ghost" size="icon">
+                <PlusCircle className="h-5 w-5" />
+                <span className="sr-only">Create Credential</span>
+            </Button>
+          </div>
           <CardDescription>
             Your unique and self-sovereign identity on the xIDFI ecosystem.
           </CardDescription>
@@ -60,7 +66,6 @@ export default function IdentityTab() {
           <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
             did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
           </div>
-          <Button className="mt-4 w-full">Create/Manage Identity</Button>
         </CardContent>
       </Card>
 
