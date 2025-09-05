@@ -22,20 +22,23 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
-      <Carousel
-        opts={{
-          align: "start",
-        }}
-        className="w-full"
-      >
-        <CarouselContent>
-          {accounts.map((account, index) => (
-            <CarouselItem key={index}>
-              <CurrencyCard {...account} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+      <section>
+        <h2 className="text-lg font-headline font-semibold mb-3">Accounts</h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {accounts.map((account, index) => (
+              <CarouselItem key={index}>
+                <CurrencyCard {...account} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
 
       <div className="grid grid-cols-3 gap-2">
         <Dialog>
