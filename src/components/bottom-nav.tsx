@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { Landmark, Fingerprint, QrCode } from "lucide-react";
+import { Landmark, Fingerprint, QrCode, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/app/page";
 
@@ -13,6 +13,7 @@ interface BottomNavProps {
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   const navItems = [
     { id: "finance", label: "Finance", icon: Landmark },
+    { id: "loyalty", label: "Loyalty", icon: Star },
     { id: "scan", label: "Scan QR", icon: QrCode },
     { id: "identity", label: "Identity", icon: Fingerprint },
   ];
