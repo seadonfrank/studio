@@ -2,12 +2,21 @@ import { Award, FileText, Fingerprint, GraduationCap, ShieldCheck, UserCheck, Mo
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export default function IdentityTab() {
-  const credentials = [
+  const activeCredentials = [
     { name: "Proof of Age", issuer: "Govt. Issued", icon: UserCheck, verified: true },
     { name: "B.Sc. Degree", issuer: "State University", icon: GraduationCap, verified: true },
     { name: "Professional License", issuer: "Medical Board", icon: Award, verified: false },
+  ];
+
+  const expiredCredentials = [
+    { name: "Old Conference Pass", issuer: "Tech Summit '23", icon: FileText, verified: false },
+  ];
+
+  const revokedCredentials = [
+     { name: "Old Driver's License", issuer: "Dept. of Motor Vehicles", icon: UserCheck, verified: false },
   ];
 
   const recentActivity = [
@@ -15,6 +24,25 @@ export default function IdentityTab() {
     { action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
     { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
   ];
+
+  const CredentialList = ({ credentials }: { credentials: typeof activeCredentials }) => (
+    <div className="space-y-4 pt-4">
+      {credentials.map((cred) => (
+        <div key={cred.name} className="flex items-center gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
+            <cred.icon className="h-5 w-5 text-secondary-foreground" />
+          </div>
+          <div className="flex-1">
+            <p className="font-semibold">{cred.name}</p>
+            <p className="text-sm text-muted-foreground">{cred.issuer}</p>
+          </div>
+          <Badge variant={cred.verified ? "accent" : "secondary"}>
+            {cred.verified ? "Verified" : "Pending"}
+          </Badge>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="space-y-6 p-4">
@@ -56,21 +84,23 @@ export default function IdentityTab() {
           <CardTitle className="font-headline">My Credentials</CardTitle>
           <CardDescription>All your digital credentials in one place.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {credentials.map((cred) => (
-            <div key={cred.name} className="flex items-center gap-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
-                <cred.icon className="h-5 w-5 text-secondary-foreground" />
-              </div>
-              <div className="flex-1">
-                <p className="font-semibold">{cred.name}</p>
-                <p className="text-sm text-muted-foreground">{cred.issuer}</p>
-              </div>
-              <Badge variant={cred.verified ? "accent" : "secondary"}>
-                {cred.verified ? "Verified" : "Pending"}
-              </Badge>
-            </div>
-          ))}
+        <CardContent>
+          <Tabs defaultValue="active">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="active">Active</TabsTrigger>
+              <TabsTrigger value="expired">Expired</TabsTrigger>
+              <TabsTrigger value="revoked">Revoked</TabsTrigger>
+            </TabsList>
+            <TabsContent value="active">
+              <CredentialList credentials={activeCredentials} />
+            </TabsContent>
+            <TabsContent value="expired">
+              <CredentialList credentials={expiredCredentials} />
+            </TabsContent>
+            <TabsContent value="revoked">
+              <CredentialList credentials={revokedCredentials} />
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 
