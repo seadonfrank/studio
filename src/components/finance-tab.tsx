@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Banknote, CreditCard, Landmark, LineChart, PiggyBank, Plus, Repeat } from "lucide-react";
+import { ArrowDown, ArrowUp, Plus, Landmark, PiggyBank, LineChart, Repeat } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -6,6 +6,8 @@ import TransactionList from "./transaction-list";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import CurrencyCard from "./currency-card";
 import DepositCard from "./deposit-card";
+import AddAccountCard from "./add-account-card";
+import ManageAccountsDialog from "./manage-accounts-dialog";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -42,6 +44,22 @@ export default function FinanceTab() {
                 <CurrencyCard {...account} />
               </CarouselItem>
             ))}
+            <CarouselItem>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <AddAccountCard />
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Account</DialogTitle>
+                    <DialogDescription>
+                      Enter details for your new currency account.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ManageAccountsDialog />
+                </DialogContent>
+              </Dialog>
+            </CarouselItem>
           </CarouselContent>
         </Carousel>
       </section>
@@ -51,7 +69,7 @@ export default function FinanceTab() {
           <DialogTrigger asChild>
             <Button variant="outline" className="flex-col h-auto py-3 gap-1">
               <Plus className="h-5 w-5" />
-              <span className="text-xs">Add/Remove</span>
+              <span className="text-xs">Add/Remove Card</span>
             </Button>
           </DialogTrigger>
           <DialogContent>
