@@ -1,5 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bell } from "lucide-react";
+import { Bell, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function AppHeader() {
@@ -17,10 +16,9 @@ export default function AppHeader() {
          <Button variant="ghost" size="icon" aria-label="Notifications">
           <Bell className="h-5 w-5" />
         </Button>
-        <Avatar className="h-8 w-8">
-          <AvatarImage src="https://picsum.photos/100" data-ai-hint="person face" alt="User Avatar" />
-          <AvatarFallback>JD</AvatarFallback>
-        </Avatar>
+        <Button variant="ghost" size="icon" aria-label="Settings">
+          <Settings className="h-5 w-5" />
+        </Button>
       </div>
     </header>
   );
