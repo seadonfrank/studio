@@ -64,21 +64,6 @@ export default function IdentityTab() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-3 gap-2">
-        <Button variant="outline" className="h-auto flex-col gap-1 py-3">
-          <FileText className="h-5 w-5" />
-          <span className="text-xs">Claim</span>
-        </Button>
-        <Button variant="outline" className="h-auto flex-col gap-1 py-3">
-          <UserCheck className="h-5 w-5" />
-          <span className="text-xs">Verify</span>
-        </Button>
-        <Button variant="outline" className="h-auto flex-col gap-1 py-3">
-          <ShieldCheck className="h-5 w-5" />
-          <span className="text-xs">ZK Proof</span>
-        </Button>
-      </div>
-
       <Card>
         <CardHeader>
           <CardTitle className="font-headline">My Credentials</CardTitle>
