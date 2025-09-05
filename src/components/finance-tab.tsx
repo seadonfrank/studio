@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowDown, ArrowUp, Plus, Landmark, PiggyBank, LineChart, Repeat } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
@@ -8,6 +10,7 @@ import CurrencyCard from "./currency-card";
 import DepositCard from "./deposit-card";
 import AddAccountCard from "./add-account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
+import ManageDepositsDialog from "./manage-deposits-dialog";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -106,6 +109,24 @@ export default function FinanceTab() {
                 <DepositCard {...deposit} />
               </CarouselItem>
             ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add New Deposit" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Deposit</DialogTitle>
+                      <DialogDescription>
+                        Enter details for your new fixed-term deposit.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageDepositsDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
           </CarouselContent>
         </Carousel>
       </section>
