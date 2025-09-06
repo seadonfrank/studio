@@ -1,9 +1,13 @@
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import GovernmentCredentialCard from "./government-credential-card";
+import AddAccountCard from "./add-account-card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 export default function IdentityTab() {
   const activeCredentials = [
@@ -18,6 +22,11 @@ export default function IdentityTab() {
 
   const revokedCredentials = [
      { name: "Old Driver's License", issuer: "Dept. of Motor Vehicles", icon: UserCheck, verified: false },
+  ];
+  
+  const governmentCredentials = [
+    { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500" },
+    { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2022-03-10", expiryDate: "2027-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500" },
   ];
 
   const recentActivity = [
@@ -74,10 +83,49 @@ export default function IdentityTab() {
         </CardContent>
       </Card>
 
+      <section>
+        <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
+          <Shield className="h-5 w-5 text-primary" />
+          Government Credentials
+        </h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {governmentCredentials.map((cred, index) => (
+              <CarouselItem key={index}>
+                <GovernmentCredentialCard {...cred} />
+              </CarouselItem>
+            ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add Credential" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Government Credential</DialogTitle>
+                      <DialogDescription>
+                        Securely add your government-issued credentials.
+                      </DialogDescription>
+                    </DialogHeader>
+                    {/* Placeholder for a form component */}
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+
       <Card>
         <CardHeader>
           <CardTitle className="font-headline">My Credentials</CardTitle>
-          <CardDescription>All your digital credentials in one place.</CardDescription>
+          <CardDescription>All your other digital credentials in one place.</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="active">
