@@ -17,35 +17,35 @@ interface DepositCardProps {
 export default function DepositCard({ currency, principalAmount, maturityAmount, interestRate, tenure, startDate, endDate, gradient }: DepositCardProps) {
   return (
     <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
-      <CardHeader className="flex flex-row justify-between items-start pb-2 p-6">
-        <CardTitle className="font-headline text-lg">Deposit ({currency})</CardTitle>
-        <Landmark className="h-8 w-8 opacity-70" />
+      <CardHeader className="flex flex-row justify-between items-start pb-2 p-5">
+        <CardTitle className="font-headline text-md">Deposit ({currency})</CardTitle>
+        <Landmark className="h-7 w-7 opacity-70" />
       </CardHeader>
-      <CardContent className="p-6 pt-0 space-y-4">
+      <CardContent className="p-5 pt-0 space-y-3">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm opacity-80">Principal</p>
-            <p className="text-xl font-bold font-headline">{principalAmount}</p>
+            <p className="text-xs opacity-80">Principal</p>
+            <p className="text-lg font-bold font-headline">{principalAmount}</p>
           </div>
           <div>
-            <p className="text-sm opacity-80">Maturity</p>
-            <p className="text-xl font-bold font-headline">{maturityAmount}</p>
+            <p className="text-xs opacity-80">Maturity</p>
+            <p className="text-lg font-bold font-headline">{maturityAmount}</p>
           </div>
         </div>
-        <div className="flex justify-between items-center text-sm opacity-90 border-t border-white/20 pt-4">
-            <div className="flex items-center gap-2">
-                <Percent className="h-4 w-4" />
+        <div className="flex justify-between items-center text-xs opacity-90 border-t border-white/20 pt-3">
+            <div className="flex items-center gap-1.5">
+                <Percent className="h-3 w-3" />
                 <span>{interestRate}% p.a.</span>
             </div>
             <span>{tenure}</span>
         </div>
-        <div className="flex justify-between items-center text-xs opacity-80">
-            <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
+        <div className="flex justify-between items-center text-[10px] opacity-80">
+            <div className="flex items-center gap-1.5">
+                <Calendar className="h-3 w-3" />
                 <span>Start: {format(new Date(startDate), "MMM d, yyyy")}</span>
             </div>
-            <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
+            <div className="flex items-center gap-1.5">
+                <Calendar className="h-3 w-3" />
                 <span>End: {format(new Date(endDate), "MMM d, yyyy")}</span>
             </div>
         </div>

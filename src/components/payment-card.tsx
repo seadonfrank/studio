@@ -13,20 +13,20 @@ interface PaymentCardProps {
 
 export default function PaymentCard({ cardType, balance, cardNumber, gradient, limit }: PaymentCardProps) {
   return (
-    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br min-h-[178px]", gradient)}>
-      <CardContent className="p-6">
+    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
+      <CardContent className="p-5">
         <div className="flex justify-between items-start">
-          <span className="font-headline text-lg">{cardType}</span>
-          <CreditCard className="h-8 w-8 opacity-70" />
+          <span className="font-headline text-md">{cardType}</span>
+          <CreditCard className="h-7 w-7 opacity-70" />
         </div>
-        <div className="mt-8 mb-4">
-          <p className="text-sm opacity-80">{limit ? "Available Credit" : "Available Balance"}</p>
-          <p className="text-3xl font-bold font-headline">{balance}</p>
+        <div className="mt-4 mb-3">
+          <p className="text-xs opacity-80">{limit ? "Available Credit" : "Available Balance"}</p>
+          <p className="text-2xl font-bold font-headline">{balance}</p>
           {limit && <p className="text-xs opacity-80">Limit: {limit}</p>}
         </div>
         <div className="flex justify-between items-center">
-          <p className="font-mono text-sm tracking-widest opacity-90">**** **** **** {cardNumber}</p>
-          <span className="font-headline text-md">xIDFI Pay</span>
+          <p className="font-mono text-xs tracking-widest opacity-90">**** **** **** {cardNumber}</p>
+          <span className="font-headline text-sm">xIDFI Pay</span>
         </div>
       </CardContent>
     </Card>
