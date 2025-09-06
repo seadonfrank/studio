@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import ManageCardsDialog from "./manage-cards-dialog";
 import TransactionList from "./transaction-list";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
-import CurrencyCard from "./currency-card";
+import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
 import AddAccountCard from "./add-account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
@@ -20,10 +20,10 @@ export default function FinanceTab() {
     { name: "Subscriptions", icon: Repeat, href: "#" },
   ];
 
-  const accounts = [
-    { currency: "USD", symbol: "$", balance: "12,450.78", cardNumber: "1234", gradient: "from-primary via-purple-500 to-fuchsia-600" },
-    { currency: "EUR", symbol: "€", balance: "8,230.45", cardNumber: "5678", gradient: "from-blue-500 via-sky-500 to-cyan-400" },
-    { currency: "BTC", symbol: "₿", balance: "0.580000", cardNumber: "9012", gradient: "from-amber-500 via-orange-500 to-yellow-400" },
+  const cards = [
+    { cardType: "Credit Card", cardNumber: "1234", balance: "$2,500.00", limit: "$10,000", gradient: "from-primary via-purple-500 to-fuchsia-600" },
+    { cardType: "Debit Card", cardNumber: "5678", balance: "$8,230.45", gradient: "from-blue-500 via-sky-500 to-cyan-400" },
+    { cardType: "Prepaid Card", cardNumber: "9012", balance: "$500.00", gradient: "from-amber-500 via-orange-500 to-yellow-400" },
   ];
 
   const deposits = [
@@ -34,7 +34,7 @@ export default function FinanceTab() {
   return (
     <div className="space-y-6 p-4">
       <section>
-        <h2 className="text-lg font-headline font-semibold mb-3">Accounts</h2>
+        <h2 className="text-lg font-headline font-semibold mb-3">Cards</h2>
         <Carousel
           opts={{
             align: "start",
@@ -42,26 +42,28 @@ export default function FinanceTab() {
           className="w-full"
         >
           <CarouselContent>
-            {accounts.map((account, index) => (
+            {cards.map((card, index) => (
               <CarouselItem key={index}>
-                <CurrencyCard {...account} />
+                <PaymentCard {...card} />
               </CarouselItem>
             ))}
             <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <AddAccountCard />
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add New Account</DialogTitle>
-                    <DialogDescription>
-                      Enter details for your new currency account.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <ManageAccountsDialog />
-                </DialogContent>
-              </Dialog>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add New Card" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Card</DialogTitle>
+                      <DialogDescription>
+                        Enter details for your new payment card.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageCardsDialog />
+                  </DialogContent>
+                </Dialog>
             </CarouselItem>
           </CarouselContent>
         </Carousel>
