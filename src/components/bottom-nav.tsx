@@ -12,10 +12,10 @@ interface BottomNavProps {
 
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   const navItems = [
-    { id: "identity", label: "Identity", icon: Fingerprint },
+    { id: "finance", label: "Finance", icon: Landmark },
     { id: "pay", label: "Pay", icon: ScanLine },
     { id: "verify", label: "Verify", icon: ShieldCheck },
-    { id: "finance", label: "Finance", icon: Landmark },
+    { id: "identity", label: "Identity", icon: Fingerprint },
   ];
 
   return (
