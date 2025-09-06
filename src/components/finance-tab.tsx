@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -46,13 +46,14 @@ export default function FinanceTab() {
       <section className="grid grid-cols-2 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base font-medium font-headline">Wallet</CardTitle>
+            <CardTitle className="text-base font-medium font-headline">Cash</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">$1,234.56</p>
             <div className="flex gap-2 mt-2">
-              <Button size="sm" className="flex-1"><ArrowUp/>Send</Button>
-              <Button size="sm" variant="secondary" className="flex-1"><ArrowDown/>Receive</Button>
+              <Button size="sm" className="flex-1" aria-label="Send"><ArrowUp/></Button>
+              <Button size="sm" variant="secondary" className="flex-1" aria-label="Receive"><ArrowDown/></Button>
+              <Button size="sm" variant="secondary" className="flex-1" aria-label="Transactions"><History/></Button>
             </div>
           </CardContent>
         </Card>
