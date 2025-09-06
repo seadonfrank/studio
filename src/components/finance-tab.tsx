@@ -69,34 +69,6 @@ export default function FinanceTab() {
         </Carousel>
       </section>
 
-      <div className="grid grid-cols-3 gap-2">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="flex-col h-auto py-3 gap-1">
-              <Plus className="h-5 w-5" />
-              <span className="text-xs">Add/Remove Card</span>
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Manage Payment Cards</DialogTitle>
-              <DialogDescription>
-                Add a new payment card or remove an existing one.
-              </DialogDescription>
-            </DialogHeader>
-            <ManageCardsDialog />
-          </DialogContent>
-        </Dialog>
-        <Button variant="outline" className="flex-col h-auto py-3 gap-1">
-          <ArrowUp className="h-5 w-5" />
-          <span className="text-xs">Send</span>
-        </Button>
-        <Button variant="outline" className="flex-col h-auto py-3 gap-1">
-          <ArrowDown className="h-5 w-5" />
-          <span className="text-xs">Receive</span>
-        </Button>
-      </div>
-
       <section>
         <h2 className="text-lg font-headline font-semibold mb-3">Deposits</h2>
         <Carousel
