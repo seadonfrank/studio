@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { Landmark, Fingerprint, QrCode } from "lucide-react";
+import { Landmark, Fingerprint, ScanLine, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/app/page";
 
@@ -13,7 +13,8 @@ interface BottomNavProps {
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   const navItems = [
     { id: "identity", label: "Identity", icon: Fingerprint },
-    { id: "scan", label: "Scan QR", icon: QrCode },
+    { id: "pay", label: "Pay", icon: ScanLine },
+    { id: "verify", label: "Verify", icon: ShieldCheck },
     { id: "finance", label: "Finance", icon: Landmark },
   ];
 
@@ -24,7 +25,7 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
           <button
             key={item.id}
             onClick={() => {
-              if (item.id !== 'scan') {
+              if (item.id !== 'pay' && item.id !== 'verify') {
                 setActiveTab(item.id as Tab)
               }
               // Potentially handle QR scan action here
