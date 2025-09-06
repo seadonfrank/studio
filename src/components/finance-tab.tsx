@@ -64,8 +64,9 @@ export default function FinanceTab() {
           <CardContent>
             <p className="text-2xl font-bold text-primary">1,280</p>
             <div className="flex gap-2 mt-2">
-              <Button size="sm" className="flex-1 text-xs px-2 h-8"><Gift/>Collect</Button>
-              <Button size="sm" variant="secondary" className="flex-1 text-xs px-2 h-8"><Trophy/>Redeem</Button>
+              <Button size="icon" className="h-8 w-8" aria-label="Collect"><Gift/></Button>
+              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Redeem"><Trophy/></Button>
+              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Transactions"><History/></Button>
             </div>
           </CardContent>
         </Card>
