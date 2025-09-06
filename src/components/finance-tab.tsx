@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowUp, Plus, Landmark, PiggyBank, LineChart, Repeat } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -11,6 +11,7 @@ import DepositCard from "./deposit-card";
 import AddAccountCard from "./add-account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
 import ManageDepositsDialog from "./manage-deposits-dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -33,6 +34,33 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
+      <section className="grid grid-cols-2 gap-4">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-medium font-headline">Wallet</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">$1,234.56</p>
+            <div className="flex gap-2 mt-2">
+              <Button size="sm" className="flex-1"><ArrowUp/>Send</Button>
+              <Button size="sm" variant="secondary" className="flex-1"><ArrowDown/>Receive</Button>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-medium font-headline">Rewards</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold text-primary">1,280</p>
+            <div className="flex gap-2 mt-2">
+              <Button size="sm" className="flex-1"><Gift/>Collect</Button>
+              <Button size="sm" variant="secondary" className="flex-1"><Trophy/>Redeem</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
       <section>
         <h2 className="text-lg font-headline font-semibold mb-3">Cards</h2>
         <Carousel
