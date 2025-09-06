@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -14,6 +14,8 @@ import ManageDepositsDialog from "./manage-deposits-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import LoanCard from "./loan-card";
 import ManageLoansDialog from "./manage-loans-dialog";
+import FundCard from "./fund-card";
+import ManageFundsDialog from "./manage-funds-dialog";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -38,6 +40,12 @@ export default function FinanceTab() {
     { currency: "USD", loanAmount: "$25,000", outstandingAmount: "$18,500", interestRate: "7.5", interestType: "Fixed", tenure: "5 Years", installments: "30 of 60", emi: "$500", disbursedDate: "2022-01-10", gradient: "from-rose-500 to-pink-500" },
     { currency: "CAD", loanAmount: "$5,000", outstandingAmount: "$2,100", interestRate: "9.2", interestType: "Floating", tenure: "2 Years", installments: "10 of 24", emi: "$250", disbursedDate: "2023-05-20", gradient: "from-indigo-500 to-purple-500" },
   ];
+
+  const funds = [
+    { currency: "USD", fundBalance: "$12,345", pnlAmount: "+1,234", pnlPercentage: "11.11", investedAmount: "$11,111", sipNumber: "12345", startDate: "2023-01-15", gradient: "from-sky-500 to-indigo-500" },
+    { currency: "EUR", fundBalance: "€8,500", pnlAmount: "-250", pnlPercentage: "-2.85", investedAmount: "€8,750", swpNumber: "67890", startDate: "2022-11-01", gradient: "from-lime-500 to-green-500" },
+  ];
+
 
   return (
     <div className="space-y-6 p-4">
@@ -169,6 +177,42 @@ export default function FinanceTab() {
                       </DialogDescription>
                     </DialogHeader>
                     <ManageLoansDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-headline font-semibold mb-3">Funds</h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {funds.map((fund, index) => (
+              <CarouselItem key={index}>
+                <FundCard {...fund} />
+              </CarouselItem>
+            ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add New Investment" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Investment</DialogTitle>
+                      <DialogDescription>
+                        Enter the details for your new mutual fund investment.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageFundsDialog />
                   </DialogContent>
                 </Dialog>
             </CarouselItem>
