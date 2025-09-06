@@ -51,9 +51,9 @@ export default function FinanceTab() {
           <CardContent>
             <p className="text-2xl font-bold">$1,234.56</p>
             <div className="flex gap-2 mt-2">
-              <Button size="sm" className="flex-1" aria-label="Send"><ArrowUp/></Button>
-              <Button size="sm" variant="secondary" className="flex-1" aria-label="Receive"><ArrowDown/></Button>
-              <Button size="sm" variant="secondary" className="flex-1" aria-label="Transactions"><History/></Button>
+              <Button size="icon" className="h-8 w-8" aria-label="Send"><ArrowUp/></Button>
+              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Receive"><ArrowDown/></Button>
+              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Transactions"><History/></Button>
             </div>
           </CardContent>
         </Card>
@@ -64,8 +64,8 @@ export default function FinanceTab() {
           <CardContent>
             <p className="text-2xl font-bold text-primary">1,280</p>
             <div className="flex gap-2 mt-2">
-              <Button size="sm" className="flex-1"><Gift/>Collect</Button>
-              <Button size="sm" variant="secondary" className="flex-1"><Trophy/>Redeem</Button>
+              <Button size="sm" className="flex-1 text-xs px-2 h-8"><Gift/>Collect</Button>
+              <Button size="sm" variant="secondary" className="flex-1 text-xs px-2 h-8"><Trophy/>Redeem</Button>
             </div>
           </CardContent>
         </Card>
