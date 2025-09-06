@@ -12,6 +12,8 @@ import AddAccountCard from "./add-account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
 import ManageDepositsDialog from "./manage-deposits-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import LoanCard from "./loan-card";
+import ManageLoansDialog from "./manage-loans-dialog";
 
 export default function FinanceTab() {
   const financialProducts = [
@@ -30,6 +32,11 @@ export default function FinanceTab() {
   const deposits = [
     { currency: "USD", principalAmount: "$10,000", maturityAmount: "$10,500", interestRate: "5.00", tenure: "1 Year", startDate: "2023-08-01", endDate: "2024-08-01", gradient: "from-green-500 to-emerald-500" },
     { currency: "EUR", principalAmount: "€5,000", maturityAmount: "€5,200", interestRate: "4.00", tenure: "1 Year", startDate: "2023-09-15", endDate: "2024-09-15", gradient: "from-teal-500 to-cyan-500" },
+  ];
+
+  const loans = [
+    { currency: "USD", loanAmount: "$25,000", outstandingAmount: "$18,500", interestRate: "7.5", interestType: "Fixed", tenure: "5 Years", installments: "30 of 60", emi: "$500", disbursedDate: "2022-01-10", gradient: "from-rose-500 to-pink-500" },
+    { currency: "CAD", loanAmount: "$5,000", outstandingAmount: "$2,100", interestRate: "9.2", interestType: "Floating", tenure: "2 Years", installments: "10 of 24", emi: "$250", disbursedDate: "2023-05-20", gradient: "from-indigo-500 to-purple-500" },
   ];
 
   return (
@@ -132,6 +139,43 @@ export default function FinanceTab() {
           </CarouselContent>
         </Carousel>
       </section>
+
+      <section>
+        <h2 className="text-lg font-headline font-semibold mb-3">Loans</h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {loans.map((loan, index) => (
+              <CarouselItem key={index}>
+                <LoanCard {...loan} />
+              </CarouselItem>
+            ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Apply for Loan" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Apply for a New Loan</DialogTitle>
+                      <DialogDescription>
+                        Enter the details for your new loan application.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageLoansDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+
 
       <section>
         <h2 className="text-lg font-headline font-semibold mb-3">Products &amp; Services</h2>
