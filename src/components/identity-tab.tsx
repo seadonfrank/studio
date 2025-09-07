@@ -1,5 +1,5 @@
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -8,6 +8,8 @@ import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import GovernmentCredentialCard from "./government-credential-card";
 import AddAccountCard from "./add-account-card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import LicenseCredentialCard from "./license-credential-card";
+import ManageLicensesDialog from "./manage-licenses-dialog";
 
 export default function IdentityTab() {
   const activeCredentials = [
@@ -27,6 +29,11 @@ export default function IdentityTab() {
   const governmentCredentials = [
     { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500" },
     { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2022-03-10", expiryDate: "2027-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500" },
+  ];
+
+  const licenseCredentials = [
+    { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500" },
+    { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2023-06-01", expiryDate: "2028-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500" },
   ];
 
   const recentActivity = [
@@ -121,6 +128,46 @@ export default function IdentityTab() {
           </CarouselContent>
         </Carousel>
       </section>
+
+      <section>
+        <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
+          <BookUser className="h-5 w-5 text-primary" />
+          Licenses
+        </h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {licenseCredentials.map((cred, index) => (
+              <CarouselItem key={index}>
+                <LicenseCredentialCard {...cred} />
+              </CarouselItem>
+            ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add License" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New License</DialogTitle>
+                      <DialogDescription>
+                        Add details for your new license credential.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageLicensesDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+
 
       <Card>
         <CardHeader>
