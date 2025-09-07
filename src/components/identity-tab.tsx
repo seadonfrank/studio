@@ -1,5 +1,5 @@
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Eye } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -98,10 +98,16 @@ export default function IdentityTab() {
       </Card>
 
       <section>
-        <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
-          <Shield className="h-5 w-5 text-primary" />
-          Government
-        </h2>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Shield className="h-5 w-5 text-primary" />
+            Government
+          </h2>
+          <Button variant="link" size="sm" className="pr-0" onClick={() => document.getElementById('my-credentials-section')?.scrollIntoView({ behavior: 'smooth' })}>
+            View All
+            <Eye className="h-4 w-4 ml-1.5" />
+          </Button>
+        </div>
         <Carousel
           opts={{
             align: "start",
@@ -137,10 +143,16 @@ export default function IdentityTab() {
       </section>
 
       <section>
-        <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
-          <BookUser className="h-5 w-5 text-primary" />
-          Licenses
-        </h2>
+        <div className="flex justify-between items-center mb-3">
+            <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+              <BookUser className="h-5 w-5 text-primary" />
+              Licenses
+            </h2>
+            <Button variant="link" size="sm" className="pr-0" onClick={() => document.getElementById('my-credentials-section')?.scrollIntoView({ behavior: 'smooth' })}>
+              View All
+              <Eye className="h-4 w-4 ml-1.5" />
+          </Button>
+        </div>
         <Carousel
           opts={{
             align: "start",
@@ -176,10 +188,16 @@ export default function IdentityTab() {
       </section>
 
        <section>
-        <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
-          <GraduationCap className="h-5 w-5 text-primary" />
-          Academic
-        </h2>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <GraduationCap className="h-5 w-5 text-primary" />
+            Academic
+          </h2>
+          <Button variant="link" size="sm" className="pr-0" onClick={() => document.getElementById('my-credentials-section')?.scrollIntoView({ behavior: 'smooth' })}>
+            View All
+            <Eye className="h-4 w-4 ml-1.5" />
+          </Button>
+        </div>
         <Carousel
           opts={{
             align: "start",
@@ -215,7 +233,7 @@ export default function IdentityTab() {
       </section>
 
 
-      <Card>
+      <Card id="my-credentials-section">
         <CardHeader>
           <CardTitle className="font-headline">My Credentials</CardTitle>
           <CardDescription>All your other digital credentials in one place.</CardDescription>
