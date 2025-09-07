@@ -86,7 +86,7 @@ export default function IdentityTab() {
       <section>
         <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
           <Shield className="h-5 w-5 text-primary" />
-          Government Credentials
+          Government
         </h2>
         <Carousel
           opts={{
