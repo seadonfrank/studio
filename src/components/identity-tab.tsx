@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -16,6 +16,7 @@ import AcademicCredentialCard from "./academic-credential-card";
 import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
@@ -62,13 +63,20 @@ export default function IdentityTab() {
     return cred.status === academicFilter;
   });
 
-  const FilterButtons = ({ filter, setFilter }: { filter: FilterType; setFilter: (filter: FilterType) => void }) => (
-    <div className="flex gap-2">
-        <Button variant={filter === 'all' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('all')}>All</Button>
-        <Button variant={filter === 'active' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('active')}>Active</Button>
-        <Button variant={filter === 'expired' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('expired')}>Expired</Button>
-        <Button variant={filter === 'revoked' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('revoked')}>Revoked</Button>
-    </div>
+  const FilterDropdown = ({ setFilter }: { setFilter: (filter: FilterType) => void }) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Filter className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => setFilter('all')}>All</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setFilter('active')}>Active</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setFilter('expired')}>Expired</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setFilter('revoked')}>Revoked</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 
   return (
@@ -97,14 +105,12 @@ export default function IdentityTab() {
       </Card>
 
       <section>
-        <div className="flex justify-between items-center mb-1">
+        <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
             <Shield className="h-5 w-5 text-primary" />
             Government
           </h2>
-        </div>
-        <div className="mb-3">
-          <FilterButtons filter={governmentFilter} setFilter={setGovernmentFilter} />
+          <FilterDropdown setFilter={setGovernmentFilter} />
         </div>
         <Carousel
           opts={{
@@ -113,11 +119,11 @@ export default function IdentityTab() {
           className="w-full"
         >
           <CarouselContent>
-            {filteredGovernmentCredentials.map((cred, index) => (
+            {filteredGovernmentCredentials.length > 0 ? filteredGovernmentCredentials.map((cred, index) => (
               <CarouselItem key={index}>
                 <GovernmentCredentialCard {...cred} />
               </CarouselItem>
-            ))}
+            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
             <CarouselItem>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -141,14 +147,12 @@ export default function IdentityTab() {
       </section>
 
       <section>
-        <div className="flex justify-between items-center mb-1">
+        <div className="flex justify-between items-center mb-3">
             <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
               <BookUser className="h-5 w-5 text-primary" />
               Licenses
             </h2>
-        </div>
-         <div className="mb-3">
-          <FilterButtons filter={licensesFilter} setFilter={setLicensesFilter} />
+            <FilterDropdown setFilter={setLicensesFilter} />
         </div>
         <Carousel
           opts={{
@@ -157,11 +161,11 @@ export default function IdentityTab() {
           className="w-full"
         >
           <CarouselContent>
-            {filteredLicenseCredentials.map((cred, index) => (
+            {filteredLicenseCredentials.length > 0 ? filteredLicenseCredentials.map((cred, index) => (
               <CarouselItem key={index}>
                 <LicenseCredentialCard {...cred} />
               </CarouselItem>
-            ))}
+            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
             <CarouselItem>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -185,14 +189,12 @@ export default function IdentityTab() {
       </section>
 
        <section>
-        <div className="flex justify-between items-center mb-1">
+        <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-primary" />
             Academic
           </h2>
-        </div>
-        <div className="mb-3">
-          <FilterButtons filter={academicFilter} setFilter={setAcademicFilter} />
+          <FilterDropdown setFilter={setAcademicFilter} />
         </div>
         <Carousel
           opts={{
@@ -201,11 +203,11 @@ export default function IdentityTab() {
           className="w-full"
         >
           <CarouselContent>
-            {filteredAcademicCredentials.map((cred, index) => (
+            {filteredAcademicCredentials.length > 0 ? filteredAcademicCredentials.map((cred, index) => (
               <CarouselItem key={index}>
                 <AcademicCredentialCard {...cred} />
               </CarouselItem>
-            ))}
+            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
             <CarouselItem>
                 <Dialog>
                   <DialogTrigger asChild>
