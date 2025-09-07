@@ -14,20 +14,6 @@ import AcademicCredentialCard from "./academic-credential-card";
 import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
 
 export default function IdentityTab() {
-  const activeCredentials = [
-    { name: "Proof of Age", issuer: "Govt. Issued", icon: UserCheck, verified: true },
-    { name: "B.Sc. Degree", issuer: "State University", icon: GraduationCap, verified: true },
-    { name: "Professional License", issuer: "Medical Board", icon: Award, verified: false },
-  ];
-
-  const expiredCredentials = [
-    { name: "Old Conference Pass", issuer: "Tech Summit '23", icon: FileText, verified: false },
-  ];
-
-  const revokedCredentials = [
-     { name: "Old Driver's License", issuer: "Dept. of Motor Vehicles", icon: UserCheck, verified: false },
-  ];
-  
   const governmentCredentials = [
     { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" },
     { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2017-03-10", expiryDate: "2022-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500", status: "expired" },
@@ -48,29 +34,6 @@ export default function IdentityTab() {
     { action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
     { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
   ];
-
-  const CredentialList = ({ credentials }: { credentials: typeof activeCredentials }) => (
-    <div className="space-y-4 pt-4">
-      {credentials.map((cred) => (
-        <Card key={cred.name}>
-          <CardHeader className="flex flex-row items-center gap-4 p-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary">
-              <cred.icon className="h-5 w-5 text-secondary-foreground" />
-            </div>
-            <div className="flex-1">
-              <p className="font-semibold">{cred.name}</p>
-              <p className="text-sm text-muted-foreground">{cred.issuer}</p>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-             <Badge variant={cred.verified ? "accent" : "secondary"}>
-              {cred.verified ? "Verified" : "Pending"}
-            </Badge>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
 
   const FilterButtons = () => (
     <div className="flex gap-2">
@@ -237,32 +200,6 @@ export default function IdentityTab() {
           </CarouselContent>
         </Carousel>
       </section>
-
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline">My Credentials</CardTitle>
-          <CardDescription>All your digital credentials in one place.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="active">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="active">Active</TabsTrigger>
-              <TabsTrigger value="expired">Expired</TabsTrigger>
-              <TabsTrigger value="revoked">Revoked</TabsTrigger>
-            </TabsList>
-            <TabsContent value="active">
-              <CredentialList credentials={activeCredentials} />
-            </TabsContent>
-            <TabsContent value="expired">
-              <CredentialList credentials={expiredCredentials} />
-            </TabsContent>
-            <TabsContent value="revoked">
-              <CredentialList credentials={revokedCredentials} />
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
 
       <Card>
         <CardHeader>
