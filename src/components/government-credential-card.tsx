@@ -14,9 +14,10 @@ interface GovernmentCredentialCardProps {
     passportNumber?: string;
     nationalIdNumber?: string;
     gradient: string;
+    status: 'active' | 'expired' | 'revoked';
 }
 
-export default function GovernmentCredentialCard({ credentialType, country, name, dob, issueDate, expiryDate, passportNumber, nationalIdNumber, gradient }: GovernmentCredentialCardProps) {
+export default function GovernmentCredentialCard({ credentialType, country, name, dob, issueDate, expiryDate, passportNumber, nationalIdNumber, gradient, status }: GovernmentCredentialCardProps) {
   return (
     <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
       <CardHeader className="flex flex-row justify-between items-start pb-2 p-5">

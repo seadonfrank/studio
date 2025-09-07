@@ -13,9 +13,10 @@ interface LicenseCredentialCardProps {
     licenseNumber: string;
     details?: string[];
     gradient: string;
+    status: 'active' | 'expired' | 'revoked';
 }
 
-export default function LicenseCredentialCard({ licenseType, issuingAuthority, name, issueDate, expiryDate, licenseNumber, details, gradient }: LicenseCredentialCardProps) {
+export default function LicenseCredentialCard({ licenseType, issuingAuthority, name, issueDate, expiryDate, licenseNumber, details, gradient, status }: LicenseCredentialCardProps) {
   return (
     <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
       <CardHeader className="flex flex-row justify-between items-start pb-2 p-5">

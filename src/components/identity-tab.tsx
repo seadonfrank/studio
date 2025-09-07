@@ -29,18 +29,18 @@ export default function IdentityTab() {
   ];
   
   const governmentCredentials = [
-    { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500" },
-    { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2022-03-10", expiryDate: "2027-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500" },
+    { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" },
+    { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2017-03-10", expiryDate: "2022-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500", status: "expired" },
   ];
 
   const licenseCredentials = [
-    { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500" },
-    { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2023-06-01", expiryDate: "2028-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500" },
+    { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500", status: "active" },
+    { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2018-06-01", expiryDate: "2023-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500", status: "expired" },
   ];
 
   const academicCredentials = [
-    { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500" },
-    { credentialType: "Master's Degree", institution: "Tech Institute", fieldOfStudy: "Artificial Intelligence", graduationDate: "2024-05-20", gradient: "from-fuchsia-600 to-pink-500" },
+    { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500", status: "active" },
+    { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" },
   ];
 
   const recentActivity = [
@@ -72,6 +72,15 @@ export default function IdentityTab() {
     </div>
   );
 
+  const FilterButtons = () => (
+    <div className="flex gap-2">
+        <Button variant="outline" size="sm" className="text-xs h-7">All</Button>
+        <Button variant="ghost" size="sm" className="text-xs h-7">Active</Button>
+        <Button variant="ghost" size="sm" className="text-xs h-7">Expired</Button>
+        <Button variant="ghost" size="sm" className="text-xs h-7">Revoked</Button>
+    </div>
+  );
+
   return (
     <div className="space-y-6 p-4">
       <Card>
@@ -98,11 +107,14 @@ export default function IdentityTab() {
       </Card>
 
       <section>
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-1">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
             <Shield className="h-5 w-5 text-primary" />
             Government
           </h2>
+        </div>
+        <div className="mb-3">
+          <FilterButtons />
         </div>
         <Carousel
           opts={{
@@ -139,11 +151,14 @@ export default function IdentityTab() {
       </section>
 
       <section>
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-1">
             <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
               <BookUser className="h-5 w-5 text-primary" />
               Licenses
             </h2>
+        </div>
+         <div className="mb-3">
+          <FilterButtons />
         </div>
         <Carousel
           opts={{
@@ -180,11 +195,14 @@ export default function IdentityTab() {
       </section>
 
        <section>
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-1">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-primary" />
             Academic
           </h2>
+        </div>
+        <div className="mb-3">
+          <FilterButtons />
         </div>
         <Carousel
           opts={{

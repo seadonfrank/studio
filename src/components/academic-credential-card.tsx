@@ -10,9 +10,10 @@ interface AcademicCredentialCardProps {
     fieldOfStudy: string;
     graduationDate: string;
     gradient: string;
+    status: 'active' | 'expired' | 'revoked';
 }
 
-export default function AcademicCredentialCard({ credentialType, institution, fieldOfStudy, graduationDate, gradient }: AcademicCredentialCardProps) {
+export default function AcademicCredentialCard({ credentialType, institution, fieldOfStudy, graduationDate, gradient, status }: AcademicCredentialCardProps) {
   return (
     <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
       <CardHeader className="flex flex-row justify-between items-start pb-2 p-5">
