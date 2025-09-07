@@ -10,6 +10,8 @@ import AddAccountCard from "./add-account-card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import LicenseCredentialCard from "./license-credential-card";
 import ManageLicensesDialog from "./manage-licenses-dialog";
+import AcademicCredentialCard from "./academic-credential-card";
+import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
 
 export default function IdentityTab() {
   const activeCredentials = [
@@ -34,6 +36,11 @@ export default function IdentityTab() {
   const licenseCredentials = [
     { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500" },
     { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2023-06-01", expiryDate: "2028-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500" },
+  ];
+
+  const academicCredentials = [
+    { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500" },
+    { credentialType: "Master's Degree", institution: "Tech Institute", fieldOfStudy: "Artificial Intelligence", graduationDate: "2024-05-20", gradient: "from-fuchsia-600 to-pink-500" },
   ];
 
   const recentActivity = [
@@ -161,6 +168,45 @@ export default function IdentityTab() {
                       </DialogDescription>
                     </DialogHeader>
                     <ManageLicensesDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+
+       <section>
+        <h2 className="text-lg font-headline font-semibold mb-3 flex items-center gap-2">
+          <GraduationCap className="h-5 w-5 text-primary" />
+          Academic
+        </h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {academicCredentials.map((cred, index) => (
+              <CarouselItem key={index}>
+                <AcademicCredentialCard {...cred} />
+              </CarouselItem>
+            ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add Credential" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Academic Credential</DialogTitle>
+                      <DialogDescription>
+                        Add details for your new academic credential.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageAcademicCredentialsDialog />
                   </DialogContent>
                 </Dialog>
             </CarouselItem>
