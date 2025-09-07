@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -63,11 +63,12 @@ export default function IdentityTab() {
     return cred.status === academicFilter;
   });
 
-  const FilterDropdown = ({ setFilter }: { setFilter: (filter: FilterType) => void }) => (
+  const FilterDropdown = ({ filter, setFilter }: { filter: FilterType, setFilter: (filter: FilterType) => void }) => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Filter className="h-4 w-4" />
+        <Button variant="outline" size="sm" className="capitalize">
+          {filter}
+          <ChevronDown className="h-4 w-4 ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -110,7 +111,7 @@ export default function IdentityTab() {
             <Shield className="h-5 w-5 text-primary" />
             Government
           </h2>
-          <FilterDropdown setFilter={setGovernmentFilter} />
+          <FilterDropdown filter={governmentFilter} setFilter={setGovernmentFilter} />
         </div>
         <Carousel
           opts={{
@@ -152,7 +153,7 @@ export default function IdentityTab() {
               <BookUser className="h-5 w-5 text-primary" />
               Licenses
             </h2>
-            <FilterDropdown setFilter={setLicensesFilter} />
+            <FilterDropdown filter={licensesFilter} setFilter={setLicensesFilter} />
         </div>
         <Carousel
           opts={{
@@ -194,7 +195,7 @@ export default function IdentityTab() {
             <GraduationCap className="h-5 w-5 text-primary" />
             Academic
           </h2>
-          <FilterDropdown setFilter={setAcademicFilter} />
+          <FilterDropdown filter={academicFilter} setFilter={setAcademicFilter} />
         </div>
         <Carousel
           opts={{
