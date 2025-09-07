@@ -1,4 +1,6 @@
 
+"use client";
+
 import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
@@ -12,21 +14,31 @@ import LicenseCredentialCard from "./license-credential-card";
 import ManageLicensesDialog from "./manage-licenses-dialog";
 import AcademicCredentialCard from "./academic-credential-card";
 import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+
+type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
 export default function IdentityTab() {
+  const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
+  const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
+  const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
+
   const governmentCredentials = [
-    { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" },
-    { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2017-03-10", expiryDate: "2022-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500", status: "expired" },
+    { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" as const },
+    { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2017-03-10", expiryDate: "2022-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500", status: "expired" as const },
+    { credentialType: "Passport", country: "UK", name: "Peter Jones", dob: "1985-11-02", issueDate: "2015-06-01", expiryDate: "2020-05-31", passportNumber: "X9Y8Z7W6", gradient: "from-gray-600 to-slate-500", status: "revoked" as const },
   ];
 
   const licenseCredentials = [
-    { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500", status: "active" },
-    { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2018-06-01", expiryDate: "2023-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500", status: "expired" },
+    { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500", status: "active" as const },
+    { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2018-06-01", expiryDate: "2023-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500", status: "expired" as const },
+    { licenseType: "Medical License", issuingAuthority: "Medical Board", name: "Dr. Emily White", issueDate: "2019-07-20", expiryDate: "2025-07-20", licenseNumber: "M555444", gradient: "from-rose-600 to-pink-500", status: "revoked" as const },
   ];
 
   const academicCredentials = [
-    { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500", status: "active" },
-    { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" },
+    { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500", status: "active" as const },
+    { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" as const },
   ];
 
   const recentActivity = [
@@ -35,12 +47,27 @@ export default function IdentityTab() {
     { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
   ];
 
-  const FilterButtons = () => (
+  const filteredGovernmentCredentials = governmentCredentials.filter(cred => {
+    if (governmentFilter === 'all') return true;
+    return cred.status === governmentFilter;
+  });
+
+  const filteredLicenseCredentials = licenseCredentials.filter(cred => {
+    if (licensesFilter === 'all') return true;
+    return cred.status === licensesFilter;
+  });
+
+  const filteredAcademicCredentials = academicCredentials.filter(cred => {
+    if (academicFilter === 'all') return true;
+    return cred.status === academicFilter;
+  });
+
+  const FilterButtons = ({ filter, setFilter }: { filter: FilterType; setFilter: (filter: FilterType) => void }) => (
     <div className="flex gap-2">
-        <Button variant="outline" size="sm" className="text-xs h-7">All</Button>
-        <Button variant="ghost" size="sm" className="text-xs h-7">Active</Button>
-        <Button variant="ghost" size="sm" className="text-xs h-7">Expired</Button>
-        <Button variant="ghost" size="sm" className="text-xs h-7">Revoked</Button>
+        <Button variant={filter === 'all' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('all')}>All</Button>
+        <Button variant={filter === 'active' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('active')}>Active</Button>
+        <Button variant={filter === 'expired' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('expired')}>Expired</Button>
+        <Button variant={filter === 'revoked' ? 'outline' : 'ghost'} size="sm" className="text-xs h-7" onClick={() => setFilter('revoked')}>Revoked</Button>
     </div>
   );
 
@@ -77,7 +104,7 @@ export default function IdentityTab() {
           </h2>
         </div>
         <div className="mb-3">
-          <FilterButtons />
+          <FilterButtons filter={governmentFilter} setFilter={setGovernmentFilter} />
         </div>
         <Carousel
           opts={{
@@ -86,7 +113,7 @@ export default function IdentityTab() {
           className="w-full"
         >
           <CarouselContent>
-            {governmentCredentials.map((cred, index) => (
+            {filteredGovernmentCredentials.map((cred, index) => (
               <CarouselItem key={index}>
                 <GovernmentCredentialCard {...cred} />
               </CarouselItem>
@@ -121,7 +148,7 @@ export default function IdentityTab() {
             </h2>
         </div>
          <div className="mb-3">
-          <FilterButtons />
+          <FilterButtons filter={licensesFilter} setFilter={setLicensesFilter} />
         </div>
         <Carousel
           opts={{
@@ -130,7 +157,7 @@ export default function IdentityTab() {
           className="w-full"
         >
           <CarouselContent>
-            {licenseCredentials.map((cred, index) => (
+            {filteredLicenseCredentials.map((cred, index) => (
               <CarouselItem key={index}>
                 <LicenseCredentialCard {...cred} />
               </CarouselItem>
@@ -165,7 +192,7 @@ export default function IdentityTab() {
           </h2>
         </div>
         <div className="mb-3">
-          <FilterButtons />
+          <FilterButtons filter={academicFilter} setFilter={setAcademicFilter} />
         </div>
         <Carousel
           opts={{
@@ -174,7 +201,7 @@ export default function IdentityTab() {
           className="w-full"
         >
           <CarouselContent>
-            {academicCredentials.map((cred, index) => (
+            {filteredAcademicCredentials.map((cred, index) => (
               <CarouselItem key={index}>
                 <AcademicCredentialCard {...cred} />
               </CarouselItem>
