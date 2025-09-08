@@ -226,7 +226,7 @@ export default function FinanceTab() {
 
       <section>
         <h2 className="text-lg font-headline font-semibold mb-3">
-            Cryptocurrency
+            Cryptocurrencies
         </h2>
         <Carousel
           opts={{
