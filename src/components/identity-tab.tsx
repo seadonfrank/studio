@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, Bitcoin } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -17,6 +17,8 @@ import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialo
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import CryptoCredentialCard from "./crypto-credential-card";
+import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
@@ -24,6 +26,7 @@ export default function IdentityTab() {
   const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
   const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
   const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
+  const [cryptoFilter, setCryptoFilter] = useState<FilterType>('all');
 
   const governmentCredentials = [
     { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" as const },
@@ -40,6 +43,12 @@ export default function IdentityTab() {
   const academicCredentials = [
     { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500", status: "active" as const },
     { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" as const },
+  ];
+
+  const cryptoCredentials = [
+    { walletName: "My ETH Wallet", asset: "ETH", balance: "1.25", network: "Ethereum", walletAddress: "0x123...abc", gradient: "from-gray-700 to-gray-900", status: "active" as const },
+    { walletName: "Bitcoin Savings", asset: "BTC", balance: "0.05", network: "Bitcoin", walletAddress: "1A1z...xyz", gradient: "from-amber-500 to-yellow-600", status: "active" as const },
+    { walletName: "Old Token Wallet", asset: "OLD", balance: "1000", network: "OldChain", walletAddress: "0xold...dead", gradient: "from-red-700 to-red-900", status: "revoked" as const },
   ];
 
   const recentActivity = [
@@ -61,6 +70,11 @@ export default function IdentityTab() {
   const filteredAcademicCredentials = academicCredentials.filter(cred => {
     if (academicFilter === 'all') return true;
     return cred.status === academicFilter;
+  });
+  
+  const filteredCryptoCredentials = cryptoCredentials.filter(cred => {
+    if (cryptoFilter === 'all') return true;
+    return cred.status === cryptoFilter;
   });
 
   const FilterDropdown = ({ filter, setFilter }: { filter: FilterType, setFilter: (filter: FilterType) => void }) => (
@@ -224,6 +238,48 @@ export default function IdentityTab() {
                       </DialogDescription>
                     </DialogHeader>
                     <ManageAcademicCredentialsDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+      
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Bitcoin className="h-5 w-5 text-primary" />
+            Cryptocurrency
+          </h2>
+          <FilterDropdown filter={cryptoFilter} setFilter={setCryptoFilter} />
+        </div>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {filteredCryptoCredentials.length > 0 ? filteredCryptoCredentials.map((cred, index) => (
+              <CarouselItem key={index}>
+                <CryptoCredentialCard {...cred} />
+              </CarouselItem>
+            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add Wallet" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Crypto Wallet</DialogTitle>
+                      <DialogDescription>
+                        Add details for a new cryptocurrency wallet.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageCryptoCredentialsDialog />
                   </DialogContent>
                 </Dialog>
             </CarouselItem>
