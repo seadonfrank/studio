@@ -29,6 +29,7 @@ const categoryIcons: { [key: string]: React.ElementType } = {
 
 export default function TransactionItem({ transaction }: { transaction: Transaction }) {
   const [category, setCategory] = useState<string | null>(null);
+  const [formattedDate, setFormattedDate] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchCategory() {
@@ -43,6 +44,10 @@ export default function TransactionItem({ transaction }: { transaction: Transact
     fetchCategory();
   }, [transaction]);
 
+  useEffect(() => {
+    setFormattedDate(format(new Date(transaction.date), "PPp"));
+  }, [transaction.date]);
+
   const isIncome = transaction.amount > 0;
   const CategoryIcon = category ? (categoryIcons[category.toLowerCase()] || MoreHorizontal) : MoreHorizontal;
 
@@ -56,7 +61,7 @@ export default function TransactionItem({ transaction }: { transaction: Transact
       </div>
       <div className="flex-1 overflow-hidden">
         <p className="font-semibold truncate">{transaction.description}</p>
-        <p className="text-xs text-muted-foreground">{format(new Date(transaction.date), "PPp")}</p>
+        <p className="text-xs text-muted-foreground">{formattedDate || ' '}</p>
       </div>
       <div className={cn("text-right font-semibold", isIncome ? "text-primary" : "text-destructive")}>
         {isIncome ? "+" : ""}${Math.abs(transaction.amount).toFixed(2)}
