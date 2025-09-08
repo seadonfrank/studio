@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, Bitcoin } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -225,8 +225,7 @@ export default function FinanceTab() {
       </section>
 
       <section>
-        <h2 className="text-lg font-headline font-semibold flex items-center gap-2 mb-3">
-            <Bitcoin className="h-5 w-5 text-primary" />
+        <h2 className="text-lg font-headline font-semibold mb-3">
             Cryptocurrency
         </h2>
         <Carousel

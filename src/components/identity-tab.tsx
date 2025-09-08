@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, Bitcoin } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
