@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, Bitcoin } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -17,6 +17,8 @@ import LoanCard from "./loan-card";
 import ManageLoansDialog from "./manage-loans-dialog";
 import FundCard from "./fund-card";
 import ManageFundsDialog from "./manage-funds-dialog";
+import CryptoCredentialCard from "./crypto-credential-card";
+import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
 
 export default function FinanceTab() {
   const cards = [
@@ -38,6 +40,12 @@ export default function FinanceTab() {
   const funds = [
     { currency: "USD", fundBalance: "$12,345", pnlAmount: "+1,234", pnlPercentage: "11.11", investedAmount: "$11,111", sipNumber: "12345", startDate: "2023-01-15", gradient: "from-sky-500 to-indigo-500" },
     { currency: "EUR", fundBalance: "€8,500", pnlAmount: "-250", pnlPercentage: "-2.85", investedAmount: "€8,750", swpNumber: "67890", startDate: "2022-11-01", gradient: "from-lime-500 to-green-500" },
+  ];
+
+  const cryptoCredentials = [
+    { walletName: "My ETH Wallet", asset: "ETH", balance: "1.25", network: "Ethereum", walletAddress: "0x123...abc", gradient: "from-gray-700 to-gray-900", status: "active" as const },
+    { walletName: "Bitcoin Savings", asset: "BTC", balance: "0.05", network: "Bitcoin", walletAddress: "1A1z...xyz", gradient: "from-amber-500 to-yellow-600", status: "active" as const },
+    { walletName: "Old Token Wallet", asset: "OLD", balance: "1000", network: "OldChain", walletAddress: "0xold...dead", gradient: "from-red-700 to-red-900", status: "revoked" as const },
   ];
 
 
@@ -209,6 +217,45 @@ export default function FinanceTab() {
                       </DialogDescription>
                     </DialogHeader>
                     <ManageFundsDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-headline font-semibold flex items-center gap-2 mb-3">
+            <Bitcoin className="h-5 w-5 text-primary" />
+            Cryptocurrency
+        </h2>
+        <Carousel
+          opts={{
+            align: "start",
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {cryptoCredentials.map((cred, index) => (
+              <CarouselItem key={index}>
+                <CryptoCredentialCard {...cred} />
+              </CarouselItem>
+            ))}
+            <CarouselItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add Wallet" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Crypto Wallet</DialogTitle>
+                      <DialogDescription>
+                        Add details for a new cryptocurrency wallet.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageCryptoCredentialsDialog />
                   </DialogContent>
                 </Dialog>
             </CarouselItem>
