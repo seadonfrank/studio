@@ -61,7 +61,6 @@ export default function FinanceTab() {
             <div className="flex gap-2 mt-2">
               <Button size="icon" className="h-8 w-8" aria-label="Send"><ArrowUp/></Button>
               <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Receive"><ArrowDown/></Button>
-              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Transactions"><History/></Button>
             </div>
           </CardContent>
         </Card>
@@ -74,7 +73,6 @@ export default function FinanceTab() {
             <div className="flex gap-2 mt-2">
               <Button size="icon" className="h-8 w-8" aria-label="Collect"><Gift/></Button>
               <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Redeem"><Trophy/></Button>
-              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Transactions"><History/></Button>
             </div>
           </CardContent>
         </Card>
