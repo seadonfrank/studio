@@ -86,44 +86,44 @@ export default function IdentityTab() {
   return (
     <div className="space-y-6 p-4">
       <Card>
-        <CardHeader>
-           <div className="flex items-center justify-between">
-            <CardTitle className="font-headline flex items-center gap-2">
-              <Fingerprint className="text-primary" />
-              Your Digital ID
-            </CardTitle>
-             <Dialog>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">Add Credential <ChevronDown className="h-4 w-4 ml-2" /></Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DialogTrigger asChild>
-                        <DropdownMenuItem>
-                            <QrCode className="mr-2 h-4 w-4" />
-                            Scan to Claim
-                        </DropdownMenuItem>
-                    </DialogTrigger>
-                    <DropdownMenuItem>
-                        <Plus className="mr-2 h-4 w-4" />
-                        Add Manually
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Scan to Claim Credential</DialogTitle>
-                  <DialogDescription>
-                    Scan a QR code to claim a new credential.
-                  </DialogDescription>
-                </DialogHeader>
-                <ScanAndClaim />
-              </DialogContent>
-            </Dialog>
-          </div>
-          <CardDescription>
-            Your unique and self-sovereign identity.
-          </CardDescription>
+        <CardHeader className="flex flex-row items-start justify-between">
+            <div>
+              <CardTitle className="font-headline flex items-center gap-2">
+                <Fingerprint className="text-primary" />
+                Your Digital ID
+              </CardTitle>
+              <CardDescription>
+                Your unique and self-sovereign identity.
+              </CardDescription>
+            </div>
+            <Dialog>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">Add Credential <ChevronDown className="h-4 w-4 ml-2" /></Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DialogTrigger asChild>
+                      <DropdownMenuItem>
+                          <QrCode className="mr-2 h-4 w-4" />
+                          Scan to Claim
+                      </DropdownMenuItem>
+                  </DialogTrigger>
+                  <DropdownMenuItem>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Manually
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Scan to Claim Credential</DialogTitle>
+                <DialogDescription>
+                  Scan a QR code to claim a new credential.
+                </DialogDescription>
+              </DialogHeader>
+              <ScanAndClaim />
+            </DialogContent>
+          </Dialog>
         </CardHeader>
         <CardContent>
           <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
@@ -283,4 +283,3 @@ export default function IdentityTab() {
     </div>
   );
 }
-
