@@ -63,7 +63,7 @@ export default function PaymentsTab() {
                       </div>
                       <div>
                           <p className="font-semibold">Receive Payment</p>
-                          <p className="text-sm text-muted-foreground">Request money or share your ID.</p>
+                          <p className="text-sm text-muted-foreground">Request to pay</p>
                       </div>
                   </div>
                   <ChevronRight className="h-5 w-5 text-muted-foreground" />
