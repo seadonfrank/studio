@@ -48,7 +48,6 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
             <Image src="https://placehold.co/200x200/png?text=Your\nQR+Code" alt="QR Code" width={200} height={200} data-ai-hint="qr code" />
             </div>
             <div className="w-full">
-            <p className="font-semibold">Your xIDFI</p>
             <p className="text-sm font-mono break-all bg-muted p-2 rounded-md text-muted-foreground mt-1">
                 {did}
             </p>
