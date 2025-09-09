@@ -13,6 +13,7 @@ import SendPaymentView from "./send-payment-view";
 import ReceivePaymentView from "./receive-payment-view";
 import ScanToPayView from "./scan-to-pay-view";
 import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 export default function PaymentsTab() {
   const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan'>('main');
@@ -40,27 +41,35 @@ export default function PaymentsTab() {
               <p className="text-muted-foreground">Send and receive money securely.</p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Card className="hover:bg-muted/50 cursor-pointer transition-colors" onClick={() => setView('send')}>
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <ArrowUpCircle className="h-10 w-10 text-primary" />
-                  <div>
-                    <CardTitle className="font-headline">Send Payment</CardTitle>
-                    <CardDescription>Send money to a friend.</CardDescription>
+            <Card>
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setView('send')}>
+                  <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                          <ArrowUpCircle className="h-6 w-6" />
+                      </div>
+                      <div>
+                          <p className="font-semibold">Send Payment</p>
+                          <p className="text-sm text-muted-foreground">Send money to a friend.</p>
+                      </div>
                   </div>
-                </CardHeader>
-              </Card>
-
-              <Card className="hover:bg-muted/50 cursor-pointer transition-colors" onClick={() => setView('receive')}>
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <ArrowDownCircle className="h-10 w-10 text-primary" />
-                  <div>
-                    <CardTitle className="font-headline">Receive Payment</CardTitle>
-                    <CardDescription>Request money or share your ID.</CardDescription>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setView('receive')}>
+                  <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                          <ArrowDownCircle className="h-6 w-6" />
+                      </div>
+                      <div>
+                          <p className="font-semibold">Receive Payment</p>
+                          <p className="text-sm text-muted-foreground">Request money or share your ID.</p>
+                      </div>
                   </div>
-                </CardHeader>
-              </Card>
-            </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+              </CardContent>
+            </Card>
 
             <Card>
                 <CardHeader>
