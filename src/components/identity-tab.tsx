@@ -92,20 +92,24 @@ export default function IdentityTab() {
               <Fingerprint className="text-primary" />
               Your Digital ID
             </CardTitle>
-          </div>
-          <CardDescription>
-            Your unique and self-sovereign identity.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
-            did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
-          </div>
-          <div className="grid grid-cols-2 gap-2 mt-4">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm"><QrCode className="mr-2 h-4 w-4" />Scan to Claim</Button>
-              </DialogTrigger>
+             <Dialog>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm">Add Credential <ChevronDown className="h-4 w-4 ml-2" /></Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DialogTrigger asChild>
+                        <DropdownMenuItem>
+                            <QrCode className="mr-2 h-4 w-4" />
+                            Scan to Claim
+                        </DropdownMenuItem>
+                    </DialogTrigger>
+                    <DropdownMenuItem>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Manually
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Scan to Claim Credential</DialogTitle>
@@ -116,7 +120,14 @@ export default function IdentityTab() {
                 <ScanAndClaim />
               </DialogContent>
             </Dialog>
-            <Button variant="outline" size="sm"><Plus className="mr-2 h-4 w-4" />Add Manually</Button>
+          </div>
+          <CardDescription>
+            Your unique and self-sovereign identity.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
+            did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
           </div>
         </CardContent>
       </Card>
@@ -272,3 +283,4 @@ export default function IdentityTab() {
     </div>
   );
 }
+
