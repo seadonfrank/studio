@@ -58,7 +58,7 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
       
       <div className="flex-grow overflow-y-auto space-y-6">
         <div className="flex flex-col items-center justify-center space-y-4 py-4 mt-6 text-center">
-            <p className="text-muted-foreground">Share your QR code or ID to get paid.</p>
+            <p className="text-muted-foreground">Your QR code or ID to get paid.</p>
             <div className="p-4 border rounded-lg bg-white">
             <Image src="https://placehold.co/200x200/png?text=Your\nQR+Code" alt="QR Code" width={200} height={200} data-ai-hint="qr code" />
             </div>
