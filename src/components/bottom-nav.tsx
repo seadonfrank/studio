@@ -1,7 +1,8 @@
+
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { Landmark, Fingerprint, CreditCard, ShieldCheck } from "lucide-react";
+import { Landmark, Fingerprint, CreditCard, ShieldCheck, Repeat } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/app/page";
 
@@ -13,7 +14,7 @@ interface BottomNavProps {
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   const navItems = [
     { id: "finance", label: "Finance", icon: Landmark },
-    { id: "payments", label: "Payments", icon: CreditCard },
+    { id: "payments", label: "Payments", icon: Repeat },
     { id: "verify", label: "Verify", icon: ShieldCheck },
     { id: "identity", label: "Identity", icon: Fingerprint },
   ];
@@ -32,11 +33,12 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
             aria-label={item.label}
             aria-pressed={activeTab === item.id}
             className={cn(
-              "flex h-12 w-16 flex-col items-center justify-center rounded-lg text-muted-foreground transition-colors duration-200",
+              "flex h-16 w-20 flex-col items-center justify-center rounded-lg text-muted-foreground transition-colors duration-200 gap-1",
               activeTab === item.id && "text-primary bg-primary/10"
             )}
           >
             <item.icon className="h-6 w-6" />
+            <span className="text-xs font-medium">{item.label}</span>
           </button>
         ))}
        </div>
