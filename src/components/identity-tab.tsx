@@ -20,6 +20,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import CryptoCredentialCard from "./crypto-credential-card";
 import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
 import ScanAndClaim from "./scan-and-claim";
+import { Separator } from "./ui/separator";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
@@ -86,22 +87,29 @@ export default function IdentityTab() {
   return (
     <div className="space-y-6 p-4">
       <Card>
-        <CardHeader className="flex flex-row items-start justify-between">
-            <div>
-              <CardTitle className="font-headline flex items-center gap-2">
-                <Fingerprint className="text-primary" />
-                Your Digital ID
-              </CardTitle>
-              <CardDescription>
-                Your unique and self-sovereign identity.
-              </CardDescription>
-            </div>
-            <Dialog>
+        <CardHeader>
+          <CardTitle className="font-headline flex items-center gap-2">
+            <Fingerprint className="text-primary" />
+            Your Digital ID
+          </CardTitle>
+          <CardDescription>
+            Your unique and self-sovereign identity.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
+            did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+          </div>
+          <Separator />
+           <Dialog>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">Add Credential <ChevronDown className="h-4 w-4 ml-2" /></Button>
+                  <Button variant="outline" className="w-full">
+                    Add Credential
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)]">
                   <DialogTrigger asChild>
                       <DropdownMenuItem>
                           <QrCode className="mr-2 h-4 w-4" />
@@ -124,11 +132,6 @@ export default function IdentityTab() {
               <ScanAndClaim />
             </DialogContent>
           </Dialog>
-        </CardHeader>
-        <CardContent>
-          <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
-            did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
-          </div>
         </CardContent>
       </Card>
 
@@ -283,3 +286,5 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
