@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { Landmark, Fingerprint, ScanLine, ShieldCheck } from "lucide-react";
+import { Landmark, Fingerprint, CreditCard, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/app/page";
 
@@ -13,7 +13,7 @@ interface BottomNavProps {
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   const navItems = [
     { id: "finance", label: "Finance", icon: Landmark },
-    { id: "pay", label: "Pay", icon: ScanLine },
+    { id: "payments", label: "Payments", icon: CreditCard },
     { id: "verify", label: "Verify", icon: ShieldCheck },
     { id: "identity", label: "Identity", icon: Fingerprint },
   ];
@@ -25,10 +25,9 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
           <button
             key={item.id}
             onClick={() => {
-              if (item.id !== 'pay' && item.id !== 'verify') {
+              if (item.id !== 'verify') {
                 setActiveTab(item.id as Tab)
               }
-              // Potentially handle QR scan action here
             }}
             aria-label={item.label}
             aria-pressed={activeTab === item.id}

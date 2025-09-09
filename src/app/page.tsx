@@ -5,8 +5,9 @@ import AppHeader from "@/components/app-header";
 import BottomNav from "@/components/bottom-nav";
 import FinanceTab from "@/components/finance-tab";
 import IdentityTab from "@/components/identity-tab";
+import PaymentsTab from "@/components/payments-tab";
 
-export type Tab = "finance" | "identity";
+export type Tab = "finance" | "identity" | "payments";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("finance");
@@ -18,6 +19,7 @@ export default function Home() {
         <div className="h-full overflow-y-auto pb-16 pt-14">
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
+          {activeTab === "payments" && <PaymentsTab />}
         </div>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
