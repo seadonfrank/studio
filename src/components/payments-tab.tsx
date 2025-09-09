@@ -9,8 +9,19 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import BillPaymentItem from "./bill-payment-item";
+import AddAccountCard from "./add-account-card";
+import ManageBillersDialog from "./manage-billers-dialog";
 
 export default function PaymentsTab() {
+   const bills = [
+    { billerName: "ATT", dueDate: "2024-08-01", amount: "$75.00", category: "internet" as const },
+    { billerName: "PG&E", dueDate: "2024-08-05", amount: "$120.00", category: "electricity" as const },
+    { billerName: "City Water", dueDate: "2024-08-10", amount: "$45.00", category: "water" as const },
+    { billerName: "State Farm", dueDate: "2024-08-15", amount: "$150.00", category: "insurance" as const },
+  ];
+
   return (
     <div className="p-4 space-y-6">
       <div className="text-center">
@@ -104,6 +115,43 @@ export default function PaymentsTab() {
                 </div>
             ))}
         </div>
+      </div>
+      
+       <div>
+        <h2 className="text-lg font-headline font-semibold mb-3">Bill Payments</h2>
+         <Carousel
+          opts={{
+            align: "start",
+            dragFree: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {bills.map((bill, index) => (
+              <CarouselItem key={index} className="basis-1/3">
+                <BillPaymentItem {...bill} />
+              </CarouselItem>
+            ))}
+            <CarouselItem className="basis-1/3">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="h-full">
+                      <AddAccountCard text="Add Biller" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Biller</DialogTitle>
+                      <DialogDescription>
+                        Configure a new biller to make easy payments.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageBillersDialog />
+                  </DialogContent>
+                </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
       </div>
     </div>
   );
