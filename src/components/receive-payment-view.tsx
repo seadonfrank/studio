@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Copy, Share2 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -24,6 +24,21 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
       description: "Your xIDFI has been copied.",
     });
   };
+
+  const handleShare = () => {
+     if (navigator.share) {
+      navigator.share({
+        title: 'xIDFI Wallet ID',
+        text: `My xIDFI is: ${did}`,
+      }).catch((error) => console.log('Error sharing', error));
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Not Supported",
+        description: "Your browser does not support the Web Share API.",
+      });
+    }
+  }
   
   const handleRequest = () => {
     toast({
@@ -52,7 +67,16 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
                 {did}
             </p>
             </div>
-            <Button variant="outline" className="w-full" onClick={handleCopy}>Copy ID</Button>
+            <div className="grid grid-cols-2 gap-4 w-full">
+              <Button variant="outline" onClick={handleCopy}>
+                <Copy className="mr-2 h-4 w-4" />
+                Copy ID
+              </Button>
+              <Button variant="outline" onClick={handleShare}>
+                <Share2 className="mr-2 h-4 w-4" />
+                Share ID
+              </Button>
+            </div>
         </div>
 
         <div className="relative">
