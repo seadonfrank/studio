@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import CryptoCredentialCard from "./crypto-credential-card";
 import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
+import ScanAndClaim from "./scan-and-claim";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
@@ -91,10 +92,6 @@ export default function IdentityTab() {
               <Fingerprint className="text-primary" />
               Your Digital ID
             </CardTitle>
-            <Button variant="ghost" size="icon">
-                <PlusCircle className="h-5 w-5" />
-                <span className="sr-only">Create Credential</span>
-            </Button>
           </div>
           <CardDescription>
             Your unique and self-sovereign identity.
@@ -103,6 +100,23 @@ export default function IdentityTab() {
         <CardContent>
           <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
             did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm"><QrCode className="mr-2 h-4 w-4" />Scan to Claim</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Scan to Claim Credential</DialogTitle>
+                  <DialogDescription>
+                    Scan a QR code to claim a new credential.
+                  </DialogDescription>
+                </DialogHeader>
+                <ScanAndClaim />
+              </DialogContent>
+            </Dialog>
+            <Button variant="outline" size="sm"><Plus className="mr-2 h-4 w-4" />Add Manually</Button>
           </div>
         </CardContent>
       </Card>
