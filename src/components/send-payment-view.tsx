@@ -6,6 +6,14 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select";
+import { Card, CardContent } from "./ui/card";
 
 interface SendPaymentViewProps {
   onBack: () => void;
@@ -46,13 +54,37 @@ export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="recipientId">Recipient's ID or Address</Label>
+            <Label htmlFor="fromAccount">From</Label>
+            <Select>
+                <SelectTrigger id="fromAccount">
+                    <SelectValue placeholder="Select an account" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="cash">Cash Balance - $1,234.56</SelectItem>
+                    <SelectItem value="card1">Debit Card **** 5678</SelectItem>
+                </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="recipientId">To</Label>
             <Input id="recipientId" placeholder="did:xidfi:... or 0x..." />
           </div>
           <div className="space-y-2">
             <Label htmlFor="amount">Amount (USD)</Label>
             <Input id="amount" type="number" placeholder="0.00" />
           </div>
+          <Card className="bg-muted/50">
+            <CardContent className="text-sm p-4 space-y-2">
+                 <div className="flex justify-between">
+                    <span className="text-muted-foreground">Fee:</span>
+                    <span>$0.50</span>
+                </div>
+                <div className="flex justify-between font-semibold">
+                    <span>Total:</span>
+                    <span>$0.50</span>
+                </div>
+            </CardContent>
+          </Card>
           <div className="space-y-2">
             <Label htmlFor="note">Note (Optional)</Label>
             <Input id="note" placeholder="For dinner last night" />
@@ -66,3 +98,4 @@ export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps
     </div>
   );
 }
+
