@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowLeft, User } from "lucide-react";
+import { ArrowLeft, User, QrCode } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -9,16 +9,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface SendPaymentViewProps {
   onBack: () => void;
+  onScan: () => void;
 }
 
-export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
+export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={onBack}>
-          <ArrowLeft />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={onBack}>
+            <ArrowLeft />
+            </Button>
+            <h2 className="text-xl font-bold font-headline">Send Payment</h2>
+        </div>
+        <Button variant="outline" size="icon" onClick={onScan}>
+            <QrCode className="h-5 w-5" />
+            <span className="sr-only">Scan to Pay</span>
         </Button>
-        <h2 className="text-xl font-bold font-headline">Send Payment</h2>
       </div>
 
       <div className="flex-grow mt-6 space-y-6">

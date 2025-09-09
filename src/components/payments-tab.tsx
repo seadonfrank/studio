@@ -11,9 +11,10 @@ import ManageBillersDialog from "./manage-billers-dialog";
 import { useState } from "react";
 import SendPaymentView from "./send-payment-view";
 import ReceivePaymentView from "./receive-payment-view";
+import ScanToPayView from "./scan-to-pay-view";
 
 export default function PaymentsTab() {
-  const [view, setView] = useState<'main' | 'send' | 'receive'>('main');
+  const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan'>('main');
 
   const bills = [
     { billerName: "ATT", dueDate: "2024-08-01", amount: "$75.00", category: "internet" as const },
@@ -25,9 +26,11 @@ export default function PaymentsTab() {
   const renderContent = () => {
     switch(view) {
       case 'send':
-        return <SendPaymentView onBack={() => setView('main')} />;
+        return <SendPaymentView onBack={() => setView('main')} onScan={() => setView('scan')} />;
       case 'receive':
         return <ReceivePaymentView onBack={() => setView('main')} />;
+      case 'scan':
+        return <ScanToPayView onBack={() => setView('send')} />;
       default:
         return (
           <>
