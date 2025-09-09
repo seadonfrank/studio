@@ -60,7 +60,7 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
         <div className="flex flex-col items-center justify-center space-y-4 py-4 mt-6 text-center">
             <p className="text-muted-foreground">Your QR code or ID to get paid.</p>
             <div className="p-4 border rounded-lg bg-white">
-            <Image src="https://placehold.co/200x200/png?text=Your\nQR+Code" alt="QR Code" width={200} height={200} data-ai-hint="qr code" />
+            <Image src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d" alt="QR Code" width={200} height={200} data-ai-hint="qr code" />
             </div>
             <div className="w-full">
             <p className="text-sm font-mono break-all bg-muted p-2 rounded-md text-muted-foreground mt-1">
