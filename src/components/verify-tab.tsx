@@ -38,7 +38,7 @@ export default function VerifyTab() {
                       <QrCode className="h-6 w-6" />
                     </div>
                     <div>
-                      <p className="font-semibold">Scan to Prove</p>
+                      <p className="font-semibold">Scan to Verify</p>
                       <p className="text-sm text-muted-foreground">
                         Provide instant zero knowledge proofs
                       </p>
