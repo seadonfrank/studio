@@ -39,7 +39,7 @@ export default function VerifyTab() {
                     <div>
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
-                        Verify a credential by scanning a QR code.
+                        Instantaneously prove with zero knowledge scans
                       </p>
                     </div>
                   </div>
