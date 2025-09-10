@@ -72,7 +72,7 @@ export default function ShareProofView({ onBack }: ShareProofViewProps) {
         <Button variant="ghost" size="icon" onClick={onBack}>
           <ArrowLeft />
         </Button>
-        <h2 className="text-xl font-bold font-headline">Generate & Share Proof</h2>
+        <h2 className="text-xl font-bold font-headline">Generate Proofs</h2>
       </div>
 
       <div className="flex-grow mt-6 space-y-6">
