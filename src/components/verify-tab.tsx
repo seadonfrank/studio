@@ -56,7 +56,7 @@ export default function VerifyTab() {
                     <div>
                       <p className="font-semibold">Generate Proofs</p>
                       <p className="text-sm text-muted-foreground">
-                        Create and share zero-knowledge proofs.
+                        Create and share zero-knowledge proofs
                       </p>
                     </div>
                   </div>
