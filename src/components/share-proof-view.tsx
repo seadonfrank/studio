@@ -115,7 +115,7 @@ export default function ShareProofView({ onBack }: ShareProofViewProps) {
           <div className="space-y-4 pt-4 border-t">
             <Alert>
               <Check className="h-4 w-4" />
-              <AlertTitle>Proof Ready!</AlertTitle>
+              <AlertTitle>Your proof is ready to share!</AlertTitle>
               <AlertDescription>
                 Share this QR code or link with the verifier to trust your proof.
               </AlertDescription>
