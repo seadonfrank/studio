@@ -54,7 +54,7 @@ export default function VerifyTab() {
                       <Share2 className="h-6 w-6" />
                     </div>
                     <div>
-                      <p className="font-semibold">Generate & Share Proofs</p>
+                      <p className="font-semibold">Generate Proofs</p>
                       <p className="text-sm text-muted-foreground">
                         Create and share zero-knowledge proofs.
                       </p>
