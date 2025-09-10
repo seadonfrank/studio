@@ -25,11 +25,7 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
         {navItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => {
-              if (item.id !== 'verify') {
-                setActiveTab(item.id as Tab)
-              }
-            }}
+            onClick={() => setActiveTab(item.id as Tab)}
             aria-label={item.label}
             aria-pressed={activeTab === item.id}
             className={cn(

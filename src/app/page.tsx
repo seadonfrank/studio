@@ -6,8 +6,9 @@ import BottomNav from "@/components/bottom-nav";
 import FinanceTab from "@/components/finance-tab";
 import IdentityTab from "@/components/identity-tab";
 import PaymentsTab from "@/components/payments-tab";
+import VerifyTab from "@/components/verify-tab";
 
-export type Tab = "finance" | "identity" | "payments";
+export type Tab = "finance" | "identity" | "payments" | "verify";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("finance");
@@ -20,6 +21,7 @@ export default function Home() {
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
           {activeTab === "payments" && <PaymentsTab />}
+          {activeTab === "verify" && <VerifyTab />}
         </div>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
