@@ -2,13 +2,14 @@
 "use client";
 
 import { useState } from "react";
-import { QrCode, Share2, ChevronRight } from "lucide-react";
+import { QrCode, Share2, ChevronRight, MessageSquareQuote } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import ScanToVerifyView from "./scan-to-verify-view";
 import ShareProofView from "./share-proof-view";
+import RequestToProveView from "./request-to-prove-view";
 
 export default function VerifyTab() {
-  const [view, setView] = useState<"main" | "scan" | "share">("main");
+  const [view, setView] = useState<"main" | "scan" | "share" | "request">("main");
 
   const renderContent = () => {
     switch (view) {
@@ -16,6 +17,8 @@ export default function VerifyTab() {
         return <ScanToVerifyView onBack={() => setView("main")} />;
       case "share":
         return <ShareProofView onBack={() => setView("main")} />;
+      case "request":
+        return <RequestToProveView onBack={() => setView("main")} />;
       default:
         return (
           <>
@@ -40,6 +43,23 @@ export default function VerifyTab() {
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
                         Provide instant zero knowledge proofs
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+                 <div
+                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={() => setView("request")}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                      <MessageSquareQuote className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Request to Prove</p>
+                      <p className="text-sm text-muted-foreground">
+                        Request a proof from another user
                       </p>
                     </div>
                   </div>
