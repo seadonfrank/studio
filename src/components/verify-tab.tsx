@@ -39,7 +39,7 @@ export default function VerifyTab() {
                     <div>
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
-                        Instantaneously prove with zero knowledge scans
+                        Provide instant zero knowledge proofs
                       </p>
                     </div>
                   </div>
