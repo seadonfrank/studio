@@ -61,7 +61,7 @@ export default function VerifyTab() {
                     <div>
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
-                        Scan a verification QR code and provide proofs
+                        Provide instant zero-knowledge proofs
                       </p>
                     </div>
                   </div>
