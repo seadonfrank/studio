@@ -48,7 +48,7 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
       
       <div className="flex-grow overflow-y-auto space-y-6 pt-6">
         <div className="space-y-4">
-            <h3 className="text-lg font-headline font-semibold text-center">Request a Payment from a user</h3>
+            <h3 className="text-lg font-headline font-semibold text-center">Request Payment</h3>
             <div className="space-y-2">
                 <Label htmlFor="requesterId">From (Sender's ID)</Label>
                 <Input id="requesterId" placeholder="did:xidfi:... or 0x..." />
