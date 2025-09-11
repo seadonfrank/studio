@@ -237,9 +237,14 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                               </div>
                           ))}
                       </div>
-                      <SheetClose asChild>
-                          <Button className="w-full">Done</Button>
-                      </SheetClose>
+                      <div className="flex gap-2">
+                        <SheetClose asChild>
+                          <Button variant="outline" className="w-full">Cancel</Button>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Button className="w-full">Request Selected</Button>
+                        </SheetClose>
+                      </div>
                   </SheetContent>
                 </Sheet>
             </div>
