@@ -197,7 +197,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                       <p className="font-semibold">Request Credentials</p>
                       <p className="text-xs text-muted-foreground">
                         {selectedProofs.length > 0
-                          ? `${selectedProofs.length} selected`
+                          ? `${selectedProofs.length} selected (Optional)`
                           : "Optional"}
                       </p>
                     </div>
@@ -208,11 +208,16 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                       size="sm"
                     >
                       {selectedProofs.length > 0 ? (
-                        <Edit className="h-4 w-4" />
+                        <>
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit
+                        </>
                       ) : (
-                        <PlusCircle className="mr-2 h-4 w-4" />
+                        <>
+                          <PlusCircle className="mr-2 h-4 w-4" />
+                          Add
+                        </>
                       )}
-                      {selectedProofs.length > 0 ? "Edit" : "Add"}
                     </Button>
                   </SheetTrigger>
                 </div>
