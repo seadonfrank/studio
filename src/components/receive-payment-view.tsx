@@ -9,7 +9,6 @@ import { Separator } from "./ui/separator";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Textarea } from "./ui/textarea";
 
 interface ReceivePaymentViewProps {
   onBack: () => void;
@@ -115,7 +114,7 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
             </div>
             <div className="space-y-2">
                 <Label htmlFor="requestNotes">Notes (Optional)</Label>
-                <Textarea id="requestNotes" placeholder="E.g., for dinner last night" />
+                <Input id="requestNotes" placeholder="E.g., for dinner last night" />
             </div>
             <Button className="w-full" onClick={handleRequest}>Request Payment</Button>
         </div>
