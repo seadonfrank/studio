@@ -10,8 +10,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Card, CardContent } from "./ui/card";
-import { Checkbox } from "./ui/checkbox";
 import {
   Sheet,
   SheetClose,
@@ -27,13 +25,6 @@ interface ScanToPayViewProps {
 }
 
 type ScanState = 'scanning' | 'scanned' | 'payment_sent' | 'error';
-type ProofStatus = 'pending' | 'verified' | 'failed';
-
-const availableProofs = [
-    { id: 'kyc', label: 'Proof of KYC' },
-    { id: 'age', label: 'Proof of Age (Over 18)' },
-    { id: 'accredited', label: 'Proof of Accredited Investor Status' },
-];
 
 const recipientRequestedProofs = [
     { id: 'age', label: 'Proof of Age (Over 18)', reason: 'Age-restricted product' },
@@ -46,10 +37,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
   const [scanState, setScanState] = useState<ScanState>('scanning');
   
-  const [selectedProofs, setSelectedProofs] = useState<string[]>([]);
-  const [isProcessingProofs, setIsProcessingProofs] = useState(false);
-  const [proofStatuses, setProofStatuses] = useState<Record<string, ProofStatus>>({});
-
   // New state to simulate if the recipient has requested proofs from the user
   const [recipientHasRequestedProofs, setRecipientHasRequestedProofs] = useState(false);
   const [proofsProvided, setProofsProvided] = useState(false);
@@ -106,38 +93,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     }
   }, [toast, scanState]);
 
-  const handleRequestProofs = () => {
-    if (selectedProofs.length === 0) {
-        toast({
-            variant: "destructive",
-            title: "No Proofs Selected",
-            description: "Please select at least one credential to request."
-        });
-        return;
-    }
-
-    setIsProcessingProofs(true);
-    
-    const initialStatuses: Record<string, ProofStatus> = {};
-    selectedProofs.forEach(p => initialStatuses[p] = 'pending');
-    setProofStatuses(initialStatuses);
-    
-    setTimeout(() => {
-        const finalStatuses: Record<string, ProofStatus> = {};
-        selectedProofs.forEach(p => {
-            const rand = Math.random();
-            if (rand < 0.7) finalStatuses[p] = 'verified';
-            else finalStatuses[p] = 'failed';
-        });
-        setProofStatuses(finalStatuses);
-        setIsProcessingProofs(false);
-        toast({
-            title: "Proofs Processed",
-            description: "Verification process for the requested credentials has completed."
-        });
-    }, 2000);
-  }
-
   const handleProvideProofs = () => {
       setProofsProvided(true);
       toast({
@@ -156,21 +111,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   
   const handleReset = () => {
     setScanState('scanning');
-    setIsProcessingProofs(false);
-    setSelectedProofs([]);
-    setProofStatuses({});
     setRecipientHasRequestedProofs(false);
     setProofsProvided(false);
   }
-  
-  const handleCheckboxChange = (proofId: string, checked: boolean) => {
-    setSelectedProofs(prev => 
-        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
-    );
-  }
-
-  const allSelectedProofsVerified = selectedProofs.length > 0 && selectedProofs.every(p => proofStatuses[p] === 'verified');
-  const proofsRequested = Object.keys(proofStatuses).length > 0;
 
   const renderContent = () => {
     switch (scanState) {
@@ -252,79 +195,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         </AlertDescription>
                     </Alert>
                 )}
-
-                <Card>
-                    <CardContent className="p-4 space-y-3">
-                        <div className="flex justify-between items-center">
-                            <h3 className="font-semibold flex items-center gap-2"><ShieldCheck className="text-primary h-5 w-5" /> Request Credentials</h3>
-                            <Sheet>
-                                <SheetTrigger asChild>
-                                    <Button variant="outline" size="sm">{proofsRequested ? "View" : "Request"}</Button>
-                                </SheetTrigger>
-                                <SheetContent>
-                                    <SheetHeader>
-                                        <SheetTitle>Request Credentials</SheetTitle>
-                                        <SheetDescription>
-                                            {proofsRequested ? 'Status of the credentials requested from Jane Doe.' : 'Select credentials to request from the recipient.'}
-                                        </SheetDescription>
-                                    </SheetHeader>
-                                    <div className="space-y-4 py-4">
-                                        {!proofsRequested ? (
-                                            <>
-                                                <div className="space-y-2 pt-2">
-                                                    {availableProofs.map(proof => (
-                                                        <div key={proof.id} className="flex items-center space-x-2">
-                                                            <Checkbox 
-                                                                id={proof.id} 
-                                                                onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
-                                                                checked={selectedProofs.includes(proof.id)}
-                                                            />
-                                                            <Label htmlFor={proof.id} className="font-normal">{proof.label}</Label>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                                <SheetClose asChild>
-                                                    <Button className="w-full" onClick={handleRequestProofs} disabled={selectedProofs.length === 0 || isProcessingProofs}>
-                                                        {isProcessingProofs ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                                        Request Selected Proofs
-                                                    </Button>
-                                                </SheetClose>
-                                            </>
-                                        ) : (
-                                            <div className="space-y-2">
-                                                {selectedProofs.map(proofId => {
-                                                    const proof = availableProofs.find(p => p.id === proofId);
-                                                    const status = proofStatuses[proofId];
-                                                    return (
-                                                        <div key={proofId} className="flex items-center justify-between p-2 border rounded-md">
-                                                            <span className="font-medium text-sm">{proof?.label}</span>
-                                                            {status === 'pending' && <span className="text-xs font-semibold text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Pending</span>}
-                                                            {status === 'verified' && <span className="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full flex items-center gap-1"><CheckCircle className="h-3 w-3" />Verified</span>}
-                                                            {status === 'failed' && <span className="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 rounded-full flex items-center gap-1"><XCircle className="h-3 w-3" />Failed</span>}
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
-                                        )}
-                                    </div>
-                                </SheetContent>
-                            </Sheet>
-                        </div>
-                        <p className="text-xs text-muted-foreground">Request verified credentials from the recipient before sending the payment.</p>
-                         {proofsRequested && allSelectedProofsVerified && (
-                            <div className="mt-2 flex items-center gap-2 text-green-600 font-medium text-sm p-2 bg-green-50 rounded-md border border-green-200">
-                                <CheckCircle className="h-5 w-5" />
-                                <span>All proofs verified.</span>
-                            </div>
-                        )}
-                         {proofsRequested && !allSelectedProofsVerified && selectedProofs.some(p => proofStatuses[p] === 'failed') && (
-                            <div className="mt-2 flex items-center gap-2 text-destructive font-medium text-sm p-2 bg-red-50 rounded-md border-red-200">
-                                <XCircle className="h-5 w-5" />
-                                <span>Some proofs failed verification.</span>
-                            </div>
-                         )}
-                    </CardContent>
-                </Card>
 
                 <div className="space-y-4">
                     <div className="space-y-2">
