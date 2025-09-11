@@ -20,7 +20,6 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { Checkbox } from "./ui/checkbox";
-import type { CheckedState } from "@radix-ui/react-checkbox";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
 
@@ -126,9 +125,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
+  const handleCheckboxChange = (proofId: string, checked: boolean) => {
     setSelectedProofsToProvide(prev => 
-        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
 
@@ -192,7 +191,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             </div>
                             <SheetTrigger asChild>
                                 <Button
-                                variant={providedProofs.length > 0 ? "ghost" : "destructive"}
+                                variant={providedProofs.length > 0 ? "ghost" : "outline"}
                                 size="sm"
                                 >
                                 {providedProofs.length > 0 ? (
@@ -204,6 +203,19 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 </Button>
                             </SheetTrigger>
                             </div>
+                            {providedProofs.length > 0 && (
+                            <>
+                                <Separator className="my-2" />
+                                <ul className="text-xs text-muted-foreground list-disc pl-5">
+                                {providedProofs.map((proofId) => {
+                                    const proof = recipientRequestedProofs.find(
+                                    (p) => p.id === proofId
+                                    );
+                                    return <li key={proofId}>{proof?.label}</li>;
+                                })}
+                                </ul>
+                            </>
+                            )}
                         </CardContent>
                     </Card>
                     <SheetContent>
@@ -218,7 +230,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                     <Checkbox 
                                         id={`sheet-${proof.id}`} 
-                                        onCheckedChange={(checked: CheckedState) => handleCheckboxChange(proof.id, checked)}
+                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
                                         checked={selectedProofsToProvide.includes(proof.id)}
                                     />
                                     <div className="flex-1">
