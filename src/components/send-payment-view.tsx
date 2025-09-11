@@ -93,7 +93,7 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
       </div>
       
       <div className="mt-auto">
-        <Button className="w-full">Review & Send</Button>
+        <Button className="w-full">Send Payment</Button>
       </div>
     </div>
   );
