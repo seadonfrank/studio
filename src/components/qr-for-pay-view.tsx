@@ -185,7 +185,6 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
               onChange={(e) => handleDetailsChange("note", e.target.value)}
             />
           </div>
-          <Separator />
           
           <Sheet>
             <Card className="my-4">
