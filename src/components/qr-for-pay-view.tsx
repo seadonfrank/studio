@@ -1,29 +1,23 @@
 
 "use client";
 
-import { ArrowLeft, Copy, Share2, ShieldCheck, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Copy, Share2, ShieldCheck, CheckCircle, XCircle, Loader2, FileQuestion } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "./ui/card";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
-import { useState } from "react";
+import { Input } from "./ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Separator } from "./ui/separator";
 
 interface QrForPayViewProps {
   onBack: () => void;
 }
 
-type ProofStatus = 'pending' | 'verified' | 'failed';
+type Step = 'credentials' | 'details' | 'qr';
 
 const availableProofs = [
     { id: 'kyc', label: 'Proof of KYC' },
@@ -35,24 +29,26 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
   const { toast } = useToast();
   const did = "did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d";
 
+  const [step, setStep] = useState<Step>('credentials');
   const [selectedProofs, setSelectedProofs] = useState<string[]>([]);
-  const [isProcessingProofs, setIsProcessingProofs] = useState(false);
-  const [proofStatuses, setProofStatuses] = useState<Record<string, ProofStatus>>({});
+  const [paymentDetails, setPaymentDetails] = useState({ amount: '', currency: 'USD', note: '' });
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(did);
+
+  const handleCopy = (url: string) => {
+    navigator.clipboard.writeText(url);
     toast({
       title: "Copied to clipboard!",
-      description: "Your xIDFI has been copied.",
     });
   };
 
-  const handleShare = () => {
+  const handleShare = (url: string) => {
     if (navigator.share) {
       navigator
         .share({
-          title: "xIDFI Wallet ID",
-          text: `My xIDFI is: ${did}`,
+          title: "xIDFI Payment Request",
+          text: `Please pay me using this QR code. Details: ${url}`,
+          url: url
         })
         .catch((error) => console.log("Error sharing", error));
     } else {
@@ -64,159 +60,196 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     }
   };
 
-  const handleRequestProofs = () => {
-    if (selectedProofs.length === 0) {
-        toast({
-            variant: "destructive",
-            title: "No Proofs Selected",
-            description: "Please select at least one credential to request."
-        });
-        return;
-    }
-
-    setIsProcessingProofs(true);
-    
-    const initialStatuses: Record<string, ProofStatus> = {};
-    selectedProofs.forEach(p => initialStatuses[p] = 'pending');
-    setProofStatuses(initialStatuses);
-    
-    setTimeout(() => {
-        const finalStatuses: Record<string, ProofStatus> = {};
-        selectedProofs.forEach(p => {
-            const rand = Math.random();
-            if (rand < 0.7) finalStatuses[p] = 'verified';
-            else finalStatuses[p] = 'failed';
-        });
-        setProofStatuses(finalStatuses);
-        setIsProcessingProofs(false);
-        toast({
-            title: "Proofs Processed",
-            description: "Verification process for the requested credentials has completed."
-        });
-    }, 2000);
-  }
-
   const handleCheckboxChange = (proofId: string, checked: boolean) => {
     setSelectedProofs(prev => 
         checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
+  
+  const handleDetailsChange = (field: keyof typeof paymentDetails, value: string) => {
+    setPaymentDetails(prev => ({...prev, [field]: value}));
+  }
 
-  const proofsRequested = Object.keys(proofStatuses).length > 0;
-  const allSelectedProofsVerified = selectedProofs.length > 0 && selectedProofs.every(p => proofStatuses[p] === 'verified');
+  const handleGenerateQr = () => {
+    if (!paymentDetails.amount || parseFloat(paymentDetails.amount) <= 0) {
+        toast({
+            variant: "destructive",
+            title: "Invalid Amount",
+            description: "Please enter a valid amount."
+        });
+        return;
+    }
+
+    const data = {
+        did,
+        amount: paymentDetails.amount,
+        currency: paymentDetails.currency,
+        note: paymentDetails.note,
+        proofs: selectedProofs
+    }
+
+    const url = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(JSON.stringify(data))}`;
+    setQrCodeUrl(url);
+    setStep('qr');
+  }
+
+  const handleBack = () => {
+    if (step === 'details') {
+        setStep('credentials');
+    } else if (step === 'qr') {
+        setStep('details');
+    } else {
+        onBack();
+    }
+  }
+
+
+  const renderContent = () => {
+    switch (step) {
+        case 'credentials':
+            return (
+                <div className="flex-grow flex flex-col justify-between">
+                    <div className="space-y-4">
+                        <div className="text-center">
+                            <h3 className="text-lg font-semibold">Request Credentials (Optional)</h3>
+                            <p className="text-sm text-muted-foreground">Select credentials to request from the payer.</p>
+                        </div>
+                        <Card>
+                            <CardContent className="p-4 space-y-3">
+                                {availableProofs.map(proof => (
+                                    <div key={proof.id} className="flex items-center space-x-3">
+                                        <Checkbox 
+                                            id={proof.id} 
+                                            onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
+                                            checked={selectedProofs.includes(proof.id)}
+                                        />
+                                        <Label htmlFor={proof.id} className="font-normal flex-1">{proof.label}</Label>
+                                    </div>
+                                ))}
+                            </CardContent>
+                        </Card>
+                    </div>
+                    <Button className="w-full" onClick={() => setStep('details')}>Next</Button>
+                </div>
+            );
+        case 'details':
+             return (
+                <div className="flex-grow flex flex-col justify-between">
+                    <div className="space-y-4">
+                        <div className="text-center">
+                            <h3 className="text-lg font-semibold">Payment Details</h3>
+                            <p className="text-sm text-muted-foreground">Enter the amount you want to request.</p>
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="requestAmount">Amount</Label>
+                            <div className="flex gap-2">
+                                <Input 
+                                    id="requestAmount" 
+                                    type="number" 
+                                    placeholder="0.00" 
+                                    className="flex-grow" 
+                                    value={paymentDetails.amount}
+                                    onChange={(e) => handleDetailsChange('amount', e.target.value)}
+                                />
+                                <Select 
+                                    value={paymentDetails.currency}
+                                    onValueChange={(value) => handleDetailsChange('currency', value)}
+                                >
+                                    <SelectTrigger className="w-[120px]">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="USD">USD</SelectItem>
+                                        <SelectItem value="EUR">EUR</SelectItem>
+                                        <SelectItem value="GBP">GBP</SelectItem>
+                                        <SelectItem value="BTC">BTC</SelectItem>
+                                        <SelectItem value="ETH">ETH</SelectItem>
+                                        <SelectItem value="SOL">SOL</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="requestNotes">Note (Optional)</Label>
+                            <Input 
+                                id="requestNotes" 
+                                placeholder="E.g., for dinner last night"
+                                value={paymentDetails.note}
+                                onChange={(e) => handleDetailsChange('note', e.target.value)}
+                            />
+                        </div>
+                         {selectedProofs.length > 0 && (
+                            <Card className="bg-muted/50">
+                                <CardContent className="p-3">
+                                    <p className="text-sm font-semibold flex items-center gap-2"><FileQuestion className="h-4 w-4"/>Requested Credentials</p>
+                                    <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                                        {selectedProofs.map(proofId => {
+                                            const proof = availableProofs.find(p => p.id === proofId);
+                                            return <li key={proofId}>{proof?.label}</li>
+                                        })}
+                                    </ul>
+                                </CardContent>
+                            </Card>
+                         )}
+                    </div>
+                    <Button className="w-full" onClick={handleGenerateQr}>Generate QR Code</Button>
+                </div>
+            );
+        case 'qr':
+            return (
+                <div className="flex-grow flex flex-col items-center justify-center space-y-4 text-center">
+                    <div className="p-4 border rounded-lg bg-white">
+                        <Image
+                            src={qrCodeUrl}
+                            alt="QR Code"
+                            width={200}
+                            height={200}
+                            data-ai-hint="qr code"
+                        />
+                    </div>
+                    <p className="text-muted-foreground">
+                        Share this QR code to get paid.
+                    </p>
+                    <Card className="w-full text-left">
+                        <CardContent className="p-3 text-sm">
+                            <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">{paymentDetails.amount} {paymentDetails.currency}</span></div>
+                            {paymentDetails.note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{paymentDetails.note}</span></div>}
+                            {selectedProofs.length > 0 && <Separator className="my-2"/>}
+                            {selectedProofs.length > 0 && <p className="font-semibold">Credentials Requested:</p>}
+                            <ul className="text-xs text-muted-foreground list-disc pl-5">
+                                {selectedProofs.map(proofId => {
+                                    const proof = availableProofs.find(p => p.id === proofId);
+                                    return <li key={proofId}>{proof?.label}</li>
+                                })}
+                            </ul>
+                        </CardContent>
+                    </Card>
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                        <Button variant="outline" onClick={() => handleCopy(qrCodeUrl)}>
+                        <Copy className="mr-2 h-4 w-4" />
+                        Copy
+                        </Button>
+                        <Button variant="outline" onClick={() => handleShare(qrCodeUrl)}>
+                        <Share2 className="mr-2 h-4 w-4" />
+                        Share
+                        </Button>
+                    </div>
+                </div>
+            )
+    }
+  }
 
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full p-4 space-y-6">
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={onBack}>
+        <Button variant="ghost" size="icon" onClick={handleBack}>
           <ArrowLeft />
         </Button>
         <h2 className="text-xl font-bold font-headline">QR for Pay</h2>
       </div>
 
-      <div className="flex-grow flex flex-col items-center justify-center space-y-4 py-4 text-center">
-        <div className="p-4 border rounded-lg bg-white">
-          <Image
-            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-            alt="QR Code"
-            width={200}
-            height={200}
-            data-ai-hint="qr code"
-          />
-        </div>
-        <p className="text-muted-foreground">
-            Share this QR code or ID to get paid.
-        </p>
-        <div className="w-full">
-          <p className="text-sm font-mono break-all bg-muted p-2 rounded-md text-muted-foreground mt-1">
-            {did}
-          </p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 w-full">
-          <Button variant="outline" onClick={handleCopy}>
-            <Copy className="mr-2 h-4 w-4" />
-            Copy ID
-          </Button>
-          <Button variant="outline" onClick={handleShare}>
-            <Share2 className="mr-2 h-4 w-4" />
-            Share ID
-          </Button>
-        </div>
-      </div>
-      
-       <Card>
-            <CardContent className="p-4 space-y-3">
-                <div className="flex justify-between items-center">
-                    <h3 className="font-semibold flex items-center gap-2"><ShieldCheck className="text-primary h-5 w-5" /> Request Credentials</h3>
-                     <Sheet>
-                        <SheetTrigger asChild>
-                            <Button variant="outline" size="sm">{proofsRequested ? "View" : "Request"}</Button>
-                        </SheetTrigger>
-                        <SheetContent>
-                            <SheetHeader>
-                                <SheetTitle>Request Credentials</SheetTitle>
-                                <SheetDescription>
-                                    {proofsRequested ? 'Status of the credentials requested from the recipient.' : 'Select credentials to request from the recipient.'}
-                                </SheetDescription>
-                            </SheetHeader>
-                            <div className="space-y-4 py-4">
-                                {!proofsRequested ? (
-                                    <>
-                                        <div className="space-y-2 pt-2">
-                                            {availableProofs.map(proof => (
-                                                <div key={proof.id} className="flex items-center space-x-2">
-                                                    <Checkbox 
-                                                        id={proof.id} 
-                                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
-                                                        checked={selectedProofs.includes(proof.id)}
-                                                    />
-                                                    <Label htmlFor={proof.id} className="font-normal">{proof.label}</Label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <SheetClose asChild>
-                                            <Button className="w-full" onClick={handleRequestProofs} disabled={selectedProofs.length === 0 || isProcessingProofs}>
-                                                {isProcessingProofs ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                                Request Selected Proofs
-                                            </Button>
-                                        </SheetClose>
-                                    </>
-                                ) : (
-                                    <div className="space-y-2">
-                                        {selectedProofs.map(proofId => {
-                                            const proof = availableProofs.find(p => p.id === proofId);
-                                            const status = proofStatuses[proofId];
-                                            return (
-                                                <div key={proofId} className="flex items-center justify-between p-2 border rounded-md">
-                                                    <span className="font-medium text-sm">{proof?.label}</span>
-                                                    {status === 'pending' && <span className="text-xs font-semibold text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Pending</span>}
-                                                    {status === 'verified' && <span className="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full flex items-center gap-1"><CheckCircle className="h-3 w-3" />Verified</span>}
-                                                    {status === 'failed' && <span className="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 rounded-full flex items-center gap-1"><XCircle className="h-3 w-3" />Failed</span>}
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                )}
-                            </div>
-                        </SheetContent>
-                    </Sheet>
-                </div>
-                <p className="text-xs text-muted-foreground">Request verified credentials from the recipient before sending the payment.</p>
-                    {proofsRequested && allSelectedProofsVerified && (
-                    <div className="mt-2 flex items-center gap-2 text-green-600 font-medium text-sm p-2 bg-green-50 rounded-md border border-green-200">
-                        <CheckCircle className="h-5 w-5" />
-                        <span>All proofs verified.</span>
-                    </div>
-                )}
-                    {proofsRequested && !allSelectedProofsVerified && selectedProofs.some(p => proofStatuses[p] === 'failed') && (
-                    <div className="mt-2 flex items-center gap-2 text-destructive font-medium text-sm p-2 bg-red-50 rounded-md border-red-200">
-                        <XCircle className="h-5 w-5" />
-                        <span>Some proofs failed verification.</span>
-                    </div>
-                    )}
-            </CardContent>
-        </Card>
+      {renderContent()}
     </div>
   );
 }

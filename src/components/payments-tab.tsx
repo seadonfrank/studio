@@ -14,7 +14,6 @@ import ReceivePaymentView from "./receive-payment-view";
 import ScanToPayView from "./scan-to-pay-view";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import ReceiveQrCode from "./receive-qr-code";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import QrForPayView from "./qr-for-pay-view";
 
