@@ -114,10 +114,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
         return;
     }
     setScanState('payment_sent');
-    toast({
-        title: "Payment Sent!",
-        description: `Your payment of ${paymentDetails.amount} ${paymentDetails.currency} has been sent to Jane Doe.`
-    });
   }
   
   const handleReset = () => {
