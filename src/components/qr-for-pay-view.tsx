@@ -271,7 +271,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
             </SheetContent>
           </Sheet>
         </div>
-        <div className="mt-auto">
+        <div className="mt-auto pt-4">
           <Button className="w-full" onClick={handleGenerateQr}>
             Generate QR Code
           </Button>
