@@ -215,7 +215,10 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                               size="sm"
                             >
                               {providedProofs.length > 0 ? (
-                                <Edit className="h-4 w-4" />
+                                <>
+                                  <Edit className="h-4 w-4" />
+                                  Edit
+                                </>
                               ) : (
                                 <>
                                  <PlusCircle className="mr-2 h-4 w-4" />
@@ -226,18 +229,18 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             </Button>
                           </SheetTrigger>
                         </div>
-                         {providedProofs.length > 0 && (
-                            <>
-                                <Separator className="my-2" />
-                                <ul className="text-xs text-muted-foreground list-disc pl-5">
-                                {providedProofs.map((proofId) => {
-                                    const proof = recipientRequestedProofs.find(
-                                    (p) => p.id === proofId
-                                    );
-                                    return <li key={proofId}>{proof?.label}</li>;
-                                })}
-                                </ul>
-                            </>
+                        {providedProofs.length > 0 && (
+                          <>
+                            <Separator className="my-2" />
+                            <ul className="text-xs text-muted-foreground list-disc pl-5">
+                              {providedProofs.map((proofId) => {
+                                const proof = recipientRequestedProofs.find(
+                                  (p) => p.id === proofId
+                                );
+                                return <li key={proofId}>{proof?.label}</li>;
+                              })}
+                            </ul>
+                          </>
                         )}
                       </CardContent>
                     </Card>
@@ -349,7 +352,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full p-4">
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : handleReset}>
           <ArrowLeft />
