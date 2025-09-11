@@ -22,7 +22,7 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
-import { CheckedState } from "@radix-ui/react-checkbox";
+import type { CheckedState } from "@radix-ui/react-checkbox";
 
 interface ScanToPayViewProps {
   onBack: () => void;
@@ -100,7 +100,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   }, [toast, scanState]);
 
   const handleProvideProofs = () => {
-      setProvidedProofs(selectedProofsToProvide);
+    setProvidedProofs(selectedProofsToProvide);
   }
 
   const handleSendPayment = () => {
@@ -128,7 +128,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofsToProvide(prev => 
-        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
 
@@ -204,7 +204,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             </Button>
                           </SheetTrigger>
                         </div>
-                        {providedProofs.length > 0 && (
+                         {providedProofs.length > 0 && (
                             <>
                                 <Separator className="my-2" />
                                 <ul className="text-xs text-muted-foreground list-disc pl-5">
@@ -223,7 +223,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <SheetHeader className="text-left">
                             <SheetTitle>Provide Credentials</SheetTitle>
                             <SheetDescription>
-                                Select which credentials you want to provide to the payee.
+                               Select which credentials you want to provide to the payee.
                             </SheetDescription>
                         </SheetHeader>
                         <div className="space-y-4 py-4">
@@ -273,8 +273,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <Label htmlFor="note">Note (Optional)</Label>
                         <Input id="note" placeholder="For coffee" />
                     </div>
-                    <Button className="w-full" onClick={handleSendPayment}>Send Payment</Button>
-                    <Button variant="ghost" className="w-full" onClick={handleReset}>Cancel</Button>
+                    <Button className="w-full" onClick={handleSendPayment}>Pay</Button>
                 </div>
             </div>
         );
@@ -314,5 +313,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
