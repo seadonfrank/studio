@@ -46,7 +46,7 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="recipientId">To</Label>
+            <Label htmlFor="recipientId">To (Receiver's ID)</Label>
             <div className="relative flex items-center">
               <Input id="recipientId" placeholder="did:xidfi:... or 0x..." className="pr-10" />
               <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
@@ -98,3 +98,4 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
     </div>
   );
 }
+
