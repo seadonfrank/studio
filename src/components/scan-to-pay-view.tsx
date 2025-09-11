@@ -101,10 +101,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   const handleProvideProofs = () => {
       setProvidedProofs(selectedProofsToProvide);
-      toast({
-        title: "Proofs Provided",
-        description: `You have provided ${selectedProofsToProvide.length} credential(s) to Jane Doe.`,
-      });
   }
 
   const handleSendPayment = () => {
@@ -208,18 +204,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 </Button>
                             </SheetTrigger>
                             </div>
-                            {providedProofs.length > 0 && (
-                                <>
-                                    <Separator className="my-2" />
-                                    <div className="text-sm font-semibold">Proofs Provided</div>
-                                    <ul className="text-xs text-muted-foreground list-disc pl-5">
-                                        {providedProofs.map(proofId => {
-                                            const proof = recipientRequestedProofs.find(p => p.id === proofId);
-                                            return <li key={proofId}>{proof?.label}</li>;
-                                        })}
-                                    </ul>
-                                </>
-                            )}
                         </CardContent>
                     </Card>
                     <SheetContent>
@@ -234,7 +218,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                     <Checkbox 
                                         id={`sheet-${proof.id}`} 
-                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked as boolean)}
+                                        onCheckedChange={(checked: CheckedState) => handleCheckboxChange(proof.id, checked)}
                                         checked={selectedProofsToProvide.includes(proof.id)}
                                     />
                                     <div className="flex-1">
@@ -317,5 +301,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
