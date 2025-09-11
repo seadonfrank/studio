@@ -217,7 +217,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 {recipientHasRequestedProofs && (
                     <Alert variant={proofsProvided ? "default" : "destructive"}>
                         <FileQuestion className="h-4 w-4" />
-                        <AlertTitle>{proofsProvided ? "Proofs Provided" : "Action Required"}</AlertTitle>
+                        <AlertTitle>{proofsProvided ? "Proofs Provided" : "Provide Credentials"}</AlertTitle>
                         <AlertDescription className="flex justify-between items-center">
                             <span>Recipient requests credentials.</span>
                             {!proofsProvided && (
@@ -388,5 +388,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
 
     
