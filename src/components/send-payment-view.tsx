@@ -14,12 +14,21 @@ import {
 } from "./ui/select";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { useToast } from "@/hooks/use-toast";
 
 interface SendPaymentViewProps {
   onBack: () => void;
 }
 
 export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
+    const { toast } = useToast();
+    const handleSend = () => {
+        toast({
+            title: "Payment Sent",
+            description: "Your payment has been sent successfully."
+        });
+        onBack();
+    }
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between">
@@ -92,10 +101,10 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
         </div>
       </div>
       
-      <div className="mt-auto">
-        <Button className="w-full">Send Payment</Button>
+      <div className="mt-auto flex gap-2">
+        <Button variant="outline" className="w-full" onClick={onBack}>Cancel</Button>
+        <Button className="w-full" onClick={handleSend}>Send Payment</Button>
       </div>
     </div>
   );
 }
-
