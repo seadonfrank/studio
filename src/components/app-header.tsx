@@ -1,5 +1,6 @@
 import { Bell, Settings } from "lucide-react";
 import { Button } from "./ui/button";
+import NotificationMenu from "./notification-menu";
 
 export default function AppHeader() {
   return (
@@ -13,9 +14,7 @@ export default function AppHeader() {
         <h1 className="text-xl font-headline font-bold text-foreground">xIDFI</h1>
       </div>
       <div className="flex items-center gap-2">
-         <Button variant="ghost" size="icon" aria-label="Notifications">
-          <Bell className="h-5 w-5" />
-        </Button>
+        <NotificationMenu />
         <Button variant="ghost" size="icon" aria-label="Settings">
           <Settings className="h-5 w-5" />
         </Button>
