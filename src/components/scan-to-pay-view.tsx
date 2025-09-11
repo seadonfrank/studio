@@ -195,6 +195,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                               <FileQuestion className="h-5 w-5 mt-0.5" />
                               <div>
                                 <p className="font-semibold">Provide Credentials</p>
+                                <p className="text-xs text-muted-foreground">Required</p>
                                 <ul className="text-xs text-muted-foreground list-disc pl-4 mt-1">
                                   {providedProofs.map((proofId) => {
                                     const proof = recipientRequestedProofs.find(
@@ -282,7 +283,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                     <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
                 <div>
-                    <h3 className="text-2xl font-bold font-headline">Completed Successfully</h3>
+                    <h3 className="text-2xl font-bold font-headline">Payment Successful!</h3>
                     <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
                 </div>
                 <Card className="w-full text-left">
@@ -329,8 +330,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   return (
     <div className="flex flex-col h-full p-4">
       <div className={cn(
-        "flex items-center gap-2 mb-4",
-        scanState === 'payment_sent' && "justify-center"
+        "flex items-center gap-2 mb-4 justify-center",
+         scanState !== 'payment_sent' && "justify-between"
       )}>
         {scanState !== 'payment_sent' && (
           <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : handleReset}>
@@ -338,7 +339,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
           </Button>
         )}
         <h2 className="text-xl font-bold font-headline">
-          {scanState === 'payment_sent' ? 'Payment Success' : 'Scan to Pay'}
+          {scanState === 'payment_sent' ? 'Payment Successful' : 'Scan to Pay'}
         </h2>
       </div>
 
@@ -346,5 +347,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
