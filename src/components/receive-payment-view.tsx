@@ -67,7 +67,10 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
                 <Input id="requestNotes" placeholder="E.g., for dinner last night" />
             </div>
 
-            <Button className="w-full" onClick={handleRequest}>Request Payment</Button>
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" className="w-full" onClick={onBack}>Cancel</Button>
+              <Button className="w-full" onClick={handleRequest}>Request Payment</Button>
+            </div>
         </div>
       </div>
 
