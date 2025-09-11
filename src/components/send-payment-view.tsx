@@ -18,10 +18,9 @@ import { Separator } from "./ui/separator";
 
 interface SendPaymentViewProps {
   onBack: () => void;
-  onScan: () => void;
 }
 
-export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps) {
+export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between">
@@ -31,10 +30,6 @@ export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps
             </Button>
             <h2 className="text-xl font-bold font-headline">Send Payment</h2>
         </div>
-        <Button variant="outline" size="icon" onClick={onScan}>
-            <QrCode className="h-5 w-5" />
-            <span className="sr-only">Scan to Pay</span>
-        </Button>
       </div>
 
       <div className="flex-grow mt-6 space-y-6">

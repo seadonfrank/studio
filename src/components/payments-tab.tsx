@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight } from "lucide-react";
+import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "./ui/dialog";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
@@ -28,11 +28,11 @@ export default function PaymentsTab() {
   const renderContent = () => {
     switch(view) {
       case 'send':
-        return <SendPaymentView onBack={() => setView('main')} onScan={() => setView('scan')} />;
+        return <SendPaymentView onBack={() => setView('main')} />;
       case 'receive':
         return <ReceivePaymentView onBack={() => setView('main')} />;
       case 'scan':
-        return <ScanToPayView onBack={() => setView('send')} />;
+        return <ScanToPayView onBack={() => setView('main')} />;
       default:
         return (
           <>
@@ -51,6 +51,19 @@ export default function PaymentsTab() {
                       <div>
                           <p className="font-semibold">Send Payment</p>
                           <p className="text-sm text-muted-foreground">Pay for anything</p>
+                      </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <Separator />
+                 <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setView('scan')}>
+                  <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                          <Scan className="h-6 w-6" />
+                      </div>
+                      <div>
+                          <p className="font-semibold">Scan to Pay</p>
+                          <p className="text-sm text-muted-foreground">Use QR codes for quick payments</p>
                       </div>
                   </div>
                   <ChevronRight className="h-5 w-5 text-muted-foreground" />
