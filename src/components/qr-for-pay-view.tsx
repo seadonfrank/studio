@@ -59,7 +59,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     }
   };
 
-  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
+  const handleCheckboxChange = (proofId: string, checked: boolean | 'indeterminate') => {
     setSelectedProofs(prev => 
         checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
@@ -113,7 +113,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                     />
                 </div>
                 <p className="text-muted-foreground">
-                    Share this QR code to get paid.
+                    Position the QR code within the frame to scan.
                 </p>
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
@@ -187,7 +187,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
           <Separator />
           
           <Sheet>
-            <Card>
+            <Card className="my-4">
               <CardContent className="p-3">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
