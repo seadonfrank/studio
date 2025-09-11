@@ -128,7 +128,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofsToProvide(prev => 
-        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
 
@@ -198,9 +198,12 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                               {providedProofs.length > 0 ? (
                                 <Edit className="h-4 w-4" />
                               ) : (
-                                <PlusCircle className="mr-2 h-4 w-4" />
+                                <>
+                                 <PlusCircle className="mr-2 h-4 w-4" />
+                                 Add
+                                </>
                               )}
-                              {providedProofs.length > 0 ? "Edit" : "Add"}
+                             
                             </Button>
                           </SheetTrigger>
                         </div>
@@ -282,7 +285,21 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
             <div className="flex-grow flex flex-col items-center justify-center text-center space-y-4">
                 <CheckCircle className="h-20 w-20 text-green-500" />
                 <h3 className="text-2xl font-bold font-headline">Payment Sent!</h3>
-                <p className="text-muted-foreground">You sent $10.00 to Jane Doe.</p>
+                <Card className="w-full text-left">
+                    <CardContent className="p-3 text-sm">
+                        <div className="flex justify-between"><span>To:</span> <span className="font-semibold">Jane Doe</span></div>
+                        <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">$10.00 USD</span></div>
+                        
+                        {providedProofs.length > 0 && <Separator className="my-2"/>}
+                        {providedProofs.length > 0 && <p className="font-semibold">Credentials Provided:</p>}
+                        <ul className="text-xs text-muted-foreground list-disc pl-5">
+                            {providedProofs.map(proofId => {
+                                const proof = recipientRequestedProofs.find(p => p.id === proofId);
+                                return <li key={proofId}>{proof?.label}</li>
+                            })}
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Button className="w-full" onClick={onBack}>Done</Button>
                 <Button variant="outline" className="w-full" onClick={handleReset}>Scan Another</Button>
             </div>
