@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Copy, Share2, FileQuestion, PlusCircle } from "lucide-react";
+import { ArrowLeft, Copy, Share2, FileQuestion, PlusCircle, Edit } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -189,51 +189,63 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                 </div>
                 <Separator />
                 
-                {selectedProofs.length > 0 ? (
-                    <Card className="bg-muted/50">
-                        <CardContent className="p-3">
-                            <p className="text-sm font-semibold flex items-center gap-2"><FileQuestion className="h-4 w-4"/>Requested Credentials</p>
-                            <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
-                                {selectedProofs.map(proofId => {
-                                    const proof = availableProofs.find(p => p.id === proofId);
-                                    return <li key={proofId}>{proof?.label}</li>
-                                })}
-                            </ul>
-                        </CardContent>
-                    </Card>
-                ) : (
-                    <Sheet>
+                <Sheet>
+                  <Card>
+                    <CardContent className="p-3">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                          <FileQuestion className="h-5 w-5" />
+                          <div>
+                            <p className="font-semibold">Request Credentials</p>
+                            <p className="text-xs text-muted-foreground">
+                              {selectedProofs.length > 0 ? `${selectedProofs.length} selected` : 'Optional'}
+                            </p>
+                          </div>
+                        </div>
                         <SheetTrigger asChild>
-                             <Button variant="outline" className="w-full">
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                Request Credentials (Optional)
-                            </Button>
+                           <Button variant={selectedProofs.length > 0 ? "ghost" : "outline"} size="sm">
+                            {selectedProofs.length > 0 ? <Edit className="h-4 w-4" /> : <PlusCircle className="mr-2 h-4 w-4" />}
+                            {selectedProofs.length > 0 ? 'Edit' : 'Add'}
+                          </Button>
                         </SheetTrigger>
-                        <SheetContent>
-                            <SheetHeader>
-                                <SheetTitle>Request Credentials</SheetTitle>
-                                <SheetDescription>
-                                    Select which credentials you want to request from the payer.
-                                </SheetDescription>
-                            </SheetHeader>
-                            <div className="py-4 space-y-3">
-                                {availableProofs.map(proof => (
-                                    <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
-                                        <Checkbox 
-                                            id={`sheet-${proof.id}`} 
-                                            onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
-                                            checked={selectedProofs.includes(proof.id)}
-                                        />
-                                        <Label htmlFor={`sheet-${proof.id}`} className="font-normal flex-1">{proof.label}</Label>
-                                    </div>
-                                ))}
-                            </div>
-                            <SheetClose asChild>
-                                <Button className="w-full">Done</Button>
-                            </SheetClose>
-                        </SheetContent>
-                    </Sheet>
-                )}
+                      </div>
+                      {selectedProofs.length > 0 && (
+                        <>
+                          <Separator className="my-2" />
+                          <ul className="text-xs text-muted-foreground list-disc pl-5">
+                            {selectedProofs.map(proofId => {
+                                const proof = availableProofs.find(p => p.id === proofId);
+                                return <li key={proofId}>{proof?.label}</li>
+                            })}
+                          </ul>
+                        </>
+                      )}
+                    </CardContent>
+                  </Card>
+                  <SheetContent>
+                      <SheetHeader>
+                          <SheetTitle>Request Credentials</SheetTitle>
+                          <SheetDescription>
+                              Select which credentials you want to request from the payer.
+                          </SheetDescription>
+                      </SheetHeader>
+                      <div className="py-4 space-y-3">
+                          {availableProofs.map(proof => (
+                              <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
+                                  <Checkbox 
+                                      id={`sheet-${proof.id}`} 
+                                      onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
+                                      checked={selectedProofs.includes(proof.id)}
+                                  />
+                                  <Label htmlFor={`sheet-${proof.id}`} className="font-normal flex-1">{proof.label}</Label>
+                              </div>
+                          ))}
+                      </div>
+                      <SheetClose asChild>
+                          <Button className="w-full">Done</Button>
+                      </SheetClose>
+                  </SheetContent>
+                </Sheet>
             </div>
             <Button className="w-full" onClick={handleGenerateQr}>Generate QR Code</Button>
         </div>
