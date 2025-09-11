@@ -196,9 +196,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                     <div>
                       <p className="font-semibold">Request Credentials</p>
                       <p className="text-xs text-muted-foreground">
-                        {selectedProofs.length > 0
-                          ? `${selectedProofs.length} selected (Optional)`
-                          : "Optional"}
+                        Optional
                       </p>
                     </div>
                   </div>
