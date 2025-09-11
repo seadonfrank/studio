@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus } from "lucide-react";
+import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "./ui/dialog";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
@@ -16,9 +16,10 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import ReceiveQrCode from "./receive-qr-code";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import QrForPayView from "./qr-for-pay-view";
 
 export default function PaymentsTab() {
-  const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan'>('main');
+  const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
 
   const bills = [
     { billerName: "ATT", dueDate: "2024-08-01", amount: "$75.00", category: "internet" as const },
@@ -35,6 +36,8 @@ export default function PaymentsTab() {
         return <ReceivePaymentView onBack={() => setView('main')} />;
       case 'scan':
         return <ScanToPayView onBack={() => setView('main')} />;
+      case 'qr':
+        return <QrForPayView onBack={() => setView('main')} />;
       default:
         return (
           <>
@@ -53,7 +56,15 @@ export default function PaymentsTab() {
                     <p className="font-bold">Scan to Pay</p>
                 </CardContent>
                 </Card>
-                <ReceiveQrCode />
+                <Card 
+                  className="cursor-pointer hover:bg-muted/50 transition-colors h-full"
+                  onClick={() => setView('qr')}
+                >
+                    <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
+                        <QrCode className="h-8 w-8 mb-2" />
+                        <p className="font-bold">QR for Pay</p>
+                    </CardContent>
+                </Card>
             </div>
             
             <Card>

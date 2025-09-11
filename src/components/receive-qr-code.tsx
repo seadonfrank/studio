@@ -41,7 +41,7 @@ export default function ReceiveQrCode() {
                 <Card className="cursor-pointer hover:bg-muted/50 transition-colors h-full">
                     <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
                         <QrCode className="h-8 w-8 mb-2" />
-                        <p className="font-bold">Receive</p>
+                        <p className="font-bold">QR for Pay</p>
                     </CardContent>
                 </Card>
             </DialogTrigger>
