@@ -20,6 +20,7 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { Checkbox } from "./ui/checkbox";
+import type { CheckedState } from "@radix-ui/react-checkbox";
 
 interface ScanToPayViewProps {
   onBack: () => void;
@@ -127,9 +128,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string, checked: boolean) => {
+  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofsToProvide(prev => 
-        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
 
@@ -197,7 +198,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                             <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                                 <Checkbox 
                                                     id={`sheet-${proof.id}`} 
-                                                    onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
+                                                    onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked)}
                                                     checked={selectedProofsToProvide.includes(proof.id)}
                                                 />
                                                 <div className="flex-1">

@@ -13,6 +13,7 @@ import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import type { CheckedState } from "@radix-ui/react-checkbox";
 
 interface QrForPayViewProps {
   onBack: () => void;
@@ -58,9 +59,9 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     }
   };
 
-  const handleCheckboxChange = (proofId: string, checked: boolean) => {
+  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofs(prev => 
-        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
   
@@ -184,7 +185,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
             />
           </div>
           <Separator />
-
+          
           <Sheet>
             <Card>
               <CardContent className="p-3">
@@ -245,7 +246,7 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                     <Checkbox
                       id={`sheet-${proof.id}`}
                       onCheckedChange={(checked) =>
-                        handleCheckboxChange(proof.id, !!checked)
+                        handleCheckboxChange(proof.id, checked)
                       }
                       checked={selectedProofs.includes(proof.id)}
                     />
