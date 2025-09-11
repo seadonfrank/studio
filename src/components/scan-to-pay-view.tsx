@@ -108,7 +108,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     if (recipientHasRequestedProofs && providedProofs.length === 0) {
         toast({
             variant: "destructive",
-            title: "Action Required",
+            title: "Provide Credentials",
             description: "Please provide the requested credentials before sending the payment."
         });
         return;
@@ -186,7 +186,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                     <Button size="sm">{providedProofs.length > 0 ? 'View' : 'Provide'}</Button>
                                 </SheetTrigger>
                                 <SheetContent>
-                                    <SheetHeader>
+                                    <SheetHeader className="text-left">
                                         <SheetTitle>Provide Credentials</SheetTitle>
                                         <SheetDescription>
                                             Select which credentials you want to provide to the payee.
