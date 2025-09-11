@@ -22,6 +22,7 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 interface ScanToPayViewProps {
   onBack: () => void;
@@ -125,9 +126,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string, checked: boolean) => {
+  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofsToProvide(prev => 
-        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
 
@@ -176,34 +177,34 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 {recipientHasRequestedProofs && (
                   <Sheet>
                     <Card>
-                        <CardContent className="p-3">
-                            <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                                <FileQuestion className="h-5 w-5" />
-                                <div>
-                                <p className="font-semibold">Provide Credentials</p>
-                                <p className="text-xs text-muted-foreground">
-                                    {providedProofs.length > 0
-                                    ? `${providedProofs.length}/${recipientRequestedProofs.length} provided`
-                                    : "Required"}
-                                </p>
-                                </div>
+                      <CardContent className="p-3">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-3">
+                            <FileQuestion className="h-5 w-5" />
+                            <div>
+                              <p className="font-semibold">Provide Credentials</p>
+                              <p className="text-xs text-muted-foreground">
+                                {providedProofs.length > 0
+                                  ? `${providedProofs.length}/${recipientRequestedProofs.length} provided`
+                                  : "Required"}
+                              </p>
                             </div>
-                            <SheetTrigger asChild>
-                                <Button
-                                variant={providedProofs.length > 0 ? "ghost" : "outline"}
-                                size="sm"
-                                >
-                                {providedProofs.length > 0 ? (
-                                    <Edit className="h-4 w-4" />
-                                ) : (
-                                    <PlusCircle className="mr-2 h-4 w-4" />
-                                )}
-                                {providedProofs.length > 0 ? "Edit" : "Provide"}
-                                </Button>
-                            </SheetTrigger>
-                            </div>
-                            {providedProofs.length > 0 && (
+                          </div>
+                          <SheetTrigger asChild>
+                            <Button
+                              variant={providedProofs.length > 0 ? "ghost" : "outline"}
+                              size="sm"
+                            >
+                              {providedProofs.length > 0 ? (
+                                <Edit className="h-4 w-4" />
+                              ) : (
+                                <PlusCircle className="mr-2 h-4 w-4" />
+                              )}
+                              {providedProofs.length > 0 ? "Edit" : "Add"}
+                            </Button>
+                          </SheetTrigger>
+                        </div>
+                        {providedProofs.length > 0 && (
                             <>
                                 <Separator className="my-2" />
                                 <ul className="text-xs text-muted-foreground list-disc pl-5">
@@ -215,8 +216,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 })}
                                 </ul>
                             </>
-                            )}
-                        </CardContent>
+                        )}
+                      </CardContent>
                     </Card>
                     <SheetContent>
                         <SheetHeader className="text-left">
@@ -230,7 +231,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                     <Checkbox 
                                         id={`sheet-${proof.id}`} 
-                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
+                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked)}
                                         checked={selectedProofsToProvide.includes(proof.id)}
                                     />
                                     <div className="flex-1">
@@ -313,3 +314,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
