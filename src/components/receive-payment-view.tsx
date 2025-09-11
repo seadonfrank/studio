@@ -78,7 +78,7 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
                 </div>
             </div>
             <div className="space-y-2">
-                <Label htmlFor="requestNotes">Notes (Optional)</Label>
+                <Label htmlFor="requestNotes">Note (Optional)</Label>
                 <Input id="requestNotes" placeholder="E.g., for dinner last night" />
             </div>
 
