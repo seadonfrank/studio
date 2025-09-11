@@ -74,7 +74,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
             setScanState('scanned');
             // Simulate that the scanned recipient is requesting proofs
             setRecipientHasRequestedProofs(true); 
-            setSelectedProofsToProvide(recipientRequestedProofs.map(p => p.id));
+            setSelectedProofsToProvide([]);
         }, 2000);
 
       } catch (error) {
@@ -130,7 +130,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string) => (checked: CheckedState) => {
+  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofsToProvide(prev => 
         checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
@@ -236,7 +236,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                     <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                         <Checkbox 
                                             id={`sheet-${proof.id}`} 
-                                            onCheckedChange={handleCheckboxChange(proof.id)}
+                                            onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked)}
                                             checked={selectedProofsToProvide.includes(proof.id)}
                                         />
                                         <div className="flex-1">
