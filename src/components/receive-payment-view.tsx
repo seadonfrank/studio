@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Separator } from "./ui/separator";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface ReceivePaymentViewProps {
   onBack: () => void;
@@ -93,8 +95,27 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
                 <Input id="requesterId" placeholder="did:xidfi:... or 0x..." />
             </div>
             <div className="space-y-2">
-                <Label htmlFor="requestAmount">Amount (USD)</Label>
-                <Input id="requestAmount" type="number" placeholder="0.00" />
+                <Label htmlFor="requestAmount">Amount</Label>
+                <div className="flex gap-2">
+                    <Input id="requestAmount" type="number" placeholder="0.00" className="flex-grow" />
+                    <Select defaultValue="USD">
+                        <SelectTrigger className="w-[120px]">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="USD">USD</SelectItem>
+                            <SelectItem value="EUR">EUR</SelectItem>
+                            <SelectItem value="GBP">GBP</SelectItem>
+                            <SelectItem value="BTC">BTC</SelectItem>
+                            <SelectItem value="ETH">ETH</SelectItem>
+                            <SelectItem value="SOL">SOL</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="requestNotes">Notes (Optional)</Label>
+                <Textarea id="requestNotes" placeholder="E.g., for dinner last night" />
             </div>
             <Button className="w-full" onClick={handleRequest}>Request Payment</Button>
         </div>
