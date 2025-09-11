@@ -101,6 +101,10 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   const handleProvideProofs = () => {
       setProvidedProofs(selectedProofsToProvide);
+      toast({
+        title: "Proofs Provided",
+        description: `You have provided ${selectedProofsToProvide.length} credential(s) to Jane Doe.`,
+      });
   }
 
   const handleSendPayment = () => {
@@ -126,7 +130,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string, checked: boolean) => {
+  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
     setSelectedProofsToProvide(prev => 
         checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
@@ -176,7 +180,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
                 {recipientHasRequestedProofs && (
                   <Sheet>
-                    <Card className={!recipientHasRequestedProofs || (recipientHasRequestedProofs && providedProofs.length !== recipientRequestedProofs.length) ? "border-destructive" : ""}>
+                    <Card>
                         <CardContent className="p-3">
                             <div className="flex justify-between items-center">
                             <div className="flex items-center gap-3">
@@ -192,9 +196,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             </div>
                             <SheetTrigger asChild>
                                 <Button
-                                variant={providedProofs.length > 0 ? "ghost" : "outline"}
+                                variant={providedProofs.length > 0 ? "ghost" : "destructive"}
                                 size="sm"
-                                className={providedProofs.length > 0 ? "" : "text-destructive"}
                                 >
                                 {providedProofs.length > 0 ? (
                                     <Edit className="h-4 w-4" />
@@ -205,6 +208,18 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 </Button>
                             </SheetTrigger>
                             </div>
+                            {providedProofs.length > 0 && (
+                                <>
+                                    <Separator className="my-2" />
+                                    <div className="text-sm font-semibold">Proofs Provided</div>
+                                    <ul className="text-xs text-muted-foreground list-disc pl-5">
+                                        {providedProofs.map(proofId => {
+                                            const proof = recipientRequestedProofs.find(p => p.id === proofId);
+                                            return <li key={proofId}>{proof?.label}</li>;
+                                        })}
+                                    </ul>
+                                </>
+                            )}
                         </CardContent>
                     </Card>
                     <SheetContent>
@@ -219,7 +234,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                     <Checkbox 
                                         id={`sheet-${proof.id}`} 
-                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
+                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked as boolean)}
                                         checked={selectedProofsToProvide.includes(proof.id)}
                                     />
                                     <div className="flex-1">
@@ -302,3 +317,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
