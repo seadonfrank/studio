@@ -189,7 +189,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                     <SheetHeader>
                                         <SheetTitle>Provide Credentials</SheetTitle>
                                         <SheetDescription>
-                                            Jane Doe is requesting the following credentials. Review and provide them.
+                                            Select which credentials you want to provide to the payee.
                                         </SheetDescription>
                                     </SheetHeader>
                                     <div className="space-y-4 py-4">
@@ -283,5 +283,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
