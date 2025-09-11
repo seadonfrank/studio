@@ -178,83 +178,70 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                     </div>
                 </div>
 
-                 {recipientHasRequestedProofs && (
-                     <Sheet>
-                        <Card className={providedProofs.length === 0 ? "border-destructive" : ""}>
-                            <CardContent className="p-3">
-                                <div className="flex justify-between items-center">
-                                <div className="flex items-center gap-3">
-                                    <FileQuestion className="h-5 w-5" />
-                                    <div>
-                                    <p className="font-semibold">Provide Credentials</p>
-                                    <p className="text-xs text-muted-foreground">
-                                        {providedProofs.length > 0
-                                        ? `${providedProofs.length} provided`
-                                        : "Required"}
-                                    </p>
-                                    </div>
-                                </div>
-                                <SheetTrigger asChild>
-                                    <Button
-                                    variant={providedProofs.length > 0 ? "ghost" : "outline"}
-                                    size="sm"
-                                    className={providedProofs.length > 0 ? "" : "text-destructive"}
-                                    >
-                                    {providedProofs.length > 0 ? (
-                                        <Edit className="h-4 w-4" />
-                                    ) : (
-                                        <PlusCircle className="mr-2 h-4 w-4" />
-                                    )}
-                                    {providedProofs.length > 0 ? "Edit" : "Provide"}
-                                    </Button>
-                                </SheetTrigger>
-                                </div>
-                                {providedProofs.length > 0 && (
-                                <>
-                                    <Separator className="my-2" />
-                                    <ul className="text-xs text-muted-foreground list-disc pl-5">
-                                    {providedProofs.map((proofId) => {
-                                        const proof = recipientRequestedProofs.find(
-                                        (p) => p.id === proofId
-                                        );
-                                        return <li key={proofId}>{proof?.label}</li>;
-                                    })}
-                                    </ul>
-                                </>
-                                )}
-                            </CardContent>
-                        </Card>
-                        <SheetContent>
-                            <SheetHeader className="text-left">
-                                <SheetTitle>Provide Credentials</SheetTitle>
-                                <SheetDescription>
-                                    Select which credentials you want to provide to the payee.
-                                </SheetDescription>
-                            </SheetHeader>
-                            <div className="space-y-4 py-4">
-                                {recipientRequestedProofs.map(proof => (
-                                    <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
-                                        <Checkbox 
-                                            id={`sheet-${proof.id}`} 
-                                            onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked)}
-                                            checked={selectedProofsToProvide.includes(proof.id)}
-                                        />
-                                        <div className="flex-1">
-                                            <Label htmlFor={`sheet-${proof.id}`} className="font-normal">{proof.label}</Label>
-                                        </div>
-                                    </div>
-                                ))}
-                                <div className="flex gap-2 !mt-6">
-                                    <SheetClose asChild>
-                                        <Button variant="outline" className="w-full">Cancel</Button>
-                                    </SheetClose>
-                                    <SheetClose asChild>
-                                        <Button className="w-full" onClick={handleProvideProofs}>Provide Selected</Button>
-                                    </SheetClose>
+                {recipientHasRequestedProofs && (
+                  <Sheet>
+                    <Card className={!recipientHasRequestedProofs || (recipientHasRequestedProofs && providedProofs.length === 0) ? "border-destructive" : ""}>
+                        <CardContent className="p-3">
+                            <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <FileQuestion className="h-5 w-5" />
+                                <div>
+                                <p className="font-semibold">Provide Credentials</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {providedProofs.length > 0
+                                    ? `${providedProofs.length} provided`
+                                    : "Required"}
+                                </p>
                                 </div>
                             </div>
-                        </SheetContent>
-                    </Sheet>
+                            <SheetTrigger asChild>
+                                <Button
+                                variant={providedProofs.length > 0 ? "ghost" : "outline"}
+                                size="sm"
+                                className={providedProofs.length > 0 ? "" : "text-destructive"}
+                                >
+                                {providedProofs.length > 0 ? (
+                                    <Edit className="h-4 w-4" />
+                                ) : (
+                                    <PlusCircle className="mr-2 h-4 w-4" />
+                                )}
+                                {providedProofs.length > 0 ? "Edit" : "Provide"}
+                                </Button>
+                            </SheetTrigger>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    <SheetContent>
+                        <SheetHeader className="text-left">
+                            <SheetTitle>Provide Credentials</SheetTitle>
+                            <SheetDescription>
+                                Select which credentials you want to provide to the payee.
+                            </SheetDescription>
+                        </SheetHeader>
+                        <div className="space-y-4 py-4">
+                            {recipientRequestedProofs.map(proof => (
+                                <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
+                                    <Checkbox 
+                                        id={`sheet-${proof.id}`} 
+                                        onCheckedChange={(checked: CheckedState) => handleCheckboxChange(proof.id, checked)}
+                                        checked={selectedProofsToProvide.includes(proof.id)}
+                                    />
+                                    <div className="flex-1">
+                                        <Label htmlFor={`sheet-${proof.id}`} className="font-normal">{proof.label}</Label>
+                                    </div>
+                                </div>
+                            ))}
+                            <div className="flex gap-2 !mt-6">
+                                <SheetClose asChild>
+                                    <Button variant="outline" className="w-full">Cancel</Button>
+                                </SheetClose>
+                                <SheetClose asChild>
+                                    <Button className="w-full" onClick={handleProvideProofs}>Provide Selected</Button>
+                                </SheetClose>
+                            </div>
+                        </div>
+                    </SheetContent>
+                </Sheet>
                  )}
 
                 <div className="space-y-4">
@@ -319,3 +306,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
