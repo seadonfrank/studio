@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info } from "lucide-react";
+import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion } from "lucide-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -34,6 +34,11 @@ const availableProofs = [
     { id: 'accredited', label: 'Proof of Accredited Investor Status' },
 ];
 
+const recipientRequestedProofs = [
+    { id: 'age', label: 'Proof of Age (Over 18)', reason: 'Age-restricted product' },
+    { id: 'kyc', label: 'Proof of KYC', reason: 'Regulatory requirement' },
+];
+
 export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   const { toast } = useToast();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -44,6 +49,10 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   const [proofsRequested, setProofsRequested] = useState(false);
   const [isProcessingProofs, setIsProcessingProofs] = useState(false);
   const [proofStatuses, setProofStatuses] = useState<Record<string, ProofStatus>>({});
+
+  // New state to simulate if the recipient has requested proofs from the user
+  const [recipientHasRequestedProofs, setRecipientHasRequestedProofs] = useState(false);
+  const [proofsProvided, setProofsProvided] = useState(false);
 
 
   useEffect(() => {
@@ -71,6 +80,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
         // Simulate scanning a QR code after 2 seconds
         setTimeout(() => {
             setScanState('scanned');
+            // Simulate that the scanned recipient is requesting proofs
+            setRecipientHasRequestedProofs(true); 
         }, 2000);
 
       } catch (error) {
@@ -128,6 +139,14 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     }, 2000);
   }
 
+  const handleProvideProofs = () => {
+      setProofsProvided(true);
+      toast({
+          title: "Proofs Provided",
+          description: "You have provided the requested credentials to Jane Doe."
+      });
+  }
+
   const handleSendPayment = () => {
     setScanState('payment_sent');
     toast({
@@ -142,6 +161,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setIsProcessingProofs(false);
     setSelectedProofs([]);
     setProofStatuses({});
+    setRecipientHasRequestedProofs(false);
+    setProofsProvided(false);
   }
   
   const handleCheckboxChange = (proofId: string, checked: boolean) => {
@@ -193,6 +214,45 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
                     </div>
                 </div>
+
+                {recipientHasRequestedProofs && (
+                    <Alert variant={proofsProvided ? "default" : "destructive"}>
+                        <FileQuestion className="h-4 w-4" />
+                        <AlertTitle>{proofsProvided ? "Proofs Provided" : "Action Required"}</AlertTitle>
+                        <AlertDescription className="flex justify-between items-center">
+                            <span>Recipient requests credentials.</span>
+                            {!proofsProvided && (
+                                <Sheet>
+                                    <SheetTrigger asChild>
+                                        <Button size="sm">Provide</Button>
+                                    </SheetTrigger>
+                                    <SheetContent>
+                                        <SheetHeader>
+                                            <SheetTitle>Provide Credentials</SheetTitle>
+                                            <SheetDescription>
+                                                Jane Doe is requesting the following credentials. Review and provide them.
+                                            </SheetDescription>
+                                        </SheetHeader>
+                                        <div className="space-y-4 py-4">
+                                            {recipientRequestedProofs.map(proof => (
+                                                <div key={proof.id} className="p-3 border rounded-lg">
+                                                    <p className="font-semibold">{proof.label}</p>
+                                                    <p className="text-xs text-muted-foreground">Reason: {proof.reason}</p>
+                                                </div>
+                                            ))}
+                                            <div className="flex gap-2 !mt-6">
+                                                <Button variant="outline" className="w-full">Deny</Button>
+                                                <SheetClose asChild>
+                                                    <Button className="w-full" onClick={handleProvideProofs}>Provide</Button>
+                                                </SheetClose>
+                                            </div>
+                                        </div>
+                                    </SheetContent>
+                                </Sheet>
+                            )}
+                        </AlertDescription>
+                    </Alert>
+                )}
 
                 <Card>
                     <CardContent className="p-4 space-y-3">
