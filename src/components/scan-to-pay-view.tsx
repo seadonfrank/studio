@@ -32,8 +32,8 @@ interface ScanToPayViewProps {
 type ScanState = 'scanning' | 'scanned' | 'payment_sent' | 'error';
 
 const recipientRequestedProofs = [
-    { id: 'age', label: 'Proof of Age (Over 18)' },
     { id: 'kyc', label: 'Proof of KYC' },
+    { id: 'age', label: 'Proof of Age (Over 18)' },
 ];
 
 export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
@@ -196,14 +196,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                               <div>
                                 <p className="font-semibold">Provide Credentials</p>
                                 <p className="text-xs text-muted-foreground">Required</p>
-                                <ul className="text-xs text-muted-foreground list-disc pl-4 mt-1">
-                                  {providedProofs.map((proofId) => {
-                                    const proof = recipientRequestedProofs.find(
-                                      (p) => p.id === proofId
-                                    );
-                                    return <li key={proofId}>{proof?.label}</li>;
-                                  })}
-                                </ul>
                               </div>
                             </div>
                             <SheetTrigger asChild>
@@ -213,6 +205,19 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             </Button>
                           </SheetTrigger>
                           </div>
+                          {providedProofs.length > 0 && (
+                            <>
+                                <Separator className="my-2" />
+                                <ul className="text-xs text-muted-foreground list-disc pl-5">
+                                  {providedProofs.map((proofId) => {
+                                    const proof = recipientRequestedProofs.find(
+                                      (p) => p.id === proofId
+                                    );
+                                    return <li key={proofId}>{proof?.label}</li>;
+                                  })}
+                                </ul>
+                            </>
+                          )}
                         </CardContent>
                       </Card>
                     <SheetContent>
@@ -347,5 +352,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
 
     
