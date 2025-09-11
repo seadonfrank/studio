@@ -145,10 +145,6 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     return (
         <div className="flex-grow flex flex-col justify-between">
             <div className="space-y-4">
-                <div className="text-center">
-                    <h3 className="text-lg font-semibold">Payment Details</h3>
-                    <p className="text-sm text-muted-foreground">Enter the amount and details for your request.</p>
-                </div>
                 <div className="space-y-2">
                     <Label htmlFor="requestAmount">Amount</Label>
                     <div className="flex gap-2">
