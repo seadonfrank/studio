@@ -217,7 +217,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 {recipientHasRequestedProofs && (
                     <Alert variant={proofsProvided ? "default" : "destructive"}>
                         <FileQuestion className="h-4 w-4" />
-                        <AlertTitle>{proofsProvided ? "Proofs Provided" : "Provide Credentials"}</AlertTitle>
+                        <AlertTitle>Provide Credentials</AlertTitle>
                         <AlertDescription className="flex justify-between items-center">
                             <span>Recipient requests credentials.</span>
                             {!proofsProvided && (
@@ -318,7 +318,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             </div>
                         )}
                          {proofsRequested && !allSelectedProofsVerified && selectedProofs.some(p => proofStatuses[p] === 'failed') && (
-                            <div className="mt-2 flex items-center gap-2 text-destructive font-medium text-sm p-2 bg-red-50 rounded-md border border-red-200">
+                            <div className="mt-2 flex items-center gap-2 text-destructive font-medium text-sm p-2 bg-red-50 rounded-md border-red-200">
                                 <XCircle className="h-5 w-5" />
                                 <span>Some proofs failed verification.</span>
                             </div>
@@ -388,7 +388,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
-
-    
