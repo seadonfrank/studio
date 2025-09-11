@@ -23,6 +23,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
 import type { CheckedState } from "@radix-ui/react-checkbox";
+import { cn } from "@/lib/utils";
 
 interface ScanToPayViewProps {
   onBack: () => void;
@@ -364,3 +365,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
