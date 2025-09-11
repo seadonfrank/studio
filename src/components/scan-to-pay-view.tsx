@@ -70,8 +70,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
         setTimeout(() => {
             setScanState('scanned');
             // Simulate that the scanned recipient is requesting proofs
-            setRecipientHasRequestedProofs(true); 
             const allProofIds = recipientRequestedProofs.map(p => p.id);
+            setRecipientHasRequestedProofs(true); 
             setSelectedProofsToProvide(allProofIds);
             setProvidedProofs(allProofIds);
         }, 2000);
@@ -189,50 +189,31 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 {recipientHasRequestedProofs && (
                   <Sheet>
                     <Card>
-                      <CardContent className="p-3">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-3">
-                            <FileQuestion className="h-5 w-5" />
-                            <div>
-                              <p className="font-semibold">Provide Credentials</p>
-                              {providedProofs.length > 0 ? (
-                                  <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
-                                    {providedProofs.map((proofId) => {
-                                      const proof = recipientRequestedProofs.find(
-                                        (p) => p.id === proofId
-                                      );
-                                      return <li key={proofId}>{proof?.label}</li>;
-                                    })}
-                                  </ul>
-                                ) : (
-                                  <p className="text-xs text-muted-foreground">
-                                    Required
-                                  </p>
-                                )}
+                        <CardContent className="p-3">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-start gap-3">
+                              <FileQuestion className="h-5 w-5 mt-0.5" />
+                              <div>
+                                <p className="font-semibold">Provide Credentials</p>
+                                <ul className="text-xs text-muted-foreground list-disc pl-4 mt-1">
+                                  {providedProofs.map((proofId) => {
+                                    const proof = recipientRequestedProofs.find(
+                                      (p) => p.id === proofId
+                                    );
+                                    return <li key={proofId}>{proof?.label}</li>;
+                                  })}
+                                </ul>
+                              </div>
                             </div>
-                          </div>
-                          <SheetTrigger asChild>
-                          <Button
-                            variant={providedProofs.length > 0 ? "ghost" : "outline"}
-                            size="sm"
-                          >
-                            {providedProofs.length > 0 ? (
-                              <>
+                            <SheetTrigger asChild>
+                            <Button variant="ghost" size="sm">
                                 <Edit className="h-4 w-4 mr-2" />
                                 Edit
-                              </>
-                            ) : (
-                              <>
-                               <PlusCircle className="mr-2 h-4 w-4" />
-                               Add
-                              </>
-                            )}
-                           
-                          </Button>
-                        </SheetTrigger>
-                        </div>
-                      </CardContent>
-                    </Card>
+                            </Button>
+                          </SheetTrigger>
+                          </div>
+                        </CardContent>
+                      </Card>
                     <SheetContent>
                         <SheetHeader className="text-left">
                             <SheetTitle>Provide Credentials</SheetTitle>
@@ -365,5 +346,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
 
     
