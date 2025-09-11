@@ -1,11 +1,10 @@
 
 "use client";
 
-import { ArrowLeft, User, QrCode, Plus } from "lucide-react";
+import { ArrowLeft, User, QrCode } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
     Select,
     SelectContent,
@@ -33,29 +32,6 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
       </div>
 
       <div className="flex-grow mt-6 space-y-6">
-        <div>
-          <h3 className="text-lg font-headline font-semibold mb-3">Beneficiaries</h3>
-          <div className="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
-              {['AB', 'CD', 'EF', 'GH', 'IJ'].map((p, i) => (
-                  <div key={i} className="flex flex-col items-center space-y-1.5 flex-shrink-0 w-16 text-center">
-                      <Avatar className="h-14 w-14">
-                          <AvatarImage src={`https://picsum.photos/id/${100+i}/200/200`} data-ai-hint="person portrait" />
-                          <AvatarFallback>{p}</AvatarFallback>
-                      </Avatar>
-                      <span className="text-xs font-medium truncate">Friend {i+1}</span>
-                  </div>
-              ))}
-              <div className="flex flex-col items-center space-y-1.5 flex-shrink-0 w-16 text-center cursor-pointer">
-                  <Avatar className="h-14 w-14 bg-secondary flex items-center justify-center">
-                      <Plus className="h-6 w-6 text-muted-foreground" />
-                  </Avatar>
-                  <span className="text-xs font-medium truncate">Add New</span>
-              </div>
-          </div>
-        </div>
-
-        <Separator />
-
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="fromAccount">From</Label>
