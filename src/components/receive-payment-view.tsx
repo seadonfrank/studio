@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ShieldCheck, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "./ui/input";
@@ -51,7 +51,12 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
         <div className="space-y-4">
             <div className="space-y-2">
                 <Label htmlFor="requesterId">From (Sender's ID)</Label>
-                <Input id="requesterId" placeholder="did:xidfi:... or 0x..." />
+                <div className="relative flex items-center">
+                    <Input id="requesterId" placeholder="did:xidfi:... or 0x..." className="pr-10" />
+                    <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                    </Button>
+                </div>
             </div>
             <div className="space-y-2">
                 <Label htmlFor="requestAmount">Amount</Label>
