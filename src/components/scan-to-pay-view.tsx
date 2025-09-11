@@ -202,46 +202,42 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             <FileQuestion className="h-5 w-5" />
                             <div>
                               <p className="font-semibold">Provide Credentials</p>
-                              <p className="text-xs text-muted-foreground">
-                                {providedProofs.length > 0
-                                  ? `${providedProofs.length}/${recipientRequestedProofs.length} provided`
-                                  : "Required"}
-                              </p>
+                              {providedProofs.length > 0 ? (
+                                  <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                                    {providedProofs.map((proofId) => {
+                                      const proof = recipientRequestedProofs.find(
+                                        (p) => p.id === proofId
+                                      );
+                                      return <li key={proofId}>{proof?.label}</li>;
+                                    })}
+                                  </ul>
+                                ) : (
+                                  <p className="text-xs text-muted-foreground">
+                                    Required
+                                  </p>
+                                )}
                             </div>
                           </div>
                           <SheetTrigger asChild>
-                            <Button
-                              variant={providedProofs.length > 0 ? "ghost" : "outline"}
-                              size="sm"
-                            >
-                              {providedProofs.length > 0 ? (
-                                <>
-                                  <Edit className="h-4 w-4" />
-                                  Edit
-                                </>
-                              ) : (
-                                <>
-                                 <PlusCircle className="mr-2 h-4 w-4" />
-                                 Add
-                                </>
-                              )}
-                             
-                            </Button>
-                          </SheetTrigger>
+                          <Button
+                            variant={providedProofs.length > 0 ? "ghost" : "outline"}
+                            size="sm"
+                          >
+                            {providedProofs.length > 0 ? (
+                              <>
+                                <Edit className="h-4 w-4" />
+                                Edit
+                              </>
+                            ) : (
+                              <>
+                               <PlusCircle className="mr-2 h-4 w-4" />
+                               Add
+                              </>
+                            )}
+                           
+                          </Button>
+                        </SheetTrigger>
                         </div>
-                        {providedProofs.length > 0 && (
-                          <>
-                            <Separator className="my-2" />
-                            <ul className="text-xs text-muted-foreground list-disc pl-5">
-                              {providedProofs.map((proofId) => {
-                                const proof = recipientRequestedProofs.find(
-                                  (p) => p.id === proofId
-                                );
-                                return <li key={proofId}>{proof?.label}</li>;
-                              })}
-                            </ul>
-                          </>
-                        )}
                       </CardContent>
                     </Card>
                     <SheetContent>
@@ -308,7 +304,10 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
         return (
             <div className="flex-grow flex flex-col items-center justify-center text-center space-y-4">
                 <CheckCircle className="h-20 w-20 text-green-500" />
-                <h3 className="text-2xl font-bold font-headline">Payment Sent!</h3>
+                <div className="text-center">
+                    <h3 className="text-2xl font-bold font-headline">Completed Successfully</h3>
+                    <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
+                </div>
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
                         <div className="flex justify-between"><span>To:</span> <span className="font-semibold">Jane Doe</span></div>
@@ -364,3 +363,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
