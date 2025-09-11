@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion, PlusCircle, Edit } from "lucide-react";
+import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion, PlusCircle, Edit, Share2, Scan } from "lucide-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -127,10 +127,28 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   }
 
   const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
+    if (checked === 'indeterminate') return;
     setSelectedProofsToProvide(prev => 
         checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "xIDFI Payment Receipt",
+          text: `Payment of $10.00 to Jane Doe.`,
+        })
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Not Supported",
+        description: "Your browser does not support the Web Share API.",
+      });
+    }
+  };
 
   const renderContent = () => {
     switch (scanState) {
@@ -276,7 +294,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <Label htmlFor="note">Note (Optional)</Label>
                         <Input id="note" placeholder="For coffee" />
                     </div>
-                    <Button className="w-full" onClick={handleSendPayment}>Pay</Button>
+                    <div className="flex flex-col gap-2 pt-2">
+                        <Button className="w-full" onClick={handleSendPayment}>Pay</Button>
+                    </div>
                 </div>
             </div>
         );
@@ -301,7 +321,16 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                     </CardContent>
                 </Card>
                 <Button className="w-full" onClick={onBack}>Done</Button>
-                <Button variant="outline" className="w-full" onClick={handleReset}>Scan Another</Button>
+                <div className="grid grid-cols-2 gap-4 w-full">
+                    <Button variant="outline" onClick={handleShare}>
+                        <Share2 className="mr-2 h-4 w-4" />
+                        Share
+                    </Button>
+                    <Button variant="outline" onClick={handleReset}>
+                        <Scan className="mr-2 h-4 w-4" />
+                        Scan Another
+                    </Button>
+                </div>
             </div>
         );
       case 'error':
@@ -330,3 +359,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
