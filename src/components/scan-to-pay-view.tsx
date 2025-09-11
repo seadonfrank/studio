@@ -269,7 +269,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <Input id="note" placeholder="For coffee" value={paymentDetails.note} onChange={(e) => handleDetailsChange('note', e.target.value)} />
                     </div>
                     <div className="flex flex-col gap-2 pt-2">
-                        <Button className="w-full" onClick={handleSendPayment}>Pay</Button>
+                        <Button className="w-full" onClick={handleSendPayment}>Complete Payment</Button>
                     </div>
                 </div>
             </div>
@@ -346,7 +346,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
 
     
