@@ -28,8 +28,8 @@ interface ScanToPayViewProps {
 type ScanState = 'scanning' | 'scanned' | 'payment_sent' | 'error';
 
 const recipientRequestedProofs = [
-    { id: 'age', label: 'Proof of Age (Over 18)', reason: 'Age-restricted product' },
-    { id: 'kyc', label: 'Proof of KYC', reason: 'Regulatory requirement' },
+    { id: 'age', label: 'Proof of Age (Over 18)' },
+    { id: 'kyc', label: 'Proof of KYC' },
 ];
 
 export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
@@ -202,7 +202,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                                 />
                                                 <div className="flex-1">
                                                     <Label htmlFor={`sheet-${proof.id}`} className="font-normal">{proof.label}</Label>
-                                                    <p className="text-xs text-muted-foreground">Reason: {proof.reason}</p>
                                                 </div>
                                             </div>
                                         ))}
