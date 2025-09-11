@@ -101,18 +101,14 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   const handleProvideProofs = () => {
       setProvidedProofs(selectedProofsToProvide);
-      toast({
-          title: "Proofs Provided",
-          description: `You have provided ${selectedProofsToProvide.length} credential(s) to Jane Doe.`
-      });
   }
 
   const handleSendPayment = () => {
-    if (recipientHasRequestedProofs && providedProofs.length === 0) {
+    if (recipientHasRequestedProofs && providedProofs.length !== recipientRequestedProofs.length) {
         toast({
             variant: "destructive",
             title: "Provide Credentials",
-            description: "Please provide the requested credentials before sending the payment."
+            description: "Please provide all the requested credentials before sending the payment."
         });
         return;
     }
@@ -130,7 +126,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
+  const handleCheckboxChange = (proofId: string, checked: boolean) => {
     setSelectedProofsToProvide(prev => 
         checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
@@ -180,7 +176,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
                 {recipientHasRequestedProofs && (
                   <Sheet>
-                    <Card className={!recipientHasRequestedProofs || (recipientHasRequestedProofs && providedProofs.length === 0) ? "border-destructive" : ""}>
+                    <Card className={!recipientHasRequestedProofs || (recipientHasRequestedProofs && providedProofs.length !== recipientRequestedProofs.length) ? "border-destructive" : ""}>
                         <CardContent className="p-3">
                             <div className="flex justify-between items-center">
                             <div className="flex items-center gap-3">
@@ -189,7 +185,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <p className="font-semibold">Provide Credentials</p>
                                 <p className="text-xs text-muted-foreground">
                                     {providedProofs.length > 0
-                                    ? `${providedProofs.length} provided`
+                                    ? `${providedProofs.length}/${recipientRequestedProofs.length} provided`
                                     : "Required"}
                                 </p>
                                 </div>
@@ -223,7 +219,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                     <Checkbox 
                                         id={`sheet-${proof.id}`} 
-                                        onCheckedChange={(checked: CheckedState) => handleCheckboxChange(proof.id, checked)}
+                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
                                         checked={selectedProofsToProvide.includes(proof.id)}
                                     />
                                     <div className="flex-1">
@@ -306,5 +302,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
