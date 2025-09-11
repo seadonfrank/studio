@@ -14,6 +14,7 @@ import {
     SelectValue,
 } from "./ui/select";
 import { Card, CardContent } from "./ui/card";
+import { Separator } from "./ui/separator";
 
 interface SendPaymentViewProps {
   onBack: () => void;
@@ -57,6 +58,8 @@ export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps
               </div>
           </div>
         </div>
+
+        <Separator />
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
