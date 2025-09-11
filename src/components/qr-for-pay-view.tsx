@@ -143,122 +143,147 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     }
 
     return (
-        <div className="flex-grow flex flex-col justify-between">
-            <div className="space-y-4">
-                <div className="space-y-2">
-                    <Label htmlFor="requestAmount">Amount</Label>
-                    <div className="flex gap-2">
-                        <Input 
-                            id="requestAmount" 
-                            type="number" 
-                            placeholder="0.00" 
-                            className="flex-grow" 
-                            value={paymentDetails.amount}
-                            onChange={(e) => handleDetailsChange('amount', e.target.value)}
-                        />
-                        <Select 
-                            value={paymentDetails.currency}
-                            onValueChange={(value) => handleDetailsChange('currency', value)}
-                        >
-                            <SelectTrigger className="w-[120px]">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="USD">USD</SelectItem>
-                                <SelectItem value="EUR">EUR</SelectItem>
-                                <SelectItem value="GBP">GBP</SelectItem>
-                                <SelectItem value="BTC">BTC</SelectItem>
-                                <SelectItem value="ETH">ETH</SelectItem>
-                                <SelectItem value="SOL">SOL</SelectItem>
-                            </SelectContent>
-                        </Select>
+      <div className="flex-grow flex flex-col justify-between">
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="requestAmount">Amount</Label>
+            <div className="flex gap-2">
+              <Input
+                id="requestAmount"
+                type="number"
+                placeholder="0.00"
+                className="flex-grow"
+                value={paymentDetails.amount}
+                onChange={(e) => handleDetailsChange("amount", e.target.value)}
+              />
+              <Select
+                value={paymentDetails.currency}
+                onValueChange={(value) => handleDetailsChange("currency", value)}
+              >
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="USD">USD</SelectItem>
+                  <SelectItem value="EUR">EUR</SelectItem>
+                  <SelectItem value="GBP">GBP</SelectItem>
+                  <SelectItem value="BTC">BTC</SelectItem>
+                  <SelectItem value="ETH">ETH</SelectItem>
+                  <SelectItem value="SOL">SOL</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="requestNotes">Note (Optional)</Label>
+            <Input
+              id="requestNotes"
+              placeholder="E.g., for dinner last night"
+              value={paymentDetails.note}
+              onChange={(e) => handleDetailsChange("note", e.target.value)}
+            />
+          </div>
+          <Separator />
+
+          <Sheet>
+            <Card>
+              <CardContent className="p-3">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <FileQuestion className="h-5 w-5" />
+                    <div>
+                      <p className="font-semibold">Request Credentials</p>
+                      <p className="text-xs text-muted-foreground">
+                        {selectedProofs.length > 0
+                          ? `${selectedProofs.length} selected`
+                          : "Optional"}
+                      </p>
                     </div>
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="requestNotes">Note (Optional)</Label>
-                    <Input 
-                        id="requestNotes" 
-                        placeholder="E.g., for dinner last night"
-                        value={paymentDetails.note}
-                        onChange={(e) => handleDetailsChange('note', e.target.value)}
-                    />
-                </div>
-                <Separator />
-                
-                <Sheet>
-                  <Card>
-                    <CardContent className="p-3">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-3">
-                          <FileQuestion className="h-5 w-5" />
-                          <div>
-                            <p className="font-semibold">Request Credentials</p>
-                            <p className="text-xs text-muted-foreground">
-                              {selectedProofs.length > 0 ? `${selectedProofs.length} selected` : 'Optional'}
-                            </p>
-                          </div>
-                        </div>
-                        <SheetTrigger asChild>
-                           <Button variant={selectedProofs.length > 0 ? "ghost" : "outline"} size="sm">
-                            {selectedProofs.length > 0 ? <Edit className="h-4 w-4" /> : <PlusCircle className="mr-2 h-4 w-4" />}
-                            {selectedProofs.length > 0 ? 'Edit' : 'Add'}
-                          </Button>
-                        </SheetTrigger>
-                      </div>
-                      {selectedProofs.length > 0 && (
-                        <>
-                          <Separator className="my-2" />
-                          <ul className="text-xs text-muted-foreground list-disc pl-5">
-                            {selectedProofs.map(proofId => {
-                                const proof = availableProofs.find(p => p.id === proofId);
-                                return <li key={proofId}>{proof?.label}</li>
-                            })}
-                          </ul>
-                        </>
+                  </div>
+                  <SheetTrigger asChild>
+                    <Button
+                      variant={selectedProofs.length > 0 ? "ghost" : "outline"}
+                      size="sm"
+                    >
+                      {selectedProofs.length > 0 ? (
+                        <Edit className="h-4 w-4" />
+                      ) : (
+                        <PlusCircle className="mr-2 h-4 w-4" />
                       )}
-                    </CardContent>
-                  </Card>
-                  <SheetContent>
-                      <SheetHeader>
-                          <SheetTitle>Request Credentials</SheetTitle>
-                          <SheetDescription>
-                              Select which credentials you want to request from the payer.
-                          </SheetDescription>
-                      </SheetHeader>
-                      <div className="py-4 space-y-3">
-                          {availableProofs.map(proof => (
-                              <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
-                                  <Checkbox 
-                                      id={`sheet-${proof.id}`} 
-                                      onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
-                                      checked={selectedProofs.includes(proof.id)}
-                                  />
-                                  <Label htmlFor={`sheet-${proof.id}`} className="font-normal flex-1">{proof.label}</Label>
-                              </div>
-                          ))}
-                      </div>
-                      <div className="flex gap-2">
-                        <SheetClose asChild>
-                          <Button variant="outline" className="w-full">Cancel</Button>
-                        </SheetClose>
-                        <SheetClose asChild>
-                          <Button className="w-full">Request Selected</Button>
-                        </SheetClose>
-                      </div>
-                  </SheetContent>
-                </Sheet>
-            </div>
-            <div className="mt-4">
-              <Button className="w-full" onClick={handleGenerateQr}>Generate QR Code</Button>
-            </div>
+                      {selectedProofs.length > 0 ? "Edit" : "Add"}
+                    </Button>
+                  </SheetTrigger>
+                </div>
+                {selectedProofs.length > 0 && (
+                  <>
+                    <Separator className="my-2" />
+                    <ul className="text-xs text-muted-foreground list-disc pl-5">
+                      {selectedProofs.map((proofId) => {
+                        const proof = availableProofs.find(
+                          (p) => p.id === proofId
+                        );
+                        return <li key={proofId}>{proof?.label}</li>;
+                      })}
+                    </ul>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+            <SheetContent>
+              <SheetHeader className="text-left">
+                <SheetTitle>Request Credentials</SheetTitle>
+                <SheetDescription>
+                  Select which credentials you want to request from the payer.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="py-4 space-y-3">
+                {availableProofs.map((proof) => (
+                  <div
+                    key={proof.id}
+                    className="flex items-center space-x-3 p-3 border rounded-md"
+                  >
+                    <Checkbox
+                      id={`sheet-${proof.id}`}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(proof.id, !!checked)
+                      }
+                      checked={selectedProofs.includes(proof.id)}
+                    />
+                    <Label
+                      htmlFor={`sheet-${proof.id}`}
+                      className="font-normal flex-1"
+                    >
+                      {proof.label}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <SheetClose asChild>
+                  <Button variant="outline" className="w-full">
+                    Cancel
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button className="w-full">Request Selected</Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
+        <div className="mt-auto">
+          <Button className="w-full" onClick={handleGenerateQr}>
+            Generate QR Code
+          </Button>
+        </div>
+      </div>
     );
   }
 
 
   return (
-    <div className="flex flex-col h-full p-4 space-y-6">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col h-full p-4">
+      <div className="flex items-center gap-2 mb-6">
         <Button variant="ghost" size="icon" onClick={handleBack}>
           <ArrowLeft />
         </Button>
