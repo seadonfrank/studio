@@ -53,11 +53,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
     const getCameraPermission = async () => {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        toast({
-          variant: "destructive",
-          title: "Camera Not Supported",
-          description: "Your browser does not support camera access.",
-        });
         setHasCameraPermission(false);
         return;
       }
@@ -81,11 +76,6 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
       } catch (error) {
         console.error('Error accessing camera:', error);
         setHasCameraPermission(false);
-        toast({
-          variant: 'destructive',
-          title: 'Camera Access Denied',
-          description: 'Please enable camera permissions in your browser settings to use this feature.',
-        });
       }
     };
 
@@ -202,9 +192,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             <FileQuestion className="h-5 w-5" />
                             <div>
                               <p className="font-semibold">Provide Credentials</p>
-                              {providedProofs.length > 0 ? (
+                              {selectedProofsToProvide.length > 0 ? (
                                   <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
-                                    {providedProofs.map((proofId) => {
+                                    {selectedProofsToProvide.map((proofId) => {
                                       const proof = recipientRequestedProofs.find(
                                         (p) => p.id === proofId
                                       );
@@ -225,7 +215,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                           >
                             {providedProofs.length > 0 ? (
                               <>
-                                <Edit className="h-4 w-4" />
+                                <Edit className="h-4 w-4 mr-2" />
                                 Edit
                               </>
                             ) : (
@@ -303,14 +293,18 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
       case 'payment_sent':
         return (
             <div className="flex-grow flex flex-col items-center justify-center text-center space-y-4">
-                <CheckCircle className="h-20 w-20 text-green-500" />
-                <div className="text-center">
-                    <h3 className="text-2xl font-bold font-headline">Completed Successfully</h3>
-                    <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
+                <div className="text-center space-y-2">
+                    <Avatar className="h-20 w-20 mx-auto">
+                        <AvatarImage src="https://picsum.photos/id/1027/200/200" data-ai-hint="person portrait" />
+                        <AvatarFallback>JD</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <p className="font-semibold text-lg">Jane Doe</p>
+                        <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
+                    </div>
                 </div>
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
-                        <div className="flex justify-between"><span>To:</span> <span className="font-semibold">Jane Doe</span></div>
                         <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">{paymentDetails.amount} {paymentDetails.currency}</span></div>
                         {paymentDetails.note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{paymentDetails.note}</span></div>}
                         
@@ -352,11 +346,15 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   return (
     <div className="flex flex-col h-full p-4">
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : handleReset}>
-          <ArrowLeft />
-        </Button>
-        <h2 className="text-xl font-bold font-headline">Scan to Pay</h2>
+      <div className="flex items-center gap-2 mb-4">
+        {scanState !== 'payment_sent' && (
+          <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : handleReset}>
+            <ArrowLeft />
+          </Button>
+        )}
+        <h2 className="text-xl font-bold font-headline">
+          {scanState === 'payment_sent' ? 'Payment Success' : 'Scan to Pay'}
+        </h2>
       </div>
 
       {renderContent()}
