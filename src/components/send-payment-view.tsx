@@ -76,8 +76,23 @@ export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps
             <Input id="recipientId" placeholder="did:xidfi:... or 0x..." />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="amount">Amount (USD)</Label>
-            <Input id="amount" type="number" placeholder="0.00" />
+            <Label htmlFor="amount">Amount</Label>
+            <div className="flex gap-2">
+                <Input id="amount" type="number" placeholder="0.00" className="flex-grow" />
+                <Select defaultValue="USD">
+                    <SelectTrigger className="w-[120px]">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="USD">USD</SelectItem>
+                        <SelectItem value="EUR">EUR</SelectItem>
+                        <SelectItem value="GBP">GBP</SelectItem>
+                        <SelectItem value="BTC">BTC</SelectItem>
+                        <SelectItem value="ETH">ETH</SelectItem>
+                        <SelectItem value="SOL">SOL</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
           </div>
           <Card className="bg-muted/50">
             <CardContent className="text-sm p-4 space-y-2">
