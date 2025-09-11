@@ -41,6 +41,26 @@ export default function PaymentsTab() {
               <p className="text-muted-foreground">Send and receive money securely.</p>
             </div>
 
+            <Card 
+              className="bg-gradient-to-br from-primary via-primary to-purple-600 text-primary-foreground cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => setView('scan')}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <div className="bg-primary-foreground/20 p-2 rounded-lg">
+                            <Scan className="h-6 w-6 text-primary-foreground" />
+                        </div>
+                        <div>
+                            <p className="font-bold text-lg">Scan to Pay</p>
+                            <p className="text-sm text-primary-foreground/80">Use QR codes for quick payments</p>
+                        </div>
+                    </div>
+                    <ChevronRight className="h-6 w-6 text-primary-foreground/50" />
+                </div>
+              </CardContent>
+            </Card>
+            
             <Card>
               <CardContent className="p-0">
                 <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setView('send')}>
@@ -51,19 +71,6 @@ export default function PaymentsTab() {
                       <div>
                           <p className="font-semibold">Send Payment</p>
                           <p className="text-sm text-muted-foreground">Pay for anything</p>
-                      </div>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <Separator />
-                 <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setView('scan')}>
-                  <div className="flex items-center gap-4">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
-                          <Scan className="h-6 w-6" />
-                      </div>
-                      <div>
-                          <p className="font-semibold">Scan to Pay</p>
-                          <p className="text-sm text-muted-foreground">Use QR codes for quick payments</p>
                       </div>
                   </div>
                   <ChevronRight className="h-5 w-5 text-muted-foreground" />
