@@ -45,6 +45,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   const [recipientHasRequestedProofs, setRecipientHasRequestedProofs] = useState(false);
   const [providedProofs, setProvidedProofs] = useState<string[]>([]);
   const [selectedProofsToProvide, setSelectedProofsToProvide] = useState<string[]>([]);
+  const [paymentDetails, setPaymentDetails] = useState({ amount: '10.00', currency: 'USD', note: 'For coffee' });
 
 
   useEffect(() => {
@@ -115,7 +116,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setScanState('payment_sent');
     toast({
         title: "Payment Sent!",
-        description: "Your payment of $10.00 has been sent to Jane Doe."
+        description: `Your payment of ${paymentDetails.amount} ${paymentDetails.currency} has been sent to Jane Doe.`
     });
   }
   
@@ -126,19 +127,23 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     setSelectedProofsToProvide([]);
   }
 
-  const handleCheckboxChange = (proofId: string, checked: CheckedState) => {
-    if (checked === 'indeterminate') return;
+  const handleCheckboxChange = (proofId: string, checked: boolean) => {
     setSelectedProofsToProvide(prev => 
-        checked === true ? [...prev, proofId] : prev.filter(id => id !== proofId)
+        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
     );
   }
 
+  const handleDetailsChange = (field: keyof typeof paymentDetails, value: string) => {
+    setPaymentDetails(prev => ({...prev, [field]: value}));
+  }
+
   const handleShare = () => {
+    const receiptText = `Payment of ${paymentDetails.amount} ${paymentDetails.currency} to Jane Doe.`;
     if (navigator.share) {
       navigator
         .share({
           title: "xIDFI Payment Receipt",
-          text: `Payment of $10.00 to Jane Doe.`,
+          text: receiptText,
         })
         .catch((error) => console.log("Error sharing", error));
     } else {
@@ -252,7 +257,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                                 <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
                                     <Checkbox 
                                         id={`sheet-${proof.id}`} 
-                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, checked)}
+                                        onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
                                         checked={selectedProofsToProvide.includes(proof.id)}
                                     />
                                     <div className="flex-1">
@@ -277,8 +282,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                     <div className="space-y-2">
                         <Label htmlFor="amount">Amount</Label>
                         <div className="flex gap-2">
-                            <Input id="amount" type="number" placeholder="0.00" className="flex-grow" defaultValue="10.00" />
-                            <Select defaultValue="USD">
+                            <Input id="amount" type="number" placeholder="0.00" className="flex-grow" value={paymentDetails.amount} onChange={(e) => handleDetailsChange('amount', e.target.value)} />
+                            <Select value={paymentDetails.currency} onValueChange={(value) => handleDetailsChange('currency', value)}>
                                 <SelectTrigger className="w-[120px]">
                                     <SelectValue />
                                 </SelectTrigger>
@@ -292,7 +297,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="note">Note (Optional)</Label>
-                        <Input id="note" placeholder="For coffee" />
+                        <Input id="note" placeholder="For coffee" value={paymentDetails.note} onChange={(e) => handleDetailsChange('note', e.target.value)} />
                     </div>
                     <div className="flex flex-col gap-2 pt-2">
                         <Button className="w-full" onClick={handleSendPayment}>Pay</Button>
@@ -308,7 +313,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
                         <div className="flex justify-between"><span>To:</span> <span className="font-semibold">Jane Doe</span></div>
-                        <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">$10.00 USD</span></div>
+                        <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">{paymentDetails.amount} {paymentDetails.currency}</span></div>
+                        {paymentDetails.note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{paymentDetails.note}</span></div>}
                         
                         {providedProofs.length > 0 && <Separator className="my-2"/>}
                         {providedProofs.length > 0 && <p className="font-semibold">Credentials Provided:</p>}
@@ -324,7 +330,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 <div className="grid grid-cols-2 gap-4 w-full">
                     <Button variant="outline" onClick={handleShare}>
                         <Share2 className="mr-2 h-4 w-4" />
-                        Share
+                        Share Receipt
                     </Button>
                     <Button variant="outline" onClick={handleReset}>
                         <Scan className="mr-2 h-4 w-4" />
@@ -359,5 +365,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
