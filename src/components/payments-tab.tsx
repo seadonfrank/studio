@@ -53,7 +53,6 @@ export default function PaymentsTab() {
                         </div>
                         <div>
                             <p className="font-bold text-lg">Scan to Pay</p>
-                            <p className="text-sm text-primary-foreground/80">Use QR codes for quick payments</p>
                         </div>
                     </div>
                     <ChevronRight className="h-6 w-6 text-primary-foreground/50" />
