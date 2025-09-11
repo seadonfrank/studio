@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { Checkbox } from "./ui/checkbox";
 
 interface ScanToPayViewProps {
   onBack: () => void;
@@ -39,7 +40,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   
   // New state to simulate if the recipient has requested proofs from the user
   const [recipientHasRequestedProofs, setRecipientHasRequestedProofs] = useState(false);
-  const [proofsProvided, setProofsProvided] = useState(false);
+  const [providedProofs, setProvidedProofs] = useState<string[]>([]);
+  const [selectedProofsToProvide, setSelectedProofsToProvide] = useState<string[]>([]);
 
 
   useEffect(() => {
@@ -69,6 +71,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
             setScanState('scanned');
             // Simulate that the scanned recipient is requesting proofs
             setRecipientHasRequestedProofs(true); 
+            setSelectedProofsToProvide(recipientRequestedProofs.map(p => p.id));
         }, 2000);
 
       } catch (error) {
@@ -94,14 +97,22 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   }, [toast, scanState]);
 
   const handleProvideProofs = () => {
-      setProofsProvided(true);
+      setProvidedProofs(selectedProofsToProvide);
       toast({
           title: "Proofs Provided",
-          description: "You have provided the requested credentials to Jane Doe."
+          description: `You have provided ${selectedProofsToProvide.length} credential(s) to Jane Doe.`
       });
   }
 
   const handleSendPayment = () => {
+    if (recipientHasRequestedProofs && providedProofs.length === 0) {
+        toast({
+            variant: "destructive",
+            title: "Action Required",
+            description: "Please provide the requested credentials before sending the payment."
+        });
+        return;
+    }
     setScanState('payment_sent');
     toast({
         title: "Payment Sent!",
@@ -112,7 +123,14 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   const handleReset = () => {
     setScanState('scanning');
     setRecipientHasRequestedProofs(false);
-    setProofsProvided(false);
+    setProvidedProofs([]);
+    setSelectedProofsToProvide([]);
+  }
+
+  const handleCheckboxChange = (proofId: string, checked: boolean) => {
+    setSelectedProofsToProvide(prev => 
+        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
+    );
   }
 
   const renderContent = () => {
@@ -158,40 +176,47 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                 </div>
 
                 {recipientHasRequestedProofs && (
-                    <Alert variant={proofsProvided ? "default" : "destructive"}>
+                    <Alert variant={providedProofs.length > 0 ? "default" : "destructive"}>
                         <FileQuestion className="h-4 w-4" />
                         <AlertTitle>Provide Credentials</AlertTitle>
                         <AlertDescription className="flex justify-between items-center">
                             <span>Recipient requests credentials.</span>
-                            {!proofsProvided && (
-                                <Sheet>
-                                    <SheetTrigger asChild>
-                                        <Button size="sm">Provide</Button>
-                                    </SheetTrigger>
-                                    <SheetContent>
-                                        <SheetHeader>
-                                            <SheetTitle>Provide Credentials</SheetTitle>
-                                            <SheetDescription>
-                                                Jane Doe is requesting the following credentials. Review and provide them.
-                                            </SheetDescription>
-                                        </SheetHeader>
-                                        <div className="space-y-4 py-4">
-                                            {recipientRequestedProofs.map(proof => (
-                                                <div key={proof.id} className="p-3 border rounded-lg">
-                                                    <p className="font-semibold">{proof.label}</p>
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button size="sm">{providedProofs.length > 0 ? 'View' : 'Provide'}</Button>
+                                </SheetTrigger>
+                                <SheetContent>
+                                    <SheetHeader>
+                                        <SheetTitle>Provide Credentials</SheetTitle>
+                                        <SheetDescription>
+                                            Jane Doe is requesting the following credentials. Review and provide them.
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <div className="space-y-4 py-4">
+                                        {recipientRequestedProofs.map(proof => (
+                                            <div key={proof.id} className="flex items-center space-x-3 p-3 border rounded-md">
+                                                <Checkbox 
+                                                    id={`sheet-${proof.id}`} 
+                                                    onCheckedChange={(checked) => handleCheckboxChange(proof.id, !!checked)}
+                                                    checked={selectedProofsToProvide.includes(proof.id)}
+                                                />
+                                                <div className="flex-1">
+                                                    <Label htmlFor={`sheet-${proof.id}`} className="font-normal">{proof.label}</Label>
                                                     <p className="text-xs text-muted-foreground">Reason: {proof.reason}</p>
                                                 </div>
-                                            ))}
-                                            <div className="flex gap-2 !mt-6">
-                                                <Button variant="outline" className="w-full">Deny</Button>
-                                                <SheetClose asChild>
-                                                    <Button className="w-full" onClick={handleProvideProofs}>Provide</Button>
-                                                </SheetClose>
                                             </div>
+                                        ))}
+                                        <div className="flex gap-2 !mt-6">
+                                            <SheetClose asChild>
+                                                <Button variant="outline" className="w-full">Cancel</Button>
+                                            </SheetClose>
+                                            <SheetClose asChild>
+                                                <Button className="w-full" onClick={handleProvideProofs}>Provide Selected</Button>
+                                            </SheetClose>
                                         </div>
-                                    </SheetContent>
-                                </Sheet>
-                            )}
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
                         </AlertDescription>
                     </Alert>
                 )}
@@ -258,3 +283,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
