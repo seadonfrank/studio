@@ -71,7 +71,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
             setScanState('scanned');
             // Simulate that the scanned recipient is requesting proofs
             setRecipientHasRequestedProofs(true); 
-            setSelectedProofsToProvide([]);
+            const allProofIds = recipientRequestedProofs.map(p => p.id);
+            setSelectedProofsToProvide(allProofIds);
+            setProvidedProofs(allProofIds);
         }, 2000);
 
       } catch (error) {
@@ -193,9 +195,9 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                             <FileQuestion className="h-5 w-5" />
                             <div>
                               <p className="font-semibold">Provide Credentials</p>
-                              {selectedProofsToProvide.length > 0 ? (
+                              {providedProofs.length > 0 ? (
                                   <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
-                                    {selectedProofsToProvide.map((proofId) => {
+                                    {providedProofs.map((proofId) => {
                                       const proof = recipientRequestedProofs.find(
                                         (p) => p.id === proofId
                                       );
@@ -294,15 +296,13 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
       case 'payment_sent':
         return (
             <div className="flex-grow flex flex-col items-center justify-center text-center space-y-4">
-                <div className="text-center space-y-2">
-                    <Avatar className="h-20 w-20 mx-auto">
-                        <AvatarImage src="https://picsum.photos/id/1027/200/200" data-ai-hint="person portrait" />
-                        <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <div>
-                        <p className="font-semibold text-lg">Jane Doe</p>
-                        <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
-                    </div>
+                <Avatar className="h-20 w-20 mx-auto">
+                    <AvatarImage src="https://picsum.photos/id/1027/200/200" data-ai-hint="person portrait" />
+                    <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+                <div>
+                    <h3 className="text-2xl font-bold font-headline">Completed Successfully</h3>
+                    <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
                 </div>
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
