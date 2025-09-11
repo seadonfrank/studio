@@ -2,21 +2,36 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, CameraOff, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { ArrowLeft, CameraOff, CheckCircle, XCircle, Loader2, ShieldCheck, FileQuestion } from "lucide-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Progress } from "./ui/progress";
+import { Card, CardContent } from "./ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { Separator } from "./ui/separator";
 
 interface ScanToProveViewProps {
   onBack: () => void;
 }
 
+const verifier = {
+    name: 'Gov. Department of Verification',
+    did: 'did:xidfi:gov:verifier:1234',
+    avatar: 'https://picsum.photos/id/101/200/200'
+};
+
+const requestedProofs = [
+    { id: 'kyc', label: 'Proof of KYC' },
+    { id: 'age', label: 'Proof of Age (Over 21)' },
+];
+
+
 export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
   const { toast } = useToast();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
-  const [scanState, setScanState] = useState<"scanning" | "processing" | "success" | "error">("scanning");
+  const [scanState, setScanState] = useState<"scanning" | "reviewing" | "processing" | "success" | "error">("scanning");
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -43,7 +58,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
 
         // Simulate scanning a QR code after 2 seconds
         setTimeout(() => {
-          setScanState("processing");
+          setScanState("reviewing");
         }, 2000);
       } catch (error) {
         console.error("Error accessing camera:", error);
@@ -84,6 +99,24 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
     }
   }, [scanState]);
 
+  const handleProvide = () => {
+    setScanState("processing");
+  }
+
+  const handleDecline = () => {
+    toast({
+        title: "Request Declined",
+        description: "You have declined the proof request.",
+        variant: "destructive"
+    });
+    onBack();
+  }
+
+  const resetState = () => {
+    setScanState("scanning");
+    setProgress(0);
+  }
+
   const renderScanContent = () => {
     switch (scanState) {
       case "scanning":
@@ -112,32 +145,77 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
             )}
           </>
         );
+      case "reviewing":
+        return (
+            <div className="w-full space-y-6">
+                <div className="text-center space-y-2">
+                    <Avatar className="h-20 w-20 mx-auto">
+                        <AvatarImage src={verifier.avatar} data-ai-hint="logo government" />
+                        <AvatarFallback>GDV</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <p className="font-semibold text-lg">{verifier.name}</p>
+                        <p className="text-muted-foreground text-sm font-mono truncate">{verifier.did}</p>
+                    </div>
+                </div>
+
+                <Card>
+                    <CardContent className="p-4">
+                        <div className="flex items-center gap-3">
+                            <FileQuestion className="h-5 w-5 text-primary"/>
+                            <p className="font-semibold">Credentials Requested</p>
+                        </div>
+                        <Separator className="my-3"/>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                            {requestedProofs.map(proof => (
+                                <li key={proof.id} className="flex items-center gap-2">
+                                    <ShieldCheck className="h-4 w-4 text-green-500"/>
+                                    <span>{proof.label}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Alert>
+                    <AlertTitle>This is a Zero-Knowledge Proof</AlertTitle>
+                    <AlertDescription>
+                        Only the validity of the statement will be shared, not the underlying data.
+                    </AlertDescription>
+                </Alert>
+
+                <div className="flex gap-4">
+                    <Button variant="outline" className="w-full" onClick={handleDecline}>Decline</Button>
+                    <Button className="w-full" onClick={handleProvide}>Provide Proof</Button>
+                </div>
+            </div>
+        );
       case "processing":
         return (
-          <div className="flex flex-col items-center justify-center h-48 space-y-4">
+          <div className="flex flex-col items-center justify-center h-64 space-y-4">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
             <p className="font-semibold">Generating Proof...</p>
-            <Progress value={progress} className="w-full" />
+            <Progress value={progress} className="w-full max-w-xs" />
           </div>
         );
       case "success":
         return (
-          <div className="flex flex-col items-center justify-center h-48 space-y-4 text-center">
+          <div className="flex flex-col items-center justify-center h-64 space-y-4 text-center">
             <CheckCircle className="h-16 w-16 text-green-500" />
             <p className="text-lg font-semibold">Proof Provided</p>
             <p className="text-muted-foreground">The required proof has been provided successfully.</p>
-            <Button onClick={() => { setScanState('scanning'); setProgress(0); }}>Scan Another</Button>
+            <Button onClick={resetState}>Scan Another</Button>
           </div>
         );
       case "error":
         return (
-          <div className="flex flex-col items-center justify-center h-48 space-y-4 text-center">
+          <div className="flex flex-col items-center justify-center h-64 space-y-4 text-center">
             <XCircle className="h-16 w-16 text-destructive" />
             <p className="text-lg font-semibold">Proof Generation Failed</p>
             <p className="text-muted-foreground">
               Could not provide the proof. The request may be invalid.
             </p>
-            <Button onClick={() => { setScanState('scanning'); setProgress(0); }}>Try Again</Button>
+            <Button onClick={resetState}>Try Again</Button>
           </div>
         );
     }
@@ -146,10 +224,10 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={onBack}>
+        <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : resetState}>
           <ArrowLeft />
         </Button>
-        <h2 className="text-xl font-bold font-headline">Scan to Prove</h2>
+        <h2 className="text-xl font-bold font-headline">{scanState === 'reviewing' ? 'Review Proof Request' : 'Scan to Prove'}</h2>
       </div>
 
       <div className="flex-grow flex flex-col items-center justify-center mt-4 space-y-4">
@@ -158,3 +236,5 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
     </div>
   );
 }
+
+    
