@@ -39,7 +39,7 @@ export default function SendPaymentView({ onBack, onScan }: SendPaymentViewProps
       <div className="flex-grow mt-6 space-y-6">
         <div>
           <h3 className="text-lg font-headline font-semibold mb-3">Beneficiaries</h3>
-          <div className="flex space-x-4 overflow-x-auto pb-4">
+          <div className="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
               {['AB', 'CD', 'EF', 'GH', 'IJ'].map((p, i) => (
                   <div key={i} className="flex flex-col items-center space-y-1.5 flex-shrink-0 w-16 text-center">
                       <Avatar className="h-14 w-14">
