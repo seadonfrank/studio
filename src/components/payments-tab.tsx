@@ -104,6 +104,9 @@ export default function PaymentsTab() {
                             <ChevronRight className="h-4 w-4" />
                         </Button>
                     </div>
+                    <p className="text-xs text-muted-foreground text-center pt-2">
+                        Bank-calculated FX rates apply to all incoming and outgoing transfers.
+                    </p>
                 </CardContent>
             </Card>
             
