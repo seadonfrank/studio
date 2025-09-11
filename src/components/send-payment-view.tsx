@@ -71,7 +71,12 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="recipientId">To</Label>
-            <Input id="recipientId" placeholder="did:xidfi:... or 0x..." />
+            <div className="relative flex items-center">
+              <Input id="recipientId" placeholder="did:xidfi:... or 0x..." className="pr-10" />
+              <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
+                <User className="h-4 w-4 text-muted-foreground" />
+              </Button>
+            </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="amount">Amount</Label>
