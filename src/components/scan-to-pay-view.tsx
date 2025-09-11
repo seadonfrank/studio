@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion, PlusCircle, Edit, Share2, Scan } from "lucide-react";
+import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion, PlusCircle, Edit, Share2, Scan, CircleCheckBig } from "lucide-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -346,7 +346,10 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
   return (
     <div className="flex flex-col h-full p-4">
-      <div className="flex items-center gap-2 mb-4">
+      <div className={cn(
+        "flex items-center gap-2 mb-4",
+        scanState === 'payment_sent' && "justify-center"
+      )}>
         {scanState !== 'payment_sent' && (
           <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : handleReset}>
             <ArrowLeft />
@@ -361,5 +364,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
