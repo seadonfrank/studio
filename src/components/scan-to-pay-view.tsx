@@ -283,7 +283,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                     <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
                 <div>
-                    <h3 className="text-2xl font-bold font-headline">Payment Successful!</h3>
+                    <h3 className="text-2xl font-bold font-headline">Jane Doe</h3>
                     <p className="text-muted-foreground text-sm font-mono">did:xidfi:...</p>
                 </div>
                 <Card className="w-full text-left">
@@ -330,8 +330,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   return (
     <div className="flex flex-col h-full p-4">
       <div className={cn(
-        "flex items-center gap-2 mb-4 justify-center",
-         scanState !== 'payment_sent' && "justify-between"
+        "flex items-center gap-2 mb-4",
+        scanState === 'payment_sent' && "justify-center"
       )}>
         {scanState !== 'payment_sent' && (
           <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : handleReset}>
@@ -347,3 +347,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
