@@ -40,7 +40,7 @@ export default function VerifyTab() {
                     <div>
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
-                        Instant scan to provide zero-knowledge credentials proofs
+                        Instant scan to provide zero-knowledge credential proofs
                       </p>
                     </div>
                   </div>
