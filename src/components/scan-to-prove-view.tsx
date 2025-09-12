@@ -319,7 +319,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
           </Button>
         )}
         <h2 className="text-xl font-bold font-headline">
-          {scanState === 'proof_sent' ? 'Proof Provided' : 'Scan to Prove'}
+          {scanState === 'proof_sent' ? 'Proof Sucessful' : 'Scan to Prove'}
         </h2>
       </div>
 
@@ -329,5 +329,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
     </div>
   );
 }
+
+    
 
     
