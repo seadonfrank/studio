@@ -58,7 +58,7 @@ export default function VerifyTab() {
                     <div>
                       <p className="font-semibold">QR to Prove</p>
                       <p className="text-sm text-muted-foreground">
-                        Generate a QR code to share proofs
+                        Generate QR code to request zero-knowledge credential proofs
                       </p>
                     </div>
                   </div>
