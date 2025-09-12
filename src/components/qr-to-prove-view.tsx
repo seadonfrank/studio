@@ -136,7 +136,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
         <div className="space-y-4">
             <h3 className="text-lg font-headline font-semibold">Select Proofs</h3>
             <p className="text-sm text-muted-foreground">
-                Select which credentials you want to send to the verifier.
+                Select which credentials you want to request from the verifier.
             </p>
             <div className="py-2 space-y-3">
             {availableProofs.map((proof) => (
