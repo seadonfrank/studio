@@ -117,7 +117,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                                 {note && <Separator className="my-2"/>}
                                 <div className="flex items-center gap-2 font-semibold">
                                     <FileQuestion className="h-4 w-4" />
-                                    <span>Requested Credentials:</span>
+                                    <span>Credentials Requested:</span>
                                 </div>
                                 <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
                                     {selectedProofs.map(proofId => {
