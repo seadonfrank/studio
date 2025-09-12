@@ -190,3 +190,4 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
     </div>
   );
 }
+

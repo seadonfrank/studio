@@ -305,5 +305,3 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     </div>
   );
 }
-
-    
