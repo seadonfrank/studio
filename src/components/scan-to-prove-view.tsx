@@ -227,7 +227,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
         <Button variant="ghost" size="icon" onClick={scanState === 'scanning' ? onBack : resetState}>
           <ArrowLeft />
         </Button>
-        <h2 className="text-xl font-bold font-headline">{scanState === 'reviewing' ? 'Review Proof Request' : 'Scan to Prove'}</h2>
+        <h2 className="text-xl font-bold font-headline">Scan to Prove</h2>
       </div>
 
       <div className="flex-grow flex flex-col items-center justify-center mt-4 space-y-4">
