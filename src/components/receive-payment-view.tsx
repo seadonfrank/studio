@@ -19,7 +19,7 @@ export default function ReceivePaymentView({ onBack }: ReceivePaymentViewProps) 
   const handleRequest = () => {
     toast({
         title: "Payment Request Sent",
-        description: "Your request has been sent successfully."
+        description: "Your payment has been requested successfully."
     });
   }
 
