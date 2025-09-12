@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, CreditCard, Wallet, Banknote, AreaChart, PlusCircle } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, CreditCard, Wallet, Banknote, AreaChart, PlusCircle, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -23,8 +23,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartConfig } from "@/components/ui/chart"
+import AccountCard from "./account-card";
+import ConvertBalanceDialog from "./convert-balance-dialog";
+import CloseBalanceDialog from "./close-balance-dialog";
 
 export default function FinanceTab() {
+  const accounts = [
+    { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
+    { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
+    { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
+  ];
+  
   const cards = [
     { cardType: "Credit Card", cardNumber: "1234", balance: "$2,500.00", limit: "$10,000", gradient: "from-primary via-purple-500 to-fuchsia-600" },
     { cardType: "Debit Card", cardNumber: "5678", balance: "$8,230.45", gradient: "from-blue-500 via-sky-500 to-cyan-400" },
@@ -94,14 +103,37 @@ export default function FinanceTab() {
       </Card>
       
 
-      <Tabs defaultValue="cards" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 h-auto">
+      <Tabs defaultValue="accounts" className="w-full">
+        <TabsList className="grid w-full grid-cols-6 h-auto">
+          <TabsTrigger value="accounts" className="flex-col h-auto p-2 gap-1"><User className="h-5 w-5"/> <span className="text-xs">Accounts</span></TabsTrigger>
           <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1"><CreditCard className="h-5 w-5"/> <span className="text-xs">Cards</span></TabsTrigger>
           <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1"><Landmark className="h-5 w-5"/> <span className="text-xs">Deposits</span></TabsTrigger>
           <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1"><Banknote className="h-5 w-5"/> <span className="text-xs">Loans</span></TabsTrigger>
           <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1"><TrendingUp className="h-5 w-5"/> <span className="text-xs">Funds</span></TabsTrigger>
           <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
         </TabsList>
+        
+        <TabsContent value="accounts" className="mt-4 space-y-4">
+            {accounts.map((account, index) => (
+                <AccountCard key={index} {...account} />
+            ))}
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                        <PlusCircle className="mr-2 h-4 w-4" /> Add New Account
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Add New Account</DialogTitle>
+                    <DialogDescription>
+                        Add a new currency account to your wallet.
+                    </DialogDescription>
+                </DialogHeader>
+                <ManageAccountsDialog />
+                </DialogContent>
+            </Dialog>
+        </TabsContent>
         
         <TabsContent value="cards" className="mt-4 space-y-4">
           {cards.map((card, index) => (
@@ -219,3 +251,5 @@ export default function FinanceTab() {
     </div>
   );
 }
+
+    
