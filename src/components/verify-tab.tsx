@@ -2,17 +2,21 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan } from "lucide-react";
+import { ChevronRight, Scan, QrCode } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
+import QrToProveView from "./qr-to-prove-view";
+import { Separator } from "./ui/separator";
 
 export default function VerifyTab() {
-  const [view, setView] = useState<"main" | "prove">("main");
+  const [view, setView] = useState<"main" | "prove" | "qr">("main");
 
   const renderContent = () => {
     switch (view) {
       case "prove":
         return <ScanToProveView onBack={() => setView("main")} />;
+      case "qr":
+        return <QrToProveView onBack={() => setView("main")} />;
       default:
         return (
           <>
@@ -37,6 +41,24 @@ export default function VerifyTab() {
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
                         Provide instant zero-knowledge proofs
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <Separator />
+                <div
+                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={() => setView("qr")}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                      <QrCode className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">QR to Prove</p>
+                      <p className="text-sm text-muted-foreground">
+                        Generate a QR code to share proofs
                       </p>
                     </div>
                   </div>
