@@ -13,6 +13,7 @@ import {
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import ConvertBalanceDialog from "./convert-balance-dialog";
 import CloseBalanceDialog from "./close-balance-dialog";
+import AddBalanceDialog from "./add-balance-dialog";
 
 interface AccountCardProps {
   currency: string;
@@ -43,6 +44,9 @@ export default function AccountCard({ currency, balance, type, gradient }: Accou
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DialogTrigger asChild>
+                <DropdownMenuItem>Add Balance</DropdownMenuItem>
+              </DialogTrigger>
+              <DialogTrigger asChild>
                 <DropdownMenuItem>Convert Balance</DropdownMenuItem>
               </DialogTrigger>
               <DropdownMenuSeparator />
@@ -51,12 +55,11 @@ export default function AccountCard({ currency, balance, type, gradient }: Accou
               </DialogTrigger>
             </DropdownMenuContent>
           </DropdownMenu>
-           <ConvertBalanceDialog currentCurrency={currency} />
+           <AddBalanceDialog currency={currency} />
+           {/* <ConvertBalanceDialog currentCurrency={currency} /> */}
            {/* <CloseBalanceDialog currency={currency} /> */}
         </Dialog>
       </CardContent>
     </Card>
   );
 }
-
-    
