@@ -103,7 +103,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     />
                 </div>
                 <p className="text-muted-foreground">
-                    Others can scan this QR code to verify your selected credentials.
+                    Position the QR code within the frame to scan.
                 </p>
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
