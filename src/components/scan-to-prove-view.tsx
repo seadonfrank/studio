@@ -210,7 +210,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
                         <SheetHeader className="text-left">
                             <SheetTitle>Provide Credentials</SheetTitle>
                             <SheetDescription>
-                               Select which credentials you want to provide to the verifier.
+                               Select which credentials you want to provide for verification.
                             </SheetDescription>
                         </SheetHeader>
                         <div className="space-y-4 py-4">
