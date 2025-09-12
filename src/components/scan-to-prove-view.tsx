@@ -133,7 +133,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
               )}
             </div>
             <p className="text-muted-foreground text-center">
-              Position the proof request QR code within the frame.
+              Position the QR code within the frame to scan.
             </p>
             {hasCameraPermission === false && (
               <Alert variant="destructive">
