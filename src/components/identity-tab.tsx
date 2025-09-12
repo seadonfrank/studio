@@ -46,12 +46,6 @@ export default function IdentityTab() {
     { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" as const },
   ];
 
-  const recentActivity = [
-    { action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
-    { action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
-    { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
-  ];
-
   const filteredGovernmentCredentials = governmentCredentials.filter(cred => {
     if (governmentFilter === 'all') return true;
     return cred.status === governmentFilter;
@@ -261,28 +255,6 @@ export default function IdentityTab() {
         </Carousel>
       </section>
       
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline">Recent Activity</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-4">
-            {recentActivity.map((activity, index) => (
-              <li key={index} className="flex items-start gap-3 text-sm">
-                <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
-                <div className="flex-1">
-                  <p className="font-medium">
-                    <span className="text-primary">{activity.action}</span> {activity.credential}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    For {activity.entity} &bull; {activity.time}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
     </div>
   );
 }
