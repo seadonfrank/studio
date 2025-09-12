@@ -117,7 +117,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                                 {note && <Separator className="my-2"/>}
                                 <div className="flex items-center gap-2 font-semibold">
                                     <FileQuestion className="h-4 w-4" />
-                                    <span>Request Credential:</span>
+                                    <span>Requested Credentials:</span>
                                 </div>
                                 <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
                                     {selectedProofs.map(proofId => {
@@ -154,7 +154,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     <div className="flex items-center gap-3">
                       <FileQuestion className="h-5 w-5" />
                       <div>
-                        <p className="font-semibold">Request Credential</p>
+                        <p className="font-semibold">Request Credentials</p>
                         <p className="text-xs text-muted-foreground">
                           {selectedProofs.length > 0 ? `${selectedProofs.length} selected` : 'Required'}
                         </p>
