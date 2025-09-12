@@ -179,7 +179,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
 
                 <div className="flex gap-4">
                     <Button variant="outline" className="w-full" onClick={handleDecline}>Decline</Button>
-                    <Button className="w-full" onClick={handleProvide}>Provide Proof</Button>
+                    <Button className="w-full" onClick={handleProvide}>Provide</Button>
                 </div>
             </div>
         );
