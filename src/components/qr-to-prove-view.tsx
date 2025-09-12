@@ -107,7 +107,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                 </p>
                 <Card className="w-full text-left">
                     <CardContent className="p-3 text-sm">
-                        <p className="font-semibold">Credentials Included:</p>
+                        <p className="font-semibold">Credentials Requested:</p>
                         <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
                             {selectedProofs.map(proofId => {
                                 const proof = availableProofs.find(p => p.id === proofId);
