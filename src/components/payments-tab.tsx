@@ -87,7 +87,7 @@ export default function PaymentsTab() {
                           <ArrowDownCircle className="h-6 w-6" />
                       </div>
                       <div>
-                          <p className="font-semibold">Receive Payment</p>
+                          <p className="font-semibold">Request Payment</p>
                           <p className="text-sm text-muted-foreground">Request to pay</p>
                       </div>
                   </div>
