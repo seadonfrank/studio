@@ -110,22 +110,21 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     Position the QR code within the frame to scan.
                 </p>
                 <Card className="w-full text-left">
-                    <CardContent className="p-4">
-                        <div className="flex items-center gap-3">
-                            <FileQuestion className="h-5 w-5 text-primary"/>
-                            <p className="font-semibold">Provide Credentials</p>
-                        </div>
-                        <Separator className="my-3"/>
-                        <ul className="space-y-1 text-sm text-muted-foreground list-disc pl-5">
-                            {selectedProofs.map(proofId => {
-                                const proof = availableProofs.find(p => p.id === proofId);
-                                return <li key={proofId}>{proof?.label}</li>
-                            })}
-                        </ul>
-                         {note && (
+                    <CardContent className="p-3 text-sm">
+                         {note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{note}</span></div>}
+                        {selectedProofs.length > 0 && (
                             <>
-                                <Separator className="my-2"/>
-                                <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{note}</span></div>
+                                {note && <Separator className="my-2"/>}
+                                <div className="flex items-center gap-2 font-semibold">
+                                    <FileQuestion className="h-4 w-4" />
+                                    <span>Request Credential:</span>
+                                </div>
+                                <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                                    {selectedProofs.map(proofId => {
+                                        const proof = availableProofs.find(p => p.id === proofId);
+                                        return <li key={proofId}>{proof?.label}</li>
+                                    })}
+                                </ul>
                             </>
                         )}
                     </CardContent>
@@ -155,7 +154,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     <div className="flex items-center gap-3">
                       <FileQuestion className="h-5 w-5" />
                       <div>
-                        <p className="font-semibold">Request Credentials</p>
+                        <p className="font-semibold">Request Credential</p>
                         <p className="text-xs text-muted-foreground">
                           {selectedProofs.length > 0 ? `${selectedProofs.length} selected` : 'Required'}
                         </p>
