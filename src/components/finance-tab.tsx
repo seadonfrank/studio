@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, CreditCard, Wallet, Banknote, AreaChart, PlusCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -12,13 +12,17 @@ import DepositCard from "./deposit-card";
 import AddAccountCard from "./add-account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
 import ManageDepositsDialog from "./manage-deposits-dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import LoanCard from "./loan-card";
 import ManageLoansDialog from "./manage-loans-dialog";
 import FundCard from "./fund-card";
 import ManageFundsDialog from "./manage-funds-dialog";
 import CryptoCredentialCard from "./crypto-credential-card";
 import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Area, CartesianGrid, XAxis, YAxis } from "recharts";
+import { ChartConfig } from "@/components/ui/chart"
 
 export default function FinanceTab() {
   const cards = [
@@ -45,220 +49,171 @@ export default function FinanceTab() {
   const cryptoCredentials = [
     { walletName: "My ETH Wallet", asset: "ETH", balance: "1.25", network: "Ethereum", walletAddress: "0x123...abc", gradient: "from-gray-700 to-gray-900", status: "active" as const },
     { walletName: "Bitcoin Savings", asset: "BTC", balance: "0.05", network: "Bitcoin", walletAddress: "1A1z...xyz", gradient: "from-amber-500 to-yellow-600", status: "active" as const },
-    { walletName: "Old Token Wallet", asset: "OLD", balance: "1000", network: "OldChain", walletAddress: "0xold...dead", gradient: "from-red-700 to-red-900", status: "revoked" as const },
   ];
 
+  const chartData = [
+    { month: "Jan", balance: 18600 },
+    { month: "Feb", balance: 30500 },
+    { month: "Mar", balance: 23700 },
+    { month: "Apr", balance: 27800 },
+    { month: "May", balance: 18900 },
+    { month: "Jun", balance: 23900 },
+  ]
+  const chartConfig = {
+    balance: {
+      label: "Balance",
+      color: "hsl(var(--primary))",
+    },
+  } satisfies ChartConfig
 
   return (
     <div className="space-y-6 p-4">
-      <section className="grid grid-cols-2 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base font-medium font-headline">Cash</CardTitle>
+      <Card>
+          <CardHeader>
+            <CardDescription>Total Balance</CardDescription>
+            <CardTitle className="font-headline text-3xl">$32,845.56</CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">$1,234.56</p>
-            <div className="flex gap-2 mt-2">
-              <Button size="icon" className="h-8 w-8" aria-label="Send"><ArrowUp/></Button>
-              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Receive"><ArrowDown/></Button>
-            </div>
+          <CardContent className="p-0">
+             <ChartContainer config={chartConfig} className="h-20 w-full">
+              <AreaChart accessibilityLayer data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="fillBalance" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--color-balance)" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="var(--color-balance)" stopOpacity={0.1} />
+                  </linearGradient>
+                </defs>
+                <Area type="monotone" dataKey="balance" stroke="hsl(var(--primary))" strokeWidth={2} fill="url(#fillBalance)" />
+              </AreaChart>
+            </ChartContainer>
           </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base font-medium font-headline">Rewards</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-primary">1,280</p>
-            <div className="flex gap-2 mt-2">
-              <Button size="icon" className="h-8 w-8" aria-label="Collect"><Gift/></Button>
-              <Button size="icon" variant="secondary" className="h-8 w-8" aria-label="Redeem"><Trophy/></Button>
-            </div>
+          <CardContent className="flex justify-center gap-2 pt-4">
+              <Button size="sm"><ArrowUp className="mr-1 h-4 w-4"/> Send</Button>
+              <Button size="sm" variant="secondary"><ArrowDown className="mr-1 h-4 w-4"/> Receive</Button>
+              <Button size="sm" variant="secondary"><PlusCircle className="mr-1 h-4 w-4"/> Add Money</Button>
           </CardContent>
-        </Card>
-      </section>
+      </Card>
+      
 
-      <section>
-        <h2 className="text-lg font-headline font-semibold mb-3">Cards</h2>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {cards.map((card, index) => (
-              <CarouselItem key={index}>
-                <PaymentCard {...card} />
-              </CarouselItem>
-            ))}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add New Card" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Card</DialogTitle>
-                      <DialogDescription>
-                        Enter details for your new payment card.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageCardsDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
+      <Tabs defaultValue="cards" className="w-full">
+        <TabsList className="grid w-full grid-cols-5 h-auto">
+          <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1"><CreditCard className="h-5 w-5"/> <span className="text-xs">Cards</span></TabsTrigger>
+          <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1"><Landmark className="h-5 w-5"/> <span className="text-xs">Deposits</span></TabsTrigger>
+          <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1"><Banknote className="h-5 w-5"/> <span className="text-xs">Loans</span></TabsTrigger>
+          <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1"><TrendingUp className="h-5 w-5"/> <span className="text-xs">Funds</span></TabsTrigger>
+          <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="cards" className="mt-4 space-y-4">
+          {cards.map((card, index) => (
+            <PaymentCard key={index} {...card} />
+          ))}
+          <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="outline" className="w-full">
+                    <PlusCircle className="mr-2 h-4 w-4" /> Add New Card
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add New Card</DialogTitle>
+                <DialogDescription>
+                  Enter details for your new payment card.
+                </DialogDescription>
+              </DialogHeader>
+              <ManageCardsDialog />
+            </DialogContent>
+          </Dialog>
+        </TabsContent>
 
-      <section>
-        <h2 className="text-lg font-headline font-semibold mb-3">Deposits</h2>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
+        <TabsContent value="deposits" className="mt-4 space-y-4">
             {deposits.map((deposit, index) => (
-              <CarouselItem key={index}>
-                <DepositCard {...deposit} />
-              </CarouselItem>
+                <DepositCard key={index} {...deposit} />
             ))}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add New Deposit" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Deposit</DialogTitle>
-                      <DialogDescription>
-                        Enter details for your new fixed-term deposit.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageDepositsDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
+            <Dialog>
+                <DialogTrigger asChild>
+                     <Button variant="outline" className="w-full">
+                        <PlusCircle className="mr-2 h-4 w-4" /> Add New Deposit
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Add New Deposit</DialogTitle>
+                    <DialogDescription>
+                    Enter details for your new fixed-term deposit.
+                    </DialogDescription>
+                </DialogHeader>
+                <ManageDepositsDialog />
+                </DialogContent>
+            </Dialog>
+        </TabsContent>
 
-      <section>
-        <h2 className="text-lg font-headline font-semibold mb-3">Loans</h2>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
+        <TabsContent value="loans" className="mt-4 space-y-4">
             {loans.map((loan, index) => (
-              <CarouselItem key={index}>
-                <LoanCard {...loan} />
-              </CarouselItem>
+                <LoanCard key={index} {...loan} />
             ))}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Apply for Loan" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Apply for a New Loan</DialogTitle>
-                      <DialogDescription>
-                        Enter the details for your new loan application.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageLoansDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section>
-        <h2 className="text-lg font-headline font-semibold mb-3">Funds</h2>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
+            <Dialog>
+                <DialogTrigger asChild>
+                     <Button variant="outline" className="w-full">
+                        <PlusCircle className="mr-2 h-4 w-4" /> Apply for Loan
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Apply for a New Loan</DialogTitle>
+                    <DialogDescription>
+                    Enter the details for your new loan application.
+                    </DialogDescription>
+                </DialogHeader>
+                <ManageLoansDialog />
+                </DialogContent>
+            </Dialog>
+        </TabsContent>
+        
+        <TabsContent value="funds" className="mt-4 space-y-4">
             {funds.map((fund, index) => (
-              <CarouselItem key={index}>
-                <FundCard {...fund} />
-              </CarouselItem>
+                <FundCard key={index} {...fund} />
             ))}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add New Investment" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Investment</DialogTitle>
-                      <DialogDescription>
-                        Enter the details for your new mutual fund investment.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageFundsDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section>
-        <h2 className="text-lg font-headline font-semibold mb-3">
-            Cryptocurrencies
-        </h2>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                        <PlusCircle className="mr-2 h-4 w-4" /> Add New Investment
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Add New Investment</DialogTitle>
+                    <DialogDescription>
+                    Enter the details for your new mutual fund investment.
+                    </DialogDescription>
+                </DialogHeader>
+                <ManageFundsDialog />
+                </DialogContent>
+            </Dialog>
+        </TabsContent>
+        
+        <TabsContent value="crypto" className="mt-4 space-y-4">
             {cryptoCredentials.map((cred, index) => (
-              <CarouselItem key={index}>
-                <CryptoCredentialCard {...cred} />
-              </CarouselItem>
+                <CryptoCredentialCard key={index} {...cred} />
             ))}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add Wallet" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Crypto Wallet</DialogTitle>
-                      <DialogDescription>
-                        Add details for a new cryptocurrency wallet.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageCryptoCredentialsDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                        <PlusCircle className="mr-2 h-4 w-4" /> Add Wallet
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Add New Crypto Wallet</DialogTitle>
+                    <DialogDescription>
+                    Add details for a new cryptocurrency wallet.
+                    </DialogDescription>
+                </DialogHeader>
+                <ManageCryptoCredentialsDialog />
+                </DialogContent>
+            </Dialog>
+        </TabsContent>
+
+      </Tabs>
 
       <TransactionList />
     </div>
