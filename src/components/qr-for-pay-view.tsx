@@ -119,14 +119,21 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
                     <CardContent className="p-3 text-sm">
                         <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">{paymentDetails.amount} {paymentDetails.currency}</span></div>
                         {paymentDetails.note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{paymentDetails.note}</span></div>}
-                        {selectedProofs.length > 0 && <Separator className="my-2"/>}
-                        {selectedProofs.length > 0 && <p className="font-semibold">Credentials Requested:</p>}
-                        <ul className="text-xs text-muted-foreground list-disc pl-5">
-                            {selectedProofs.map(proofId => {
-                                const proof = availableProofs.find(p => p.id === proofId);
-                                return <li key={proofId}>{proof?.label}</li>
-                            })}
-                        </ul>
+                        {selectedProofs.length > 0 && (
+                            <>
+                                <Separator className="my-2"/>
+                                <div className="flex items-center gap-2 font-semibold">
+                                    <FileQuestion className="h-4 w-4" />
+                                    <span>Credentials Requested:</span>
+                                </div>
+                                <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                                    {selectedProofs.map(proofId => {
+                                        const proof = availableProofs.find(p => p.id === proofId);
+                                        return <li key={proofId}>{proof?.label}</li>
+                                    })}
+                                </ul>
+                            </>
+                        )}
                     </CardContent>
                 </Card>
                  <Button className="w-full" onClick={onBack}>Done</Button>
@@ -298,3 +305,5 @@ export default function QrForPayView({ onBack }: QrForPayViewProps) {
     </div>
   );
 }
+
+    

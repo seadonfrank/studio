@@ -296,14 +296,21 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">{paymentDetails.amount} {paymentDetails.currency}</span></div>
                         {paymentDetails.note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{paymentDetails.note}</span></div>}
                         
-                        {providedProofs.length > 0 && <Separator className="my-2"/>}
-                        {providedProofs.length > 0 && <p className="font-semibold">Credentials Provided:</p>}
-                        <ul className="text-xs text-muted-foreground list-disc pl-5">
-                            {providedProofs.map(proofId => {
-                                const proof = recipientRequestedProofs.find(p => p.id === proofId);
-                                return <li key={proofId}>{proof?.label}</li>
-                            })}
-                        </ul>
+                        {providedProofs.length > 0 && (
+                            <>
+                                <Separator className="my-2"/>
+                                <div className="flex items-center gap-2 font-semibold">
+                                    <FileQuestion className="h-4 w-4" />
+                                    <span>Credentials Provided:</span>
+                                </div>
+                                <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                                    {providedProofs.map(proofId => {
+                                        const proof = recipientRequestedProofs.find(p => p.id === proofId);
+                                        return <li key={proofId}>{proof?.label}</li>
+                                    })}
+                                </ul>
+                            </>
+                        )}
                     </CardContent>
                 </Card>
                 <Button className="w-full" onClick={onBack}>Done</Button>
@@ -352,5 +359,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
+
+    
 
     
