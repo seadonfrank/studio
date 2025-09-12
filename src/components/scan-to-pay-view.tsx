@@ -352,7 +352,3 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
-
-    
