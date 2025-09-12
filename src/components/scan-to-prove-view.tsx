@@ -163,7 +163,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
                     <CardContent className="p-4">
                         <div className="flex items-center gap-3">
                             <FileQuestion className="h-5 w-5 text-primary"/>
-                            <p className="font-semibold">Credentials Requested</p>
+                            <p className="font-semibold">Provide Credentials</p>
                         </div>
                         <Separator className="my-3"/>
                         <ul className="space-y-2 text-sm text-muted-foreground">
