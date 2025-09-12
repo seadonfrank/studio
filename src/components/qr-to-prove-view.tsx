@@ -199,7 +199,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                 <SheetHeader className="text-left">
                   <SheetTitle>Request Credentials</SheetTitle>
                   <SheetDescription>
-                    Select which credentials you want to request from the verifier.
+                    Select which credentials you want to request for verification.
                   </SheetDescription>
                 </SheetHeader>
                 <div className="py-4 space-y-3">
