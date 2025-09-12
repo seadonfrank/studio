@@ -177,13 +177,6 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
                     </CardContent>
                 </Card>
 
-                <Alert>
-                    <AlertTitle>This is a Zero-Knowledge Proof</AlertTitle>
-                    <AlertDescription>
-                        Only the validity of the statement will be shared, not the underlying data.
-                    </AlertDescription>
-                </Alert>
-
                 <div className="flex gap-4">
                     <Button variant="outline" className="w-full" onClick={handleDecline}>Decline</Button>
                     <Button className="w-full" onClick={handleProvide}>Provide Proof</Button>
