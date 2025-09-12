@@ -106,13 +106,13 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     Position the QR code within the frame to scan.
                 </p>
                 <Card className="w-full text-left">
-                    <CardContent className="p-4 text-sm">
+                    <CardContent className="p-4">
                         <div className="flex items-center gap-3">
                             <FileQuestion className="h-5 w-5 text-primary"/>
                             <p className="font-semibold">Credentials Requested</p>
                         </div>
                         <Separator className="my-3"/>
-                        <ul className="text-sm text-muted-foreground list-disc pl-5">
+                        <ul className="space-y-1 text-sm text-muted-foreground list-disc pl-5">
                             {selectedProofs.map(proofId => {
                                 const proof = availableProofs.find(p => p.id === proofId);
                                 return <li key={proofId}>{proof?.label}</li>
@@ -137,34 +137,95 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
 
     return (
       <div className="flex-grow flex flex-col justify-between">
-        <div className="space-y-4">
-            <h3 className="text-lg font-headline font-semibold">Select Proofs</h3>
-            <p className="text-sm text-muted-foreground">
-                Select which credentials you want to request from the verifier.
-            </p>
-            <div className="py-2 space-y-3">
-            {availableProofs.map((proof) => (
-                <div
-                key={proof.id}
-                className="flex items-center space-x-3 p-3 border rounded-md"
-                >
-                <Checkbox
-                    id={proof.id}
-                    onCheckedChange={(checked) =>
-                    handleCheckboxChange(proof.id, !!checked)
-                    }
-                    checked={selectedProofs.includes(proof.id)}
-                />
-                <Label
-                    htmlFor={proof.id}
-                    className="font-normal flex-1"
-                >
-                    {proof.label}
-                </Label>
+        <Sheet>
+            <Card>
+              <CardContent className="p-3">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <FileQuestion className="h-5 w-5" />
+                    <div>
+                      <p className="font-semibold">Request Credentials</p>
+                      <p className="text-xs text-muted-foreground">
+                        {selectedProofs.length > 0 ? `${selectedProofs.length} selected` : 'Required'}
+                      </p>
+                    </div>
+                  </div>
+                  <SheetTrigger asChild>
+                    <Button
+                      variant={selectedProofs.length > 0 ? "ghost" : "outline"}
+                      size="sm"
+                    >
+                      {selectedProofs.length > 0 ? (
+                        <>
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit
+                        </>
+                      ) : (
+                        <>
+                          <PlusCircle className="mr-2 h-4 w-4" />
+                          Add
+                        </>
+                      )}
+                    </Button>
+                  </SheetTrigger>
                 </div>
-            ))}
-            </div>
-        </div>
+                {selectedProofs.length > 0 && (
+                  <>
+                    <Separator className="my-2" />
+                    <ul className="text-xs text-muted-foreground list-disc pl-5 space-y-1">
+                      {selectedProofs.map((proofId) => {
+                        const proof = availableProofs.find(
+                          (p) => p.id === proofId
+                        );
+                        return <li key={proofId}>{proof?.label}</li>;
+                      })}
+                    </ul>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+            <SheetContent>
+              <SheetHeader className="text-left">
+                <SheetTitle>Request Credentials</SheetTitle>
+                <SheetDescription>
+                  Select which credentials you want to request from the verifier.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="py-4 space-y-3">
+                {availableProofs.map((proof) => (
+                  <div
+                    key={proof.id}
+                    className="flex items-center space-x-3 p-3 border rounded-md"
+                  >
+                    <Checkbox
+                      id={`sheet-${proof.id}`}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(proof.id, !!checked)
+                      }
+                      checked={selectedProofs.includes(proof.id)}
+                    />
+                    <Label
+                      htmlFor={`sheet-${proof.id}`}
+                      className="font-normal flex-1"
+                    >
+                      {proof.label}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <SheetClose asChild>
+                  <Button variant="outline" className="w-full">
+                    Cancel
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button className="w-full">Request Selected</Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
+
         <div className="mt-auto pt-4">
           <Button className="w-full" onClick={handleGenerateQr} disabled={selectedProofs.length === 0}>
             Generate QR Code
@@ -190,4 +251,3 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
     </div>
   );
 }
-
