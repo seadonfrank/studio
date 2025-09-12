@@ -106,9 +106,13 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     Position the QR code within the frame to scan.
                 </p>
                 <Card className="w-full text-left">
-                    <CardContent className="p-3 text-sm">
-                        <p className="font-semibold">Credentials Requested:</p>
-                        <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                    <CardContent className="p-4 text-sm">
+                        <div className="flex items-center gap-3">
+                            <FileQuestion className="h-5 w-5 text-primary"/>
+                            <p className="font-semibold">Credentials Requested</p>
+                        </div>
+                        <Separator className="my-3"/>
+                        <ul className="text-sm text-muted-foreground list-disc pl-5">
                             {selectedProofs.map(proofId => {
                                 const proof = availableProofs.find(p => p.id === proofId);
                                 return <li key={proofId}>{proof?.label}</li>
