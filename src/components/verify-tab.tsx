@@ -2,19 +2,15 @@
 "use client";
 
 import { useState } from "react";
-import { Share2, ChevronRight, Scan } from "lucide-react";
+import { ChevronRight, Scan } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
-import ShareProofView from "./share-proof-view";
-import { Separator } from "./ui/separator";
 import ScanToProveView from "./scan-to-prove-view";
 
 export default function VerifyTab() {
-  const [view, setView] = useState<"main" | "share" | "prove">("main");
+  const [view, setView] = useState<"main" | "prove">("main");
 
   const renderContent = () => {
     switch (view) {
-      case "share":
-        return <ShareProofView onBack={() => setView("main")} />;
       case "prove":
         return <ScanToProveView onBack={() => setView("main")} />;
       default:
@@ -41,24 +37,6 @@ export default function VerifyTab() {
                       <p className="font-semibold">Scan to Prove</p>
                       <p className="text-sm text-muted-foreground">
                         Provide instant zero-knowledge proofs
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <Separator />
-                <div
-                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => setView("share")}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
-                      <Share2 className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">Generate Proofs</p>
-                      <p className="text-sm text-muted-foreground">
-                        Create and share zero-knowledge proofs
                       </p>
                     </div>
                   </div>
