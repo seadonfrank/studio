@@ -102,20 +102,10 @@ export default function FinanceTab() {
               <Button size="sm" variant="secondary"><PlusCircle className="mr-1 h-4 w-4"/> Add Money</Button>
           </CardContent>
       </Card>
-      
 
-      <Tabs defaultValue="accounts" className="w-full">
-        <TabsList className="grid w-full grid-cols-6 h-auto">
-          <TabsTrigger value="accounts" className="flex-col h-auto p-2 gap-1"><User className="h-5 w-5"/> <span className="text-xs">Accounts</span></TabsTrigger>
-          <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1"><CreditCard className="h-5 w-5"/> <span className="text-xs">Cards</span></TabsTrigger>
-          <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1"><Landmark className="h-5 w-5"/> <span className="text-xs">Deposits</span></TabsTrigger>
-          <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1"><Banknote className="h-5 w-5"/> <span className="text-xs">Loans</span></TabsTrigger>
-          <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1"><TrendingUp className="h-5 w-5"/> <span className="text-xs">Funds</span></TabsTrigger>
-          <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="accounts" className="mt-4">
-          <Carousel opts={{ align: "start" }} className="w-full">
+      <div>
+        <h2 className="text-lg font-headline font-semibold mb-3">Your Accounts</h2>
+        <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent>
               {accounts.map((account, index) => (
                 <CarouselItem key={index} className="basis-auto">
@@ -144,7 +134,17 @@ export default function FinanceTab() {
               </CarouselItem>
             </CarouselContent>
           </Carousel>
-        </TabsContent>
+      </div>
+      
+
+      <Tabs defaultValue="cards" className="w-full">
+        <TabsList className="grid w-full grid-cols-5 h-auto">
+          <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1"><CreditCard className="h-5 w-5"/> <span className="text-xs">Cards</span></TabsTrigger>
+          <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1"><Landmark className="h-5 w-5"/> <span className="text-xs">Deposits</span></TabsTrigger>
+          <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1"><Banknote className="h-5 w-5"/> <span className="text-xs">Loans</span></TabsTrigger>
+          <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1"><TrendingUp className="h-5 w-5"/> <span className="text-xs">Funds</span></TabsTrigger>
+          <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
+        </TabsList>
         
         <TabsContent value="cards" className="mt-4 space-y-4">
           {cards.map((card, index) => (
