@@ -5,7 +5,6 @@ import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
-import TransactionList from "./transaction-list";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
@@ -18,9 +17,10 @@ import FundCard from "./fund-card";
 import ManageFundsDialog from "./manage-funds-dialog";
 import CryptoCredentialCard from "./crypto-credential-card";
 import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AccountCard from "./account-card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import { Badge } from "./ui/badge";
 
 export default function FinanceTab() {
   const accounts = [
@@ -120,120 +120,117 @@ export default function FinanceTab() {
           </Carousel>
       </div>
       
-      <Tabs defaultValue="cards">
-        <TabsList className="grid w-full grid-cols-5 h-auto p-1.5 gap-1.5 rounded-xl bg-muted">
-            <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
-                <CreditCard className="h-5 w-5"/>
-                Cards
-            </TabsTrigger>
-            <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
-                <Landmark className="h-5 w-5"/>
-                Deposits
-            </TabsTrigger>
-            <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
-                <TrendingUp className="h-5 w-5"/>
-                Loans
-            </TabsTrigger>
-            <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
-                <Wallet className="h-5 w-5"/>
-                Funds
-            </TabsTrigger>
-            <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
-                <Wallet className="h-5 w-5"/>
-                Crypto
-            </TabsTrigger>
-        </TabsList>
-        <TabsContent value="cards" className="mt-4">
-            <Carousel opts={{ align: "start" }} className="w-full">
-                <CarouselContent>
-                    {cards.map((card, index) => (
-                        <CarouselItem key={index}><PaymentCard {...card} /></CarouselItem>
-                    ))}
-                    <CarouselItem>
-                        <Dialog>
-                        <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Card" /></div></DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader><DialogTitle>Manage Payment Cards</DialogTitle><DialogDescription>Add or remove your debit/credit cards.</DialogDescription></DialogHeader>
-                            <ManageCardsDialog />
-                        </DialogContent>
-                        </Dialog>
-                    </CarouselItem>
-                </CarouselContent>
-            </Carousel>
-        </TabsContent>
-        <TabsContent value="deposits" className="mt-4">
-            <Carousel opts={{ align: "start" }} className="w-full">
-                <CarouselContent>
-                    {deposits.map((deposit, index) => (
-                        <CarouselItem key={index}><DepositCard {...deposit} /></CarouselItem>
-                    ))}
-                    <CarouselItem>
-                        <Dialog>
-                        <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Deposit" /></div></DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader><DialogTitle>Add New Deposit</DialogTitle><DialogDescription>Create a new fixed or recurring deposit.</DialogDescription></DialogHeader>
-                            <ManageDepositsDialog />
-                        </DialogContent>
-                        </Dialog>
-                    </CarouselItem>
-                </CarouselContent>
-            </Carousel>
-        </TabsContent>
-        <TabsContent value="loans" className="mt-4">
-             <Carousel opts={{ align: "start" }} className="w-full">
-                <CarouselContent>
-                    {loans.map((loan, index) => (
-                        <CarouselItem key={index}><LoanCard {...loan} /></CarouselItem>
-                    ))}
-                    <CarouselItem>
-                        <Dialog>
-                        <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Apply for Loan" /></div></DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader><DialogTitle>Apply for New Loan</DialogTitle><DialogDescription>Submit an application for a new personal or business loan.</DialogDescription></DialogHeader>
-                            <ManageLoansDialog />
-                        </DialogContent>
-                        </Dialog>
-                    </CarouselItem>
-                </CarouselContent>
-            </Carousel>
-        </TabsContent>
-        <TabsContent value="funds" className="mt-4">
-            <Carousel opts={{ align: "start" }} className="w-full">
-                <CarouselContent>
-                    {funds.map((fund, index) => (
-                        <CarouselItem key={index}><FundCard {...fund} /></CarouselItem>
-                    ))}
-                    <CarouselItem>
-                        <Dialog>
-                        <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Investment" /></div></DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader><DialogTitle>Add New Fund Investment</DialogTitle><DialogDescription>Invest in a new mutual fund.</DialogDescription></DialogHeader>
-                            <ManageFundsDialog />
-                        </DialogContent>
-                        </Dialog>
-                    </CarouselItem>
-                </CarouselContent>
-            </Carousel>
-        </TabsContent>
-        <TabsContent value="crypto" className="mt-4">
-            <Carousel opts={{ align: "start" }} className="w-full">
-                <CarouselContent>
-                    {crypto.map((cred, index) => (
-                        <CarouselItem key={index}><CryptoCredentialCard {...cred} /></CarouselItem>
-                    ))}
-                    <CarouselItem>
-                        <Dialog>
-                        <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add Crypto Wallet" /></div></DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader><DialogTitle>Add Crypto Wallet</DialogTitle><DialogDescription>Add a new crypto wallet to your identity.</DialogDescription></DialogHeader>
-                            <ManageCryptoCredentialsDialog />
-                        </DialogContent>
-                        </Dialog>
-                    </CarouselItem>
-                </CarouselContent>
-            </Carousel>
-        </TabsContent>
-      </Tabs>
+      <Accordion type="single" collapsible className="w-full space-y-2">
+        <AccordionItem value="cards" className="border-none">
+          <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
+            <div className="flex items-center gap-3">
+              <CreditCard className="h-5 w-5 text-primary"/>
+              <span className="font-semibold text-base">Cards</span>
+              <Badge variant="secondary">{cards.length}</Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-4">
+              {cards.map((card, index) => (
+                  <PaymentCard key={index} {...card} />
+              ))}
+              <Dialog>
+              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Card" /></div></DialogTrigger>
+              <DialogContent>
+                  <DialogHeader><DialogTitle>Manage Payment Cards</DialogTitle><DialogDescription>Add or remove your debit/credit cards.</DialogDescription></DialogHeader>
+                  <ManageCardsDialog />
+              </DialogContent>
+              </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="deposits" className="border-none">
+           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Landmark className="h-5 w-5 text-primary"/>
+              <span className="font-semibold text-base">Deposits</span>
+              <Badge variant="secondary">{deposits.length}</Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-4">
+              {deposits.map((deposit, index) => (
+                  <DepositCard key={index} {...deposit} />
+              ))}
+              <Dialog>
+              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Deposit" /></div></DialogTrigger>
+              <DialogContent>
+                  <DialogHeader><DialogTitle>Add New Deposit</DialogTitle><DialogDescription>Create a new fixed or recurring deposit.</DialogDescription></DialogHeader>
+                  <ManageDepositsDialog />
+              </DialogContent>
+              </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="loans" className="border-none">
+           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
+            <div className="flex items-center gap-3">
+              <TrendingUp className="h-5 w-5 text-primary"/>
+              <span className="font-semibold text-base">Loans</span>
+              <Badge variant="secondary">{loans.length}</Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-4">
+              {loans.map((loan, index) => (
+                  <LoanCard key={index} {...loan} />
+              ))}
+              <Dialog>
+              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Apply for Loan" /></div></DialogTrigger>
+              <DialogContent>
+                  <DialogHeader><DialogTitle>Apply for New Loan</DialogTitle><DialogDescription>Submit an application for a new personal or business loan.</DialogDescription></DialogHeader>
+                  <ManageLoansDialog />
+              </DialogContent>
+              </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="funds" className="border-none">
+           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Wallet className="h-5 w-5 text-primary"/>
+              <span className="font-semibold text-base">Funds</span>
+              <Badge variant="secondary">{funds.length}</Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-4">
+              {funds.map((fund, index) => (
+                  <FundCard key={index} {...fund} />
+              ))}
+              <Dialog>
+              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Investment" /></div></DialogTrigger>
+              <DialogContent>
+                  <DialogHeader><DialogTitle>Add New Fund Investment</DialogTitle><DialogDescription>Invest in a new mutual fund.</DialogDescription></DialogHeader>
+                  <ManageFundsDialog />
+              </DialogContent>
+              </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="crypto" className="border-none">
+           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Wallet className="h-5 w-5 text-primary"/>
+              <span className="font-semibold text-base">Crypto</span>
+              <Badge variant="secondary">{crypto.length}</Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4 space-y-4">
+              {crypto.map((cred, index) => (
+                  <CryptoCredentialCard key={index} {...cred} />
+              ))}
+              <Dialog>
+              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add Crypto Wallet" /></div></DialogTrigger>
+              <DialogContent>
+                  <DialogHeader><DialogTitle>Add Crypto Wallet</DialogTitle><DialogDescription>Add a new crypto wallet to your identity.</DialogDescription></DialogHeader>
+                  <ManageCryptoCredentialsDialog />
+              </DialogContent>
+              </Dialog>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
