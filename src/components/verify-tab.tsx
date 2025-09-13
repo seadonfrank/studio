@@ -2,18 +2,16 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School, ArrowUp, Plus, ChevronDown } from "lucide-react";
+import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
 import { Separator } from "./ui/separator";
 import SendCredentialsView from "./send-credentials-view";
 import RequestCredentialsView from "./request-credentials-view";
-import { Badge } from "./ui/badge";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import CredentialTypeCard from "./credential-type-card";
 import { Button } from "./ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 export default function VerifyTab() {
   const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
@@ -59,20 +57,7 @@ export default function VerifyTab() {
             </div>
             
             <div className="flex justify-start gap-2">
-                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><ArrowUp className="mr-1 h-4 w-4"/> Send</Button>
-                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Plus className="mr-1 h-4 w-4"/> Add money</Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4">
-                      Request
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem>Request via Link</DropdownMenuItem>
-                    <DropdownMenuItem>Request from user</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
             </div>
 
             <Card>
@@ -107,24 +92,6 @@ export default function VerifyTab() {
                       <p className="font-semibold">Request Credentials</p>
                       <p className="text-sm text-muted-foreground">
                         Request credentials from another user
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <Separator />
-                <div
-                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => setView("prove")}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
-                      <Scan className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">Scan to Prove</p>
-                      <p className="text-sm text-muted-foreground">
-                        Instant scan to provide zero-knowledge credential proofs
                       </p>
                     </div>
                   </div>
