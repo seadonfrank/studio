@@ -2,13 +2,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
 import { Separator } from "./ui/separator";
 import SendCredentialsView from "./send-credentials-view";
 import RequestCredentialsView from "./request-credentials-view";
+import { Badge } from "./ui/badge";
 
 export default function VerifyTab() {
   const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
@@ -18,6 +19,13 @@ export default function VerifyTab() {
     { action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
     { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
   ];
+
+  const credentialCounts = {
+    government: 3,
+    licenses: 3,
+    academic: 2,
+    crypto: 2,
+  };
 
   const renderContent = () => {
     switch (view) {
@@ -32,11 +40,23 @@ export default function VerifyTab() {
       default:
         return (
           <>
-            <div className="text-center">
-              <h1 className="text-2xl font-bold font-headline">Verify</h1>
-              <p className="text-muted-foreground">
-                Verify credentials and share proofs
-              </p>
+            <div className="flex flex-wrap items-center justify-center gap-2 rounded-lg bg-muted p-3">
+                <Badge variant="secondary" className="gap-2">
+                  <Shield className="h-3.5 w-3.5" />
+                  Government ({credentialCounts.government})
+                </Badge>
+                 <Badge variant="secondary" className="gap-2">
+                  <BookUser className="h-3.5 w-3.5" />
+                  Licenses ({credentialCounts.licenses})
+                </Badge>
+                 <Badge variant="secondary" className="gap-2">
+                  <GraduationCap className="h-3.5 w-3.5" />
+                  Academic ({credentialCounts.academic})
+                </Badge>
+                 <Badge variant="secondary" className="gap-2">
+                  <Wallet className="h-3.5 w-3.5" />
+                  Crypto ({credentialCounts.crypto})
+                </Badge>
             </div>
 
             <Card>
