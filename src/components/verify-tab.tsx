@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet } from "lucide-react";
+import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
@@ -23,10 +23,10 @@ export default function VerifyTab() {
   ];
 
   const credentialTypes = [
-    { type: "Government", count: 3, icon: Shield },
-    { type: "Licenses", count: 3, icon: BookUser },
-    { type: "Academic", count: 2, icon: GraduationCap },
-    { type: "Crypto", count: 2, icon: Wallet },
+    { type: "Date of Birth/Age", count: 1, icon: Cake },
+    { type: "Driving License", count: 1, icon: Car },
+    { type: "Master's Degree", count: 1, icon: School },
+    { type: "Crypto Wallet", count: 2, icon: Wallet },
   ];
 
   const renderContent = () => {
