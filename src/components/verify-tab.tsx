@@ -58,6 +58,7 @@ export default function VerifyTab() {
             
             <div className="flex justify-start gap-2">
                 <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
+                <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
             </div>
 
             <Card>
@@ -92,24 +93,6 @@ export default function VerifyTab() {
                       <p className="font-semibold">Request Credentials</p>
                       <p className="text-sm text-muted-foreground">
                         Request credentials from another user
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <Separator />
-                <div
-                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => setView("qr")}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
-                      <QrCode className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">QR to Prove</p>
-                      <p className="text-sm text-muted-foreground">
-                        Generate QR to request zero-knowledge credential proofs
                       </p>
                     </div>
                   </div>
