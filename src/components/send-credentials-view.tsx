@@ -8,10 +8,22 @@ import { Label } from "./ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Card, CardContent } from "./ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface SendCredentialsViewProps {
   onBack: () => void;
 }
+
+const availableCredentials = [
+    "Passport (USA)",
+    "National ID (Canada)",
+    "Driver's License",
+    "Boating License",
+    "Medical License",
+    "Bachelor's Degree",
+    "Professional Certificate",
+    "Proof of KYC",
+];
 
 export default function SendCredentialsView({ onBack }: SendCredentialsViewProps) {
     const { toast } = useToast();
@@ -84,11 +96,16 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
                     <div className="space-y-2">
                         {credentials.map((cred, index) => (
                             <div key={index} className="flex items-center gap-2">
-                                <Input 
-                                    placeholder="e.g., Proof of KYC" 
-                                    value={cred}
-                                    onChange={(e) => handleCredentialChange(index, e.target.value)}
-                                />
+                                <Select value={cred} onValueChange={(value) => handleCredentialChange(index, value)}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a credential" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {availableCredentials.map(item => (
+                                            <SelectItem key={item} value={item}>{item}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 <Button variant="ghost" size="icon" onClick={() => removeCredentialField(index)} disabled={credentials.length <= 1}>
                                     <Trash2 className="h-4 w-4 text-destructive" />
                                 </Button>
