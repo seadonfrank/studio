@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -107,9 +107,13 @@ export default function IdentityTab() {
                   <DialogTrigger asChild>
                       <DropdownMenuItem>
                           <QrCode className="mr-2 h-4 w-4" />
-                          Scan to Claim
+                          Scan and Claim
                       </DropdownMenuItem>
                   </DialogTrigger>
+                   <DropdownMenuItem>
+                      <Inbox className="mr-2 h-4 w-4" />
+                      Available to Claim
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                       <Plus className="mr-2 h-4 w-4" />
                       Add Manually
@@ -118,7 +122,7 @@ export default function IdentityTab() {
               </DropdownMenu>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Scan to Claim Credential</DialogTitle>
+                <DialogTitle>Scan and Claim Credential</DialogTitle>
                 <DialogDescription>
                   Scan a QR code to claim a new credential.
                 </DialogDescription>
@@ -258,5 +262,7 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
 
     
