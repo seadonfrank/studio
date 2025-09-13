@@ -138,12 +138,12 @@ export default function FinanceTab() {
       
 
       <Tabs defaultValue="cards" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 h-auto">
-          <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1"><CreditCard className="h-5 w-5"/> <span className="text-xs">Cards</span></TabsTrigger>
-          <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1"><Landmark className="h-5 w-5"/> <span className="text-xs">Deposits</span></TabsTrigger>
-          <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1"><Banknote className="h-5 w-5"/> <span className="text-xs">Loans</span></TabsTrigger>
-          <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1"><TrendingUp className="h-5 w-5"/> <span className="text-xs">Funds</span></TabsTrigger>
-          <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
+        <TabsList className="w-full justify-start overflow-x-auto no-scrollbar">
+          <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1 flex-shrink-0"><CreditCard className="h-5 w-5"/> <span className="text-xs">Cards</span></TabsTrigger>
+          <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1 flex-shrink-0"><Landmark className="h-5 w-5"/> <span className="text-xs">Deposits</span></TabsTrigger>
+          <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1 flex-shrink-0"><Banknote className="h-5 w-5"/> <span className="text-xs">Loans</span></TabsTrigger>
+          <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1 flex-shrink-0"><TrendingUp className="h-5 w-5"/> <span className="text-xs">Funds</span></TabsTrigger>
+          <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1 flex-shrink-0"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
         </TabsList>
         
         <TabsContent value="cards" className="mt-4 space-y-4">
