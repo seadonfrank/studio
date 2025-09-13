@@ -10,6 +10,8 @@ import { Separator } from "./ui/separator";
 import SendCredentialsView from "./send-credentials-view";
 import RequestCredentialsView from "./request-credentials-view";
 import { Badge } from "./ui/badge";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import CredentialTypeCard from "./credential-type-card";
 
 export default function VerifyTab() {
   const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
@@ -20,12 +22,12 @@ export default function VerifyTab() {
     { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
   ];
 
-  const credentialCounts = {
-    government: 3,
-    licenses: 3,
-    academic: 2,
-    crypto: 2,
-  };
+  const credentialTypes = [
+    { type: "Government", count: 3, icon: Shield },
+    { type: "Licenses", count: 3, icon: BookUser },
+    { type: "Academic", count: 2, icon: GraduationCap },
+    { type: "Crypto", count: 2, icon: Wallet },
+  ];
 
   const renderContent = () => {
     switch (view) {
@@ -40,23 +42,18 @@ export default function VerifyTab() {
       default:
         return (
           <>
-            <div className="flex flex-wrap items-center justify-center gap-2 rounded-lg bg-muted p-3">
-                <Badge variant="secondary" className="gap-2">
-                  <Shield className="h-3.5 w-3.5" />
-                  Government ({credentialCounts.government})
-                </Badge>
-                 <Badge variant="secondary" className="gap-2">
-                  <BookUser className="h-3.5 w-3.5" />
-                  Licenses ({credentialCounts.licenses})
-                </Badge>
-                 <Badge variant="secondary" className="gap-2">
-                  <GraduationCap className="h-3.5 w-3.5" />
-                  Academic ({credentialCounts.academic})
-                </Badge>
-                 <Badge variant="secondary" className="gap-2">
-                  <Wallet className="h-3.5 w-3.5" />
-                  Crypto ({credentialCounts.crypto})
-                </Badge>
+            <div>
+              <Carousel opts={{ align: "start", dragFree: true }} className="w-full -ml-4">
+                  <CarouselContent className="pl-4">
+                    {credentialTypes.map((credType, index) => (
+                      <CarouselItem key={index} className="basis-auto pl-2">
+                        <div className="w-[150px]">
+                          <CredentialTypeCard {...credType} />
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
             </div>
 
             <Card>
