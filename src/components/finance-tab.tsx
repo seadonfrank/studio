@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet } from "lucide-react";
+import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -60,9 +60,14 @@ export default function FinanceTab() {
             <div className="flex items-center gap-2">
                 <h2 className="text-3xl font-headline font-bold">17.39 EUR</h2>
             </div>
-            <Button variant="ghost" size="icon">
-              <BarChart2 className="h-6 w-6" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon">
+                <BarChart2 className="h-6 w-6" />
+              </Button>
+              <Button variant="ghost" size="icon" aria-label="Toggle visibility">
+                <Eye className="h-5 w-5" />
+              </Button>
+            </div>
         </div>
       </div>
       

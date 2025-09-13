@@ -18,9 +18,6 @@ export default function AppHeader({ activeTab }: { activeTab: Tab }) {
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" className="bg-green-100 text-green-800 hover:bg-green-200 h-8 rounded-full">Earn £50</Button>
-          <Button variant="ghost" size="icon" aria-label="Toggle visibility">
-            <Eye className="h-5 w-5" />
-          </Button>
         </div>
       </header>
     );
