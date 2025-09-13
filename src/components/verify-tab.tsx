@@ -2,14 +2,16 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan, QrCode } from "lucide-react";
+import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
 import { Separator } from "./ui/separator";
+import SendCredentialsView from "./send-credentials-view";
+import RequestCredentialsView from "./request-credentials-view";
 
 export default function VerifyTab() {
-  const [view, setView] = useState<"main" | "prove" | "qr">("main");
+  const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
 
   const recentActivity = [
     { action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
@@ -23,6 +25,10 @@ export default function VerifyTab() {
         return <ScanToProveView onBack={() => setView("main")} />;
       case "qr":
         return <QrToProveView onBack={() => setView("main")} />;
+      case "send":
+        return <SendCredentialsView onBack={() => setView("main")} />;
+      case "request":
+        return <RequestCredentialsView onBack={() => setView("main")} />;
       default:
         return (
           <>
@@ -35,6 +41,42 @@ export default function VerifyTab() {
 
             <Card>
               <CardContent className="p-0">
+                <div
+                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={() => setView("send")}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                      <ArrowUpCircle className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Send Credentials</p>
+                      <p className="text-sm text-muted-foreground">
+                        Provide your credentials to a verifier
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <Separator />
+                <div
+                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={() => setView("request")}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary">
+                      <ArrowDownCircle className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Request Credentials</p>
+                      <p className="text-sm text-muted-foreground">
+                        Request credentials from another user
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <Separator />
                 <div
                   className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors"
                   onClick={() => setView("prove")}
