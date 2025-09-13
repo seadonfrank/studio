@@ -2,7 +2,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { Landmark, Fingerprint, CreditCard, ShieldCheck, Repeat, Home, UserSquare, Users } from "lucide-react";
+import { Home, CreditCard, Repeat, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/app/page";
 
