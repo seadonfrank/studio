@@ -117,45 +117,6 @@ export default function PaymentsTab() {
                   </div>
               </div>
             </div>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle className="font-headline text-lg">Payment Defaults</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 cursor-pointer transition-colors">
-                        <div className="flex items-center gap-3">
-                            <div className="flex items-center justify-center h-10 w-10 bg-secondary rounded-lg">
-                                <Landmark className="h-5 w-5 text-secondary-foreground" />
-                            </div>
-                            <div>
-                                <p className="font-medium text-sm">Receiving Account</p>
-                                <p className="text-xs text-muted-foreground">Bank of America ••••1234</p>
-                            </div>
-                        </div>
-                        <Button variant="ghost" size="icon">
-                            <ChevronRight className="h-4 w-4" />
-                        </Button>
-                    </div>
-                     <div className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 cursor-pointer transition-colors">
-                        <div className="flex items-center gap-3">
-                            <div className="flex items-center justify-center h-10 w-10 bg-secondary rounded-lg">
-                                <Nfc className="h-5 w-5 text-secondary-foreground" />
-                            </div>
-                            <div>
-                                <p className="font-medium text-sm">Tap & Pay</p>
-                                <p className="text-xs text-muted-foreground">Visa Debit ••••5678</p>
-                            </div>
-                        </div>
-                        <Button variant="ghost" size="icon">
-                            <ChevronRight className="h-4 w-4" />
-                        </Button>
-                    </div>
-                    <p className="text-xs text-muted-foreground text-center pt-2">
-                        Bank-calculated FX rates apply to all incoming and outgoing transfers.
-                    </p>
-                </CardContent>
-            </Card>
             
             <div>
               <h2 className="text-lg font-headline font-semibold mb-3">Bill Payments</h2>
