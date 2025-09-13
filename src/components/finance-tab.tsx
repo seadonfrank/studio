@@ -117,23 +117,23 @@ export default function FinanceTab() {
       
       <Tabs defaultValue="cards">
         <TabsList className="grid w-full grid-cols-5 h-auto p-1.5 gap-1.5 rounded-xl bg-muted">
-            <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-lg text-xs">
+            <TabsTrigger value="cards" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
                 <CreditCard className="h-5 w-5"/>
                 Cards
             </TabsTrigger>
-            <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-lg text-xs">
+            <TabsTrigger value="deposits" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
                 <Landmark className="h-5 w-5"/>
                 Deposits
             </TabsTrigger>
-            <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-lg text-xs">
+            <TabsTrigger value="loans" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
                 <TrendingUp className="h-5 w-5"/>
                 Loans
             </TabsTrigger>
-            <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-lg text-xs">
+            <TabsTrigger value="funds" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
                 <Wallet className="h-5 w-5"/>
                 Funds
             </TabsTrigger>
-            <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none rounded-lg text-xs">
+            <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg text-xs">
                 <Wallet className="h-5 w-5"/>
                 Crypto
             </TabsTrigger>
