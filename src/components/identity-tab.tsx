@@ -116,7 +116,7 @@ export default function IdentityTab() {
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                       <Plus className="mr-2 h-4 w-4" />
-                      Add Manually
+                      Claim Manually
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -262,6 +262,8 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
 
     
 
