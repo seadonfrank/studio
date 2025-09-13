@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import QrForPayView from "./qr-for-pay-view";
+import TransactionList from "./transaction-list";
 
 export default function PaymentsTab() {
   const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
@@ -192,6 +193,7 @@ export default function PaymentsTab() {
                 </CarouselContent>
               </Carousel>
             </div>
+            <TransactionList />
           </>
         );
     }

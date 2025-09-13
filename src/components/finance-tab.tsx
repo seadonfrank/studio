@@ -234,9 +234,6 @@ export default function FinanceTab() {
             </Carousel>
         </TabsContent>
       </Tabs>
-
-
-      <TransactionList />
     </div>
   );
 }
