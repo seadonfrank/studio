@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, CreditCard, Wallet, Banknote, AreaChart, PlusCircle, User } from "lucide-react";
+import { ArrowDown, ArrowUp, Landmark, PiggyBank, LineChart, Repeat, Gift, Trophy, TrendingUp, History, CreditCard, Wallet, Banknote, AreaChart, PlusCircle, User, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -27,6 +27,7 @@ import AccountCard from "./account-card";
 import ConvertBalanceDialog from "./convert-balance-dialog";
 import CloseBalanceDialog from "./close-balance-dialog";
 import AddBalanceDialog from "./add-balance-dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 export default function FinanceTab() {
   const accounts = [
@@ -78,11 +79,27 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
+      <div className="text-center">
+        <p className="text-sm text-muted-foreground">Total Balance</p>
+        <div className="flex justify-center items-center gap-2">
+            <h2 className="text-3xl font-headline font-bold">$32,845.56</h2>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="gap-1">
+                  USD
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center">
+                <DropdownMenuItem>USD</DropdownMenuItem>
+                <DropdownMenuItem>EUR</DropdownMenuItem>
+                <DropdownMenuItem>GBP</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
+      </div>
+      
       <Card>
-          <CardHeader>
-            <CardDescription>Total Balance</CardDescription>
-            <CardTitle className="font-headline text-3xl">$32,845.56</CardTitle>
-          </CardHeader>
           <CardContent className="p-0">
              <ChartContainer config={chartConfig} className="h-20 w-full">
               <AreaChart accessibilityLayer data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
