@@ -26,6 +26,7 @@ import { ChartConfig } from "@/components/ui/chart"
 import AccountCard from "./account-card";
 import ConvertBalanceDialog from "./convert-balance-dialog";
 import CloseBalanceDialog from "./close-balance-dialog";
+import AddBalanceDialog from "./add-balance-dialog";
 
 export default function FinanceTab() {
   const accounts = [
@@ -113,26 +114,36 @@ export default function FinanceTab() {
           <TabsTrigger value="crypto" className="flex-col h-auto p-2 gap-1"><Wallet className="h-5 w-5"/> <span className="text-xs">Crypto</span></TabsTrigger>
         </TabsList>
         
-        <TabsContent value="accounts" className="mt-4 space-y-4">
-            {accounts.map((account, index) => (
-                <AccountCard key={index} {...account} />
-            ))}
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="outline" className="w-full">
-                        <PlusCircle className="mr-2 h-4 w-4" /> Add New Account
-                    </Button>
-                </DialogTrigger>
-                <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Add New Account</DialogTitle>
-                    <DialogDescription>
-                        Add a new currency account to your wallet.
-                    </DialogDescription>
-                </DialogHeader>
-                <ManageAccountsDialog />
-                </DialogContent>
-            </Dialog>
+        <TabsContent value="accounts" className="mt-4">
+          <Carousel opts={{ align: "start" }} className="w-full">
+            <CarouselContent>
+              {accounts.map((account, index) => (
+                <CarouselItem key={index} className="basis-auto">
+                  <div className="w-[300px]">
+                    <AccountCard {...account} />
+                  </div>
+                </CarouselItem>
+              ))}
+              <CarouselItem className="basis-auto">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="w-[300px] h-full">
+                      <AddAccountCard text="Add New Account" className="min-h-[105px]" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Add New Account</DialogTitle>
+                        <DialogDescription>
+                            Add a new currency account to your wallet.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <ManageAccountsDialog />
+                  </DialogContent>
+                </Dialog>
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </TabsContent>
         
         <TabsContent value="cards" className="mt-4 space-y-4">
@@ -251,5 +262,3 @@ export default function FinanceTab() {
     </div>
   );
 }
-
-    

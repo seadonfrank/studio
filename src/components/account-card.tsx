@@ -10,10 +10,11 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "./ui/dropdown-menu";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import ConvertBalanceDialog from "./convert-balance-dialog";
 import CloseBalanceDialog from "./close-balance-dialog";
 import AddBalanceDialog from "./add-balance-dialog";
+import { useState } from "react";
 
 interface AccountCardProps {
   currency: string;
@@ -23,8 +24,16 @@ interface AccountCardProps {
 }
 
 export default function AccountCard({ currency, balance, type, gradient }: AccountCardProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogContent, setDialogContent] = useState<React.ReactNode | null>(null);
+
+  const openDialog = (content: React.ReactNode) => {
+    setDialogContent(content);
+    setDialogOpen(true);
+  };
+
   return (
-    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
+    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br min-h-[105px]", gradient)}>
       <CardContent className="p-5 flex justify-between items-center">
         <div>
           <div className="flex items-baseline gap-2">
@@ -35,7 +44,7 @@ export default function AccountCard({ currency, balance, type, gradient }: Accou
             <p className="text-xs opacity-80 mt-1">Primary Account</p>
           )}
         </div>
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
@@ -43,21 +52,22 @@ export default function AccountCard({ currency, balance, type, gradient }: Accou
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DialogTrigger asChild>
-                <DropdownMenuItem>Add Balance</DropdownMenuItem>
-              </DialogTrigger>
-              <DialogTrigger asChild>
-                <DropdownMenuItem>Convert Balance</DropdownMenuItem>
-              </DialogTrigger>
+              <DropdownMenuItem onClick={() => openDialog(<AddBalanceDialog currency={currency} />)}>
+                Add Money
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openDialog(<ConvertBalanceDialog currentCurrency={currency} />)}>
+                Move Money
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DialogTrigger asChild>
-                <DropdownMenuItem className="text-destructive focus:text-destructive">Close Balance</DropdownMenuItem>
-              </DialogTrigger>
+              <DropdownMenuItem 
+                className="text-destructive focus:text-destructive"
+                onClick={() => openDialog(<CloseBalanceDialog currency={currency} />)}
+              >
+                Close Account
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-           <AddBalanceDialog currency={currency} />
-           {/* <ConvertBalanceDialog currentCurrency={currency} /> */}
-           {/* <CloseBalanceDialog currency={currency} /> */}
+          {dialogContent}
         </Dialog>
       </CardContent>
     </Card>

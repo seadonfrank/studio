@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog";
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "./ui/dialog";
 import { ArrowRight } from "lucide-react";
 import { Label } from "./ui/label";
 
@@ -59,7 +59,7 @@ export default function ConvertBalanceDialog({ currentCurrency }: ConvertBalance
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Convert Balance</DialogTitle>
+        <DialogTitle>Move Money</DialogTitle>
         <DialogDescription>
           Exchange funds between your currency accounts.
         </DialogDescription>
@@ -110,12 +110,12 @@ export default function ConvertBalanceDialog({ currentCurrency }: ConvertBalance
             <p>You will receive approximately: 0.00 EUR</p>
           </div>
           <DialogFooter>
-            <Button type="submit" className="w-full">Convert</Button>
+            <DialogClose asChild>
+                <Button type="submit" className="w-full">Convert</Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </Form>
     </DialogContent>
   );
 }
-
-    

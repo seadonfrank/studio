@@ -16,8 +16,8 @@ export default function CloseBalanceDialog({ currency }: CloseBalanceDialogProps
 
   function handleClose() {
     toast({
-      title: "Balance Closed",
-      description: `Your ${currency} balance has been closed.`,
+      title: "Account Closed",
+      description: `Your ${currency} account has been closed.`,
       variant: "destructive"
     });
   }
@@ -25,7 +25,7 @@ export default function CloseBalanceDialog({ currency }: CloseBalanceDialogProps
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Close {currency} Balance</DialogTitle>
+        <DialogTitle>Close {currency} Account</DialogTitle>
         <DialogDescription>
           Are you sure you want to close this currency account? This action cannot be undone.
         </DialogDescription>
@@ -41,10 +41,10 @@ export default function CloseBalanceDialog({ currency }: CloseBalanceDialogProps
         <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button variant="destructive" onClick={handleClose}>Confirm & Close</Button>
+        <DialogClose asChild>
+            <Button variant="destructive" onClick={handleClose}>Confirm & Close</Button>
+        </DialogClose>
       </DialogFooter>
     </DialogContent>
   );
 }
-
-    

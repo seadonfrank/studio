@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog";
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "./ui/dialog";
 
 const addBalanceSchema = z.object({
   amount: z.string().refine(val => !isNaN(parseFloat(val)) && parseFloat(val) > 0, {
@@ -69,7 +69,9 @@ export default function AddBalanceDialog({ currency }: AddBalanceDialogProps) {
                 )}
             />
           <DialogFooter>
-            <Button type="submit" className="w-full">Add Balance</Button>
+            <DialogClose asChild>
+                <Button type="submit" className="w-full">Add Balance</Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </Form>
