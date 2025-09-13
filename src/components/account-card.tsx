@@ -33,22 +33,17 @@ export default function AccountCard({ currency, balance, type, gradient }: Accou
   };
 
   return (
-    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br min-h-[105px]", gradient)}>
-      <CardContent className="p-5 flex justify-between items-center">
+    <Card className={cn("overflow-hidden text-card-foreground shadow-sm bg-muted/50 min-h-[105px]")}>
+      <CardContent className="p-3 flex flex-col justify-between h-full">
         <div>
-          <div className="flex items-baseline gap-2">
-            <p className="text-2xl font-bold font-headline">{balance}</p>
-            <p className="font-headline">{currency}</p>
-          </div>
-          {type === "primary" && (
-            <p className="text-xs opacity-80 mt-1">Primary Account</p>
-          )}
+          <p className="font-headline text-sm">{currency}</p>
+           <p className="text-xl font-bold font-headline">{balance}</p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20">
-                <MoreVertical className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-6 w-6 self-end -mr-2 -mb-2">
+                <MoreVertical className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

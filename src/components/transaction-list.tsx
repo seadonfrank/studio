@@ -2,17 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import TransactionItem from "./transaction-item";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "./ui/button";
-import { ArrowUpDown } from "lucide-react";
 
 const transactions = [
   { id: 1, description: "Starbucks Coffee", amount: -5.75, date: "2024-07-22T08:30:00.000Z" },
@@ -23,15 +14,8 @@ const transactions = [
   { id: 6, description: "Flight to NYC", amount: -345.00, date: "2024-07-18T14:00:00.000Z" },
 ];
 
-const categories = ["all", "food", "transportation", "entertainment", "utilities", "rent", "salary", "shopping", "travel", "health", "other"];
-
 export default function TransactionList() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [filterCategory, setFilterCategory] = useState("all");
-
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-  };
 
   const sortedTransactions = [...transactions].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
@@ -39,42 +23,17 @@ export default function TransactionList() {
     return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
   });
 
-  const filteredTransactions =
-    filterCategory === "all"
-      ? sortedTransactions
-      : sortedTransactions.filter(
-          (tx) => tx.description.toLowerCase().includes(filterCategory) // A simple filter logic
-        );
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="font-headline">Recent Transactions</CardTitle>
-        <div className="flex items-center gap-2 pt-2">
-            <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-full sm:w-[180px]">
-                <SelectValue placeholder="Filter by category" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((cat) => (
-                  <SelectItem key={cat} value={cat} className="capitalize">
-                    {cat}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="icon" onClick={toggleSortOrder} className="shrink-0">
-              <ArrowUpDown className="h-4 w-4" />
-            </Button>
-          </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {filteredTransactions.map((tx) => (
-            <TransactionItem key={tx.id} transaction={tx} />
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div>
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-headline font-semibold">Transactions</h2>
+        <Button variant="link" className="text-primary pr-0">See all</Button>
+      </div>
+      <div className="space-y-4">
+        {sortedTransactions.map((tx) => (
+          <TransactionItem key={tx.id} transaction={tx} />
+        ))}
+      </div>
+    </div>
   );
 }
