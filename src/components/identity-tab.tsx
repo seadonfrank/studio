@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -20,6 +20,7 @@ import CryptoCredentialCard from "./crypto-credential-card";
 import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
 import ScanAndClaim from "./scan-and-claim";
 import { Separator } from "./ui/separator";
+import Image from "next/image";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
@@ -90,8 +91,23 @@ export default function IdentityTab() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
-            did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+          <div className="flex items-center gap-2">
+            <p className="flex-1 break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
+              did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+            </p>
+            <Button variant="ghost" size="icon">
+              <Share2 className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="flex justify-center">
+            <Image 
+              src="https://placehold.co/300x50/F5F5F5/000000?text=|||||||||||||||||||||||||"
+              alt="barcode"
+              width={300}
+              height={50}
+              data-ai-hint="barcode"
+              className="object-contain"
+            />
           </div>
           <Separator />
            <Dialog>
@@ -113,10 +129,12 @@ export default function IdentityTab() {
                       <Inbox className="mr-2 h-4 w-4" />
                       Available to Claim
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                      <Plus className="mr-2 h-4 w-4" />
-                      Claim Manually
-                  </DropdownMenuItem>
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Claim Manually
+                    </DropdownMenuItem>
+                  </DialogTrigger>
                 </DropdownMenuContent>
               </DropdownMenu>
             <DialogContent>
@@ -261,11 +279,3 @@ export default function IdentityTab() {
     </div>
   );
 }
-
-    
-
-    
-
-    
-
-    
