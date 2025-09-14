@@ -100,16 +100,7 @@ export default function IdentityTab() {
               <Share2 className="h-5 w-5" />
             </Button>
           </div>
-          <div className="flex justify-center">
-            <Image 
-              src="https://api.qrserver.com/v1/create-qr-code/?size=150x50&data=did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d&ecc=L&qzone=1&format=svg"
-              alt="barcode"
-              width={300}
-              height={50}
-              data-ai-hint="barcode"
-              className="object-contain"
-            />
-          </div>
+          
           <Separator />
            <Dialog>
               <DropdownMenu>
@@ -280,5 +271,7 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
 
     
