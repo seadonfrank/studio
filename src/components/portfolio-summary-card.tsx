@@ -61,7 +61,7 @@ export default function PortfolioSummaryCard() {
       <CardHeader>
         <CardTitle className="font-headline flex items-center gap-2">
             <Wallet className="h-6 w-6 text-primary" />
-            Your Financial Summary
+            Your Finincials
         </CardTitle>
         <CardDescription>Overview of Finincial well-being</CardDescription>
       </CardHeader>
