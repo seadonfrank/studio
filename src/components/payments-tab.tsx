@@ -51,10 +51,14 @@ export default function PaymentsTab() {
         return (
           <>
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Total balance</p>
+              <p className="text-sm text-muted-foreground">Credit Score</p>
               <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
-                      <h2 className="text-3xl font-headline font-bold">17.39 EUR</h2>
+                      <h2 className="text-3xl font-headline font-bold">750</h2>
+                       <div className="text-left">
+                            <p className="font-semibold text-green-500 text-sm">Excellent</p>
+                            <p className="text-xs text-muted-foreground">Based on your credit history</p>
+                        </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button variant="ghost" size="icon">
