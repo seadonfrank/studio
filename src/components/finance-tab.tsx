@@ -48,117 +48,130 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
-      <Accordion type="single" collapsible className="w-full space-y-2">
-        <AccordionItem value="cards" className="border-none">
-          <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
-            <div className="flex items-center gap-3">
-              <CreditCard className="h-5 w-5 text-primary"/>
-              <span className="font-semibold text-base">Cards</span>
-              <Badge variant="secondary">{cards.length}</Badge>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
-              {cards.map((card, index) => (
-                  <PaymentCard key={index} {...card} />
-              ))}
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <CreditCard className="h-5 w-5 text-primary" />
+            Cards
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {cards.map((card, index) => (
+              <CarouselItem key={index}><PaymentCard {...card} /></CarouselItem>
+            ))}
+            <CarouselItem>
               <Dialog>
-              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Card" /></div></DialogTrigger>
-              <DialogContent>
+                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Card" /></div></DialogTrigger>
+                <DialogContent>
                   <DialogHeader><DialogTitle>Manage Payment Cards</DialogTitle><DialogDescription>Add or remove your debit/credit cards.</DialogDescription></DialogHeader>
                   <ManageCardsDialog />
-              </DialogContent>
+                </DialogContent>
               </Dialog>
-          </AccordionContent>
-        </AccordionItem>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
 
-        <AccordionItem value="deposits" className="border-none">
-           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
-            <div className="flex items-center gap-3">
-              <Landmark className="h-5 w-5 text-primary"/>
-              <span className="font-semibold text-base">Deposits</span>
-              <Badge variant="secondary">{deposits.length}</Badge>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
-              {deposits.map((deposit, index) => (
-                  <DepositCard key={index} {...deposit} />
-              ))}
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Landmark className="h-5 w-5 text-primary" />
+            Deposits
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {deposits.map((deposit, index) => (
+              <CarouselItem key={index}><DepositCard {...deposit} /></CarouselItem>
+            ))}
+            <CarouselItem>
               <Dialog>
-              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Deposit" /></div></DialogTrigger>
-              <DialogContent>
+                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Deposit" /></div></DialogTrigger>
+                <DialogContent>
                   <DialogHeader><DialogTitle>Add New Deposit</DialogTitle><DialogDescription>Create a new fixed or recurring deposit.</DialogDescription></DialogHeader>
                   <ManageDepositsDialog />
-              </DialogContent>
+                </DialogContent>
               </Dialog>
-          </AccordionContent>
-        </AccordionItem>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
 
-        <AccordionItem value="loans" className="border-none">
-           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
-            <div className="flex items-center gap-3">
-              <TrendingUp className="h-5 w-5 text-primary"/>
-              <span className="font-semibold text-base">Loans</span>
-              <Badge variant="secondary">{loans.length}</Badge>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
-              {loans.map((loan, index) => (
-                  <LoanCard key={index} {...loan} />
-              ))}
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            Loans
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {loans.map((loan, index) => (
+              <CarouselItem key={index}><LoanCard {...loan} /></CarouselItem>
+            ))}
+            <CarouselItem>
               <Dialog>
-              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Apply for Loan" /></div></DialogTrigger>
-              <DialogContent>
+                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Apply for Loan" /></div></DialogTrigger>
+                <DialogContent>
                   <DialogHeader><DialogTitle>Apply for New Loan</DialogTitle><DialogDescription>Submit an application for a new personal or business loan.</DialogDescription></DialogHeader>
                   <ManageLoansDialog />
-              </DialogContent>
+                </DialogContent>
               </Dialog>
-          </AccordionContent>
-        </AccordionItem>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
 
-        <AccordionItem value="funds" className="border-none">
-           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
-            <div className="flex items-center gap-3">
-              <Wallet className="h-5 w-5 text-primary"/>
-              <span className="font-semibold text-base">Funds</span>
-              <Badge variant="secondary">{funds.length}</Badge>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
-              {funds.map((fund, index) => (
-                  <FundCard key={index} {...fund} />
-              ))}
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Wallet className="h-5 w-5 text-primary" />
+            Funds
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {funds.map((fund, index) => (
+              <CarouselItem key={index}><FundCard {...fund} /></CarouselItem>
+            ))}
+            <CarouselItem>
               <Dialog>
-              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Investment" /></div></DialogTrigger>
-              <DialogContent>
+                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Investment" /></div></DialogTrigger>
+                <DialogContent>
                   <DialogHeader><DialogTitle>Add New Fund Investment</DialogTitle><DialogDescription>Invest in a new mutual fund.</DialogDescription></DialogHeader>
                   <ManageFundsDialog />
-              </DialogContent>
+                </DialogContent>
               </Dialog>
-          </AccordionContent>
-        </AccordionItem>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
 
-        <AccordionItem value="crypto" className="border-none">
-           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
-            <div className="flex items-center gap-3">
-              <Wallet className="h-5 w-5 text-primary"/>
-              <span className="font-semibold text-base">Crypto</span>
-              <Badge variant="secondary">{crypto.length}</Badge>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4 space-y-4">
-              {crypto.map((cred, index) => (
-                  <CryptoCredentialCard key={index} {...cred} />
-              ))}
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Wallet className="h-5 w-5 text-primary" />
+            Crypto
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {crypto.map((cred, index) => (
+              <CarouselItem key={index}><CryptoCredentialCard {...cred} /></CarouselItem>
+            ))}
+            <CarouselItem>
               <Dialog>
-              <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add Crypto Wallet" /></div></DialogTrigger>
-              <DialogContent>
+                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add Crypto Wallet" /></div></DialogTrigger>
+                <DialogContent>
                   <DialogHeader><DialogTitle>Add Crypto Wallet</DialogTitle><DialogDescription>Add a new crypto wallet to your identity.</DialogDescription></DialogHeader>
                   <ManageCryptoCredentialsDialog />
-              </DialogContent>
+                </DialogContent>
               </Dialog>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
     </div>
   );
 }
