@@ -17,9 +17,17 @@ import { Separator } from "./ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import QrForPayView from "./qr-for-pay-view";
 import TransactionList from "./transaction-list";
+import AccountCard from "./account-card";
+import ManageAccountsDialog from "./manage-accounts-dialog";
 
 export default function PaymentsTab() {
   const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
+
+  const accounts = [
+    { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
+    { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
+    { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
+  ];
 
   const bills = [
     { billerName: "ATT", dueDate: "2024-08-01", amount: "$75.00", category: "internet" as const },
@@ -44,6 +52,38 @@ export default function PaymentsTab() {
             <div className="text-center">
               <h1 className="text-2xl font-bold font-headline">Payments</h1>
               <p className="text-muted-foreground">Send and receive money securely.</p>
+            </div>
+
+            <div>
+              <Carousel opts={{ align: "start" }} className="w-full -ml-4">
+                <CarouselContent className="pl-4">
+                  {accounts.map((account, index) => (
+                    <CarouselItem key={index} className="basis-auto pl-2">
+                      <div className="w-[150px]">
+                        <AccountCard {...account} />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                  <CarouselItem className="basis-auto pl-2">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div className="w-[150px] h-full">
+                          <AddAccountCard text="Add New Account" className="min-h-[105px]" />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Add New Account</DialogTitle>
+                            <DialogDescription>
+                                Add a new currency account to your wallet.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <ManageAccountsDialog />
+                      </DialogContent>
+                    </Dialog>
+                  </CarouselItem>
+                </CarouselContent>
+              </Carousel>
             </div>
 
             <div className="grid grid-cols-2 gap-4">

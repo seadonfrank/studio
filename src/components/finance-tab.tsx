@@ -23,12 +23,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 import { Badge } from "./ui/badge";
 
 export default function FinanceTab() {
-  const accounts = [
-    { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
-    { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
-    { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
-  ];
-
   const cards = [
     { cardType: "Debit Card", balance: "€1,234.56", cardNumber: "1234", gradient: "from-blue-500 to-indigo-600" },
     { cardType: "Credit Card", balance: "€5,000.00", cardNumber: "5678", limit: "€10,000", gradient: "from-purple-500 to-violet-600" },
@@ -88,38 +82,6 @@ export default function FinanceTab() {
           </DropdownMenu>
       </div>
 
-      <div>
-        <Carousel opts={{ align: "start" }} className="w-full -ml-4">
-            <CarouselContent className="pl-4">
-              {accounts.map((account, index) => (
-                <CarouselItem key={index} className="basis-auto pl-2">
-                  <div className="w-[150px]">
-                    <AccountCard {...account} />
-                  </div>
-                </CarouselItem>
-              ))}
-              <CarouselItem className="basis-auto pl-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="w-[150px] h-full">
-                      <AddAccountCard text="Add New Account" className="min-h-[105px]" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Add New Account</DialogTitle>
-                        <DialogDescription>
-                            Add a new currency account to your wallet.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <ManageAccountsDialog />
-                  </DialogContent>
-                </Dialog>
-              </CarouselItem>
-            </CarouselContent>
-          </Carousel>
-      </div>
-      
       <Accordion type="single" collapsible className="w-full space-y-2">
         <AccordionItem value="cards" className="border-none">
           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">
