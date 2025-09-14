@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox } from "lucide-react";
@@ -87,7 +86,7 @@ export default function IdentityTab() {
             Your Digital ID
           </CardTitle>
           <CardDescription>
-            Unique and self-sovereign identity.
+            Unique and Self-sovereign ID
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
