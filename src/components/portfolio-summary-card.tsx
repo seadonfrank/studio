@@ -59,7 +59,7 @@ export default function PortfolioSummaryCard() {
     <Card>
       <CardHeader>
         <CardTitle className="font-headline">Portfolio Summary</CardTitle>
-        <CardDescription>An overview of your financial health.</CardDescription>
+        <CardDescription>Overview of Finincial well-being</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-3 gap-4 text-center mb-4">
