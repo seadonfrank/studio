@@ -68,7 +68,7 @@ export default function PaymentsTab() {
             </div>
 
             <div className="flex justify-start gap-2">
-                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><ArrowUp className="mr-1 h-4 w-4"/> Send</Button>
+                <Button onClick={() => setView('scan')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Pay</Button>
                 <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Plus className="mr-1 h-4 w-4"/> Add money</Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -114,27 +114,6 @@ export default function PaymentsTab() {
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-               <Card 
-                className="bg-gradient-to-br from-primary via-primary to-purple-600 text-primary-foreground cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => setView('scan')}
-                >
-                <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
-                    <Scan className="h-8 w-8 mb-2" />
-                    <p className="font-bold">Scan to Pay</p>
-                </CardContent>
-                </Card>
-                <Card 
-                  className="cursor-pointer hover:bg-muted/50 transition-colors h-full"
-                  onClick={() => setView('qr')}
-                >
-                    <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
-                        <QrCode className="h-8 w-8 mb-2" />
-                        <p className="font-bold">QR for Pay</p>
-                    </CardContent>
-                </Card>
             </div>
             
             <Card>
