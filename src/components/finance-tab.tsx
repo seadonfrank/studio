@@ -48,22 +48,6 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
-      <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">Total balance</p>
-        <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-                <h2 className="text-3xl font-headline font-bold">17.39 EUR</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon">
-                <BarChart2 className="h-6 w-6" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Toggle visibility">
-                <Eye className="h-5 w-5" />
-              </Button>
-            </div>
-        </div>
-      </div>
       
       <div className="flex justify-start gap-2">
           <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><ArrowUp className="mr-1 h-4 w-4"/> Send</Button>

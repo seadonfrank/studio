@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode } from "lucide-react";
+import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode, BarChart2, Eye } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "./ui/dialog";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
@@ -49,9 +49,21 @@ export default function PaymentsTab() {
       default:
         return (
           <>
-            <div className="text-center">
-              <h1 className="text-2xl font-bold font-headline">Payments</h1>
-              <p className="text-muted-foreground">Send and receive money securely.</p>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Total balance</p>
+              <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                      <h2 className="text-3xl font-headline font-bold">17.39 EUR</h2>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon">
+                      <BarChart2 className="h-6 w-6" />
+                    </Button>
+                    <Button variant="ghost" size="icon" aria-label="Toggle visibility">
+                      <Eye className="h-5 w-5" />
+                    </Button>
+                  </div>
+              </div>
             </div>
 
             <div>
