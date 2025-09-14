@@ -74,18 +74,6 @@ export default function PaymentsTab() {
             <div className="flex justify-start gap-2">
                 <Button onClick={() => setView('scan')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Pay</Button>
                 <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR for Pay</Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4">
-                      Request
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem>Request via Link</DropdownMenuItem>
-                    <DropdownMenuItem>Request from user</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
             </div>
 
             <div>
