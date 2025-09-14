@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2 } from "lucide-react";
@@ -101,7 +102,7 @@ export default function IdentityTab() {
           </div>
           <div className="flex justify-center">
             <Image 
-              src="https://placehold.co/300x50/F5F5F5/000000?text=|||||||||||||||||||||||||"
+              src="https://api.qrserver.com/v1/create-qr-code/?size=150x50&data=did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d&ecc=L&qzone=1&format=svg"
               alt="barcode"
               width={300}
               height={50}
@@ -279,3 +280,5 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
