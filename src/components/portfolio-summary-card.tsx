@@ -3,6 +3,7 @@
 
 import * as React from "react"
 import { PieChart, Pie, Cell, Tooltip } from "recharts"
+import { Wallet } from "lucide-react";
 
 import {
   Card,
@@ -58,7 +59,10 @@ export default function PortfolioSummaryCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">Portfolio Summary</CardTitle>
+        <CardTitle className="font-headline flex items-center gap-2">
+            <Wallet className="h-6 w-6 text-primary" />
+            Your Financial Summary
+        </CardTitle>
         <CardDescription>Overview of Finincial well-being</CardDescription>
       </CardHeader>
       <CardContent>
