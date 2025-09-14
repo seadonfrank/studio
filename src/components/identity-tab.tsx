@@ -87,7 +87,7 @@ export default function IdentityTab() {
             Your Digital ID
           </CardTitle>
           <CardDescription>
-            Your unique and self-sovereign identity.
+            Unique and self-sovereign identity.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -262,6 +262,8 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
 
     
 
