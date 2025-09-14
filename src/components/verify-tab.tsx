@@ -12,6 +12,7 @@ import RequestCredentialsView from "./request-credentials-view";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import CredentialTypeCard from "./credential-type-card";
 import { Button } from "./ui/button";
+import { Progress } from "./ui/progress";
 
 export default function VerifyTab() {
   const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
@@ -42,6 +43,22 @@ export default function VerifyTab() {
       default:
         return (
           <>
+             <Card>
+              <CardHeader>
+                <CardTitle className="font-headline text-lg">Credibility Score</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                    <p className="text-4xl font-bold font-headline">850</p>
+                    <div className="text-right">
+                        <p className="font-semibold text-green-500">High</p>
+                        <p className="text-xs text-muted-foreground">Based on your verified credentials</p>
+                    </div>
+                </div>
+                <Progress value={85} className="mt-4 h-2" />
+              </CardContent>
+            </Card>
+
             <div>
               <Carousel opts={{ align: "start", dragFree: true }} className="w-full -ml-4">
                   <CarouselContent className="pl-4">
