@@ -48,24 +48,6 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
-      
-      <div className="flex justify-start gap-2">
-          <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><ArrowUp className="mr-1 h-4 w-4"/> Send</Button>
-          <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Plus className="mr-1 h-4 w-4"/> Add money</Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4">
-                Request
-                <ChevronDown className="ml-1 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem>Request via Link</DropdownMenuItem>
-              <DropdownMenuItem>Request from user</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-      </div>
-
       <Accordion type="single" collapsible className="w-full space-y-2">
         <AccordionItem value="cards" className="border-none">
           <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline">

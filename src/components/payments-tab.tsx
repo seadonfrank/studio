@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode, BarChart2, Eye } from "lucide-react";
+import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode, BarChart2, Eye, ArrowUp, ChevronDown } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "./ui/dialog";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
@@ -19,6 +19,7 @@ import QrForPayView from "./qr-for-pay-view";
 import TransactionList from "./transaction-list";
 import AccountCard from "./account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 export default function PaymentsTab() {
   const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
@@ -64,6 +65,23 @@ export default function PaymentsTab() {
                     </Button>
                   </div>
               </div>
+            </div>
+
+            <div className="flex justify-start gap-2">
+                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><ArrowUp className="mr-1 h-4 w-4"/> Send</Button>
+                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Plus className="mr-1 h-4 w-4"/> Add money</Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4">
+                      Request
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem>Request via Link</DropdownMenuItem>
+                    <DropdownMenuItem>Request from user</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
             </div>
 
             <div>
