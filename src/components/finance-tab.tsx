@@ -21,6 +21,7 @@ import AccountCard from "./account-card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import { Badge } from "./ui/badge";
+import PortfolioSummaryCard from "./portfolio-summary-card";
 
 export default function FinanceTab() {
   const cards = [
@@ -48,6 +49,7 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
+      <PortfolioSummaryCard />
       <section>
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
