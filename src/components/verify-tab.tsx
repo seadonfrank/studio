@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School, Badge as BadgeIcon } from "lucide-react";
+import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School, Badge as BadgeIcon, BarChart2, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
@@ -43,21 +43,26 @@ export default function VerifyTab() {
       default:
         return (
           <>
-             <Card>
-              <CardHeader>
-                <CardTitle className="font-headline text-lg">Credibility Score</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                    <p className="text-4xl font-bold font-headline">850</p>
-                    <div className="text-right">
-                        <p className="font-semibold text-green-500">High</p>
-                        <p className="text-xs text-muted-foreground">Based on your verified credentials</p>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Credibility Score</p>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-3xl font-headline font-bold">850</h2>
+                   <div className="text-left">
+                        <p className="font-semibold text-green-500 text-sm">High</p>
+                        <p className="text-xs text-muted-foreground">Based on your credentials</p>
                     </div>
                 </div>
-                <Progress value={85} className="mt-4 h-2" />
-              </CardContent>
-            </Card>
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" size="icon">
+                    <BarChart2 className="h-6 w-6" />
+                  </Button>
+                  <Button variant="ghost" size="icon" aria-label="Toggle visibility">
+                    <Eye className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+            </div>
 
             <div>
               <Carousel opts={{ align: "start", dragFree: true }} className="w-full -ml-4">
