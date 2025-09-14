@@ -26,7 +26,7 @@ export default function VerifyTab() {
     { type: "Date of Birth/Age", count: 1, icon: Cake },
     { type: "Driving License", count: 1, icon: Car },
     { type: "Master's Degree", count: 1, icon: School },
-    { type: "Indian National Badge", count: 1, icon: BadgeIcon },
+    { type: "Indian National", count: 1, icon: BadgeIcon },
   ];
 
   const renderContent = () => {
