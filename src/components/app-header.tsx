@@ -1,5 +1,5 @@
 
-import { Bell } from "lucide-react";
+import { Bell, Cog, User } from "lucide-react";
 import NotificationMenu from "./notification-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import type { Tab } from "@/app/page";
@@ -30,7 +30,6 @@ export default function AppHeader({ activeTab }: { activeTab: Tab }) {
             <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
             <AvatarFallback>JD</AvatarFallback>
         </Avatar>
-        <h1 className="text-xl font-headline font-bold text-foreground">xIDFI</h1>
       </div>
       <div className="flex items-center gap-2">
         <NotificationMenu />
