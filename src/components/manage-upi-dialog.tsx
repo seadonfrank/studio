@@ -75,6 +75,9 @@ export default function ManageUpiDialog() {
 
         <DialogFooter>
             <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <DialogClose asChild>
                 <Button onClick={handleSaveChanges}>Save Changes</Button>
             </DialogClose>
         </DialogFooter>
