@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School, Badge as BadgeIcon, BarChart2, Eye } from "lucide-react";
+import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School, Badge as BadgeIcon, BarChart2, Eye, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
@@ -15,8 +15,7 @@ import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import ActivityItem from "./activity-item";
 
-export default function VerifyTab() {
-  const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
+export default function VerifyTab({ view, setView }: { view: string, setView: (view: string) => void }) {
 
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
@@ -41,6 +40,20 @@ export default function VerifyTab() {
         return <SendCredentialsView onBack={() => setView("main")} />;
       case "request":
         return <RequestCredentialsView onBack={() => setView("main")} />;
+      case "activities":
+        return (
+          <div className="flex flex-col h-full">
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" onClick={() => setView('main')}>
+                <ArrowLeft />
+              </Button>
+              <h2 className="text-xl font-bold font-headline">Activities</h2>
+            </div>
+            <div className="flex-grow overflow-y-auto space-y-6 pt-6">
+              {/* Content for activities will go here */}
+            </div>
+          </div>
+        );
       default:
         return (
           <>

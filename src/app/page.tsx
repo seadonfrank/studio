@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -14,6 +15,7 @@ export type Tab = "home" | "finance" | "identity" | "payments" | "verify";
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [paymentsView, setPaymentsView] = useState('main');
+  const [verifyView, setVerifyView] = useState('main');
 
   const handleTransactionsClick = () => {
     if (activeTab === 'payments') {
@@ -21,16 +23,26 @@ export default function Home() {
     }
   };
 
+  const handleActivitiesClick = () => {
+    if (activeTab === 'verify') {
+      setVerifyView('activities');
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-muted p-4 sm:p-8">
       <div className="relative h-[844px] w-full max-w-[390px] overflow-hidden rounded-[40px] border-[8px] border-black bg-background shadow-2xl">
-        <AppHeader activeTab={activeTab} onTransactionsClick={handleTransactionsClick} />
+        <AppHeader 
+          activeTab={activeTab} 
+          onTransactionsClick={handleTransactionsClick}
+          onActivitiesClick={handleActivitiesClick} 
+        />
         <div className="h-full overflow-y-auto pb-32 pt-20">
           {activeTab === "home" && <HomeTab />}
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
-          {activeTab === "verify" && <VerifyTab />}
+          {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} />}
         </div>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
