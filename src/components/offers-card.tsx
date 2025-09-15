@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Ticket } from "lucide-react";
+import { ChevronDown, Ticket, Award } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -11,14 +11,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Card, CardContent } from "./ui/card";
 
 type OfferStatus = 'redeem' | 'redeeming' | 'redeemed';
 type OfferFilter = OfferStatus | 'all';
 
-const allOffers: { title: string; description: string; category: string; status: OfferStatus }[] = [
-  { title: "20% off on your next coffee", description: "Use code COFFEE20 at Starbucks", category: "Food & Drink", status: "redeem" },
-  { title: "Flat $50 off on flights", description: "Book via xIDFI Pay on any airline", category: "Travel", status: "redeeming" },
-  { title: "1 month free movie streaming", description: "Link your xIDFI account with Netflix", category: "Entertainment", status: "redeemed" },
+const allOffers: { title: string; description: string; category: string; status: OfferStatus, value: number }[] = [
+  { title: "20% off on your next coffee", description: "Use code COFFEE20 at Starbucks", category: "Food & Drink", status: "redeem", value: 0 },
+  { title: "Flat $50 off on flights", description: "Book via xIDFI Pay on any airline", category: "Travel", status: "redeeming", value: 0 },
+  { title: "1 month free movie streaming", description: "Link your xIDFI account with Netflix", category: "Entertainment", status: "redeemed", value: 15 },
+  { title: "$5 off on groceries", description: "On purchases above $50", category: "Shopping", status: "redeemed", value: 5 },
 ];
 
 export default function OffersCard() {
@@ -28,6 +30,13 @@ export default function OffersCard() {
     if (filter === 'all') return true;
     return offer.status === filter;
   });
+
+  const totalSavings = allOffers.reduce((total, offer) => {
+    if (offer.status === 'redeemed') {
+      return total + offer.value;
+    }
+    return total;
+  }, 0);
 
   const filters: { label: string; value: OfferFilter }[] = [
     { label: "All", value: "all" },
@@ -59,6 +68,22 @@ export default function OffersCard() {
             </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+       <Card className="mb-4 bg-muted/50 border-none">
+        <CardContent className="p-3 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center rounded-full bg-background h-8 w-8 text-primary">
+              <Award className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-semibold text-sm">Total Savings</p>
+              <p className="text-xs text-muted-foreground">From redeemed offers</p>
+            </div>
+          </div>
+          <p className="text-xl font-bold font-headline text-primary">${totalSavings.toFixed(2)}</p>
+        </CardContent>
+      </Card>
+
       <div className="space-y-4">
           {filteredOffers.length > 0 ? filteredOffers.map((offer, index) => (
             <div key={index} className="flex items-center gap-4 cursor-pointer group">
