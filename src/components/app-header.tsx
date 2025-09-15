@@ -42,9 +42,10 @@ export default function AppHeader({ activeTab }: { activeTab: Tab }) {
       </div>
       <div className="flex items-center gap-2">
         <NotificationMenu />
-        <Button variant="ghost" size="icon" aria-label="Settings">
-          <Settings className="h-5 w-5" />
-        </Button>
+        <Avatar className="h-9 w-9">
+            <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
+            <AvatarFallback>JD</AvatarFallback>
+        </Avatar>
       </div>
     </header>
   );
