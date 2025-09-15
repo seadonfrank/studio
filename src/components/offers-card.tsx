@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { ChevronDown, Ticket } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -38,33 +37,29 @@ export default function OffersCard() {
   ];
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-            <CardTitle className="font-headline flex items-center gap-2">
-                <Ticket className="h-6 w-6 text-primary" />
-                Offers
-            </CardTitle>
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="capitalize">
-                        {filter}
-                        <ChevronDown className="h-4 w-4 ml-2" />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    {filters.map(f => (
-                        <DropdownMenuItem key={f.value} onClick={() => setFilter(f.value)} className="capitalize">
-                            {f.label}
-                        </DropdownMenuItem>
-                    ))}
-                </DropdownMenuContent>
-            </DropdownMenu>
-        </div>
-        <CardDescription>Exclusive deals for you</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+    <div>
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Ticket className="h-5 w-5 text-primary" />
+            Offers
+        </h2>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="capitalize">
+                    {filter}
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                {filters.map(f => (
+                    <DropdownMenuItem key={f.value} onClick={() => setFilter(f.value)} className="capitalize">
+                        {f.label}
+                    </DropdownMenuItem>
+                ))}
+            </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <div className="space-y-4">
           {filteredOffers.length > 0 ? filteredOffers.map((offer, index) => (
             <div key={index} className="flex items-center gap-4 cursor-pointer group">
               <div className="flex-1">
@@ -86,7 +81,6 @@ export default function OffersCard() {
             </div>
           )) : <p className="text-sm text-muted-foreground text-center py-4">No offers match the filter.</p>}
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }
