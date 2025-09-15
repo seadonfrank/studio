@@ -20,15 +20,11 @@ export default function TransactionList() {
   const sortedTransactions = [...transactions].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
-    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    return sortOrder === "asc" ? dateA - dateB : dateB - a.date;
   });
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-3">
-        <h2 className="text-lg font-headline font-semibold">Transactions</h2>
-        <Button variant="link" className="text-primary pr-0">See all</Button>
-      </div>
       <div className="space-y-4">
         {sortedTransactions.map((tx) => (
           <TransactionItem key={tx.id} transaction={tx} />
