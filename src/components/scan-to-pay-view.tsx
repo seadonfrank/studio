@@ -255,6 +255,19 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
 
                 <div className="space-y-4">
                     <div className="space-y-2">
+                      <Label htmlFor="fromAccount">From</Label>
+                      <Select defaultValue="usd-balance">
+                          <SelectTrigger id="fromAccount">
+                              <SelectValue placeholder="Select a payment method" />
+                          </SelectTrigger>
+                          <SelectContent>
+                              <SelectItem value="usd-balance">USD Balance - $1,250.00</SelectItem>
+                              <SelectItem value="eur-balance">EUR Balance - €800.00</SelectItem>
+                              <SelectItem value="debit-card">Debit Card **** 1234</SelectItem>
+                          </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
                         <Label htmlFor="amount">Amount</Label>
                         <div className="flex gap-2">
                             <Input id="amount" type="number" placeholder="0.00" className="flex-grow" value={paymentDetails.amount} onChange={(e) => handleDetailsChange('amount', e.target.value)} />
