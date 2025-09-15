@@ -25,6 +25,14 @@ import PortfolioSummaryCard from "./portfolio-summary-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 
 export default function FinanceTab() {
+  const accounts = [
+    { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
+    { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
+    { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
+    { currency: "BTC", balance: "0.05", type: "secondary" as const, gradient: "from-yellow-500 to-orange-500" },
+    { currency: "ETH", balance: "1.5", type: "secondary" as const, gradient: "from-slate-500 to-gray-600" },
+  ];
+
   const cards = [
     { cardType: "Debit Card", balance: "€1,234.56", cardNumber: "1234", gradient: "from-blue-500 to-indigo-600" },
     { cardType: "Credit Card", balance: "€5,000.00", cardNumber: "5678", limit: "€10,000", gradient: "from-purple-500 to-violet-600" },
@@ -66,6 +74,44 @@ export default function FinanceTab() {
                 <SyncWithBankDialog />
             </DialogContent>
         </Dialog>
+      </section>
+
+      <section>
+        <div className="flex justify-between items-center mb-3">
+            <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+              <Landmark className="h-5 w-5 text-primary" />
+              Accounts
+            </h2>
+          </div>
+          <Carousel opts={{ align: "start" }} className="w-full -ml-4">
+            <CarouselContent className="pl-4">
+              {accounts.map((account, index) => (
+                <CarouselItem key={index} className="basis-auto pl-2">
+                  <div className="w-[150px]">
+                    <AccountCard {...account} />
+                  </div>
+                </CarouselItem>
+              ))}
+              <CarouselItem className="basis-auto pl-2">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="w-[150px] h-full">
+                      <AddAccountCard text="Add New Account" className="min-h-[105px]" />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Add New Account</DialogTitle>
+                        <DialogDescription>
+                            Add a new currency account to your wallet.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <ManageAccountsDialog />
+                  </DialogContent>
+                </Dialog>
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
       </section>
       
       <section>
