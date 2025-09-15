@@ -21,6 +21,7 @@ import AccountCard from "./account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import ManageUpiDialog from "./manage-upi-dialog";
+import ManageAniDialog from "./manage-ani-dialog";
 
 export default function PaymentsTab() {
   const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
@@ -89,7 +90,20 @@ export default function PaymentsTab() {
                     <ManageUpiDialog />
                   </DialogContent>
                 </Dialog>
-                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Nfc className="mr-1 h-4 w-4"/> Manage ANI</Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Nfc className="mr-1 h-4 w-4"/> Manage ANI</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Manage ANI Settings</DialogTitle>
+                      <DialogDescription>
+                        Configure your Autonomous Network Identity (ANI) settings.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageAniDialog />
+                  </DialogContent>
+                </Dialog>
             </div>
 
             <div>
