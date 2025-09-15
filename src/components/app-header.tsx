@@ -1,4 +1,5 @@
-import { Bell, Settings, Eye } from "lucide-react";
+
+import { Bell, Settings, User, Cog } from "lucide-react";
 import { Button } from "./ui/button";
 import NotificationMenu from "./notification-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -19,7 +20,10 @@ export default function AppHeader({ activeTab }: { activeTab: Tab }) {
         <div className="flex items-center gap-2">
           <NotificationMenu />
           <Button variant="ghost" size="icon" aria-label="Settings">
-            <Settings className="h-5 w-5" />
+            <div className="relative">
+              <User className="h-5 w-5" />
+              <Cog className="absolute -bottom-1 -right-1 h-3 w-3 bg-background rounded-full" />
+            </div>
           </Button>
         </div>
       </header>
