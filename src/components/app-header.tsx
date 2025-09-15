@@ -14,9 +14,9 @@ export default function AppHeader({ activeTab }: { activeTab: Tab }) {
             <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
             <AvatarFallback>JD</AvatarFallback>
           </Avatar>
-           <Button size="sm" className="bg-green-100 text-green-800 hover:bg-green-200 h-8 rounded-full">Earn £50</Button>
         </div>
         <div className="flex items-center gap-2">
+           <Button size="sm" className="bg-green-100 text-green-800 hover:bg-green-200 h-8 rounded-full">Earn £50</Button>
           <NotificationMenu />
         </div>
       </header>
