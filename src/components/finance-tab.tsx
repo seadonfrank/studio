@@ -83,16 +83,16 @@ export default function FinanceTab() {
               Accounts
             </h2>
           </div>
-          <Carousel opts={{ align: "start" }} className="w-full -ml-4">
-            <CarouselContent className="pl-4">
+          <Carousel opts={{ align: "start" }} className="w-full">
+            <CarouselContent>
               {accounts.map((account, index) => (
-                <CarouselItem key={index} className="basis-auto pl-2">
+                <CarouselItem key={index} className="basis-auto">
                   <div className="w-[150px]">
                     <AccountCard {...account} />
                   </div>
                 </CarouselItem>
               ))}
-              <CarouselItem className="basis-auto pl-2">
+              <CarouselItem className="basis-auto">
                 <Dialog>
                   <DialogTrigger asChild>
                     <div className="w-[150px] h-full">
