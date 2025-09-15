@@ -71,9 +71,10 @@ export default function PaymentsTab() {
               </div>
             </div>
 
-            <div className="flex justify-start gap-2">
-                <Button onClick={() => setView('scan')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Pay</Button>
-                <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR for Pay</Button>
+            <div className="flex justify-start gap-2 overflow-x-auto no-scrollbar">
+                <Button onClick={() => setView('scan')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Scan className="mr-1 h-4 w-4"/> Scan to Pay</Button>
+                <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><QrCode className="mr-1 h-4 w-4"/> QR for Pay</Button>
+                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Landmark className="mr-1 h-4 w-4"/> UPI Payment</Button>
             </div>
 
             <div>
