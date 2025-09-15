@@ -78,40 +78,40 @@ export default function FinanceTab() {
 
       <section>
         <div className="flex justify-between items-center mb-3">
-            <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-              <Landmark className="h-5 w-5 text-primary" />
-              Accounts
-            </h2>
-          </div>
-          <Carousel opts={{ align: "start" }} className="w-full">
-            <CarouselContent>
-              {accounts.map((account, index) => (
-                <CarouselItem key={index} className="basis-auto">
-                  <div className="w-[150px]">
-                    <AccountCard {...account} />
-                  </div>
-                </CarouselItem>
-              ))}
-              <CarouselItem className="basis-auto">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="w-[150px] h-full">
-                      <AddAccountCard text="Add New Account" className="min-h-[105px]" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Add New Account</DialogTitle>
-                        <DialogDescription>
-                            Add a new currency account to your wallet.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <ManageAccountsDialog />
-                  </DialogContent>
-                </Dialog>
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Landmark className="h-5 w-5 text-primary" />
+            Accounts
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {accounts.map((account, index) => (
+              <CarouselItem key={index} className="basis-auto">
+                <div className="w-[150px]">
+                  <AccountCard {...account} />
+                </div>
               </CarouselItem>
-            </CarouselContent>
-          </Carousel>
+            ))}
+            <CarouselItem className="basis-auto">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <div className="w-[150px] h-full">
+                    <AddAccountCard text="Add New Account" className="min-h-[105px]" />
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                      <DialogTitle>Add New Account</DialogTitle>
+                      <DialogDescription>
+                          Add a new currency account to your wallet.
+                      </DialogDescription>
+                  </DialogHeader>
+                  <ManageAccountsDialog />
+                </DialogContent>
+              </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
       </section>
       
       <section>
@@ -241,3 +241,5 @@ export default function FinanceTab() {
     </div>
   );
 }
+
+    
