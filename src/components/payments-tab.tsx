@@ -192,7 +192,7 @@ export default function PaymentsTab() {
             </div>
             
             <div>
-              <h2 className="text-lg font-headline font-semibold mb-3">Bill Payments</h2>
+              <h2 className="text-lg font-headline font-semibold mb-3">Bills and Subscriptions</h2>
               <Carousel
                 opts={{
                   align: "start",
