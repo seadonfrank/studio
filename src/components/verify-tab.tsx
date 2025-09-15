@@ -13,14 +13,15 @@ import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import CredentialTypeCard from "./credential-type-card";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
+import ActivityItem from "./activity-item";
 
 export default function VerifyTab() {
   const [view, setView] = useState<"main" | "prove" | "qr" | "send" | "request">("main");
 
   const recentActivity = [
-    { action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
-    { action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
-    { action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
+    { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
+    { id: 2, action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
+    { id: 3, action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
   ];
 
   const credentialTypes = [
@@ -123,28 +124,17 @@ export default function VerifyTab() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="font-headline">Recent Activity</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-4">
-                  {recentActivity.map((activity, index) => (
-                    <li key={index} className="flex items-start gap-3 text-sm">
-                      <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
-                      <div className="flex-1">
-                        <p className="font-medium">
-                          <span className="text-primary">{activity.action}</span> {activity.credential}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          For {activity.entity} &bull; {activity.time}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+            <div>
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-lg font-headline font-semibold">Activities</h2>
+                <Button variant="link" className="text-primary pr-0">See all</Button>
+              </div>
+              <div className="space-y-4">
+                {recentActivity.map((activity) => (
+                  <ActivityItem key={activity.id} activity={activity} />
+                ))}
+              </div>
+            </div>
           </>
         );
     }
