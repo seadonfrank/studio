@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode, BarChart2, Eye, ArrowUp, ChevronDown } from "lucide-react";
+import { ArrowUpCircle, ArrowDownCircle, Landmark, Nfc, ChevronRight, Scan, Plus, QrCode, BarChart2, Eye, ArrowUp, ChevronDown, ArrowLeft } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "./ui/dialog";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
@@ -23,9 +23,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import ManageUpiDialog from "./manage-upi-dialog";
 import ManageAniDialog from "./manage-ani-dialog";
 
-export default function PaymentsTab() {
-  const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
-
+export default function PaymentsTab({ view, setView }: { view: string, setView: (view: string) => void }) {
   const accounts = [
     { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
     { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
@@ -51,6 +49,20 @@ export default function PaymentsTab() {
         return <ScanToPayView onBack={() => setView('main')} />;
       case 'qr':
         return <QrForPayView onBack={() => setView('main')} />;
+      case 'transactions':
+        return (
+          <div className="flex flex-col h-full">
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" onClick={() => setView('main')}>
+                <ArrowLeft />
+              </Button>
+              <h2 className="text-xl font-bold font-headline">Transactions</h2>
+            </div>
+            <div className="flex-grow overflow-y-auto space-y-6 pt-6">
+              {/* This is the blank page content */}
+            </div>
+          </div>
+        );
       default:
         return (
           <>
