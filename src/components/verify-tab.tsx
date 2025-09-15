@@ -140,18 +140,6 @@ export default function VerifyTab({ view, setView }: { view: string, setView: (s
                 </div>
               </CardContent>
             </Card>
-
-            <div>
-              <div className="flex justify-between items-center mb-3">
-                <h2 className="text-lg font-headline font-semibold">Recent Activities</h2>
-                <Button variant="link" className="text-primary pr-0" onClick={() => setView('activities')}>See all</Button>
-              </div>
-              <div className="space-y-4">
-                {recentActivity.slice(0, 3).map((activity) => (
-                  <ActivityItem key={activity.id} activity={activity} />
-                ))}
-              </div>
-            </div>
           </>
         );
     }
