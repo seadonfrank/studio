@@ -59,7 +59,7 @@ export default function PaymentsTab({ view, setView }: { view: string, setView: 
               <h2 className="text-xl font-bold font-headline">Transactions</h2>
             </div>
             <div className="flex-grow overflow-y-auto space-y-6 pt-6">
-              {/* This is the blank page content */}
+              <TransactionList />
             </div>
           </div>
         );
@@ -239,7 +239,6 @@ export default function PaymentsTab({ view, setView }: { view: string, setView: 
                 </CarouselContent>
               </Carousel>
             </div>
-            <TransactionList />
           </>
         );
     }
