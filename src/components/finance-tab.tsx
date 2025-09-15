@@ -23,6 +23,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 import { Badge } from "./ui/badge";
 import PortfolioSummaryCard from "./portfolio-summary-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
+import AccountCarouselCard from "./account-carousel-card";
 
 export default function FinanceTab() {
   const accounts = [
@@ -31,6 +32,12 @@ export default function FinanceTab() {
     { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
     { currency: "BTC", balance: "0.05", type: "secondary" as const, gradient: "from-yellow-500 to-orange-500" },
     { currency: "ETH", balance: "1.5", type: "secondary" as const, gradient: "from-slate-500 to-gray-600" },
+  ];
+  
+  const carouselAccounts = [
+    { currency: "USD", accountType: "Primary Checking", balance: "1,250.00", fees: "0.00", gradient: "from-blue-500 to-indigo-600" },
+    { currency: "EUR", accountType: "Secondary Savings", balance: "800.00", fees: "1.00", gradient: "from-green-500 to-emerald-600" },
+    { currency: "GBP", accountType: "Travel Account", balance: "500.00", fees: "2.50", gradient: "from-purple-500 to-violet-600" },
   ];
 
   const cards = [
@@ -74,6 +81,31 @@ export default function FinanceTab() {
                 <SyncWithBankDialog />
             </DialogContent>
         </Dialog>
+      </section>
+
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Landmark className="h-5 w-5 text-primary" />
+            Accounts
+          </h2>
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {carouselAccounts.map((account, index) => (
+              <CarouselItem key={index}><AccountCarouselCard {...account} /></CarouselItem>
+            ))}
+            <CarouselItem>
+              <Dialog>
+                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Account" /></div></DialogTrigger>
+                <DialogContent>
+                  <DialogHeader><DialogTitle>Add New Bank Account</DialogTitle><DialogDescription>Add a new bank account.</DialogDescription></DialogHeader>
+                  <ManageAccountsDialog />
+                </DialogContent>
+              </Dialog>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
       </section>
       
       <section>
