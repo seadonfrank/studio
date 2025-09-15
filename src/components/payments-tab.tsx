@@ -30,6 +30,8 @@ export default function PaymentsTab() {
     { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
     { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
     { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
+    { currency: "BTC", balance: "0.05", type: "secondary" as const, gradient: "from-yellow-500 to-orange-500" },
+    { currency: "ETH", balance: "1.5", type: "secondary" as const, gradient: "from-slate-500 to-gray-600" },
   ];
 
   const bills = [
