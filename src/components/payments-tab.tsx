@@ -20,6 +20,7 @@ import TransactionList from "./transaction-list";
 import AccountCard from "./account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import ManageUpiDialog from "./manage-upi-dialog";
 
 export default function PaymentsTab() {
   const [view, setView] = useState<'main' | 'send' | 'receive' | 'scan' | 'qr'>('main');
@@ -74,7 +75,20 @@ export default function PaymentsTab() {
             <div className="flex justify-start gap-2 overflow-x-auto no-scrollbar">
                 <Button onClick={() => setView('scan')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Scan className="mr-1 h-4 w-4"/> Scan to Pay</Button>
                 <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><QrCode className="mr-1 h-4 w-4"/> QR for Pay</Button>
-                <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Landmark className="mr-1 h-4 w-4"/> Manage UPI</Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Landmark className="mr-1 h-4 w-4"/> Manage UPI</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Manage UPI Settings</DialogTitle>
+                      <DialogDescription>
+                        Configure your UPI and UPI Lite settings, and manage linked accounts.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ManageUpiDialog />
+                  </DialogContent>
+                </Dialog>
                 <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 flex-shrink-0"><Nfc className="mr-1 h-4 w-4"/> Manage ANI</Button>
             </div>
 
