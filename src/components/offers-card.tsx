@@ -3,9 +3,15 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Ticket } from "lucide-react";
+import { ChevronDown, Ticket } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 type OfferStatus = 'redeem' | 'redeeming' | 'redeemed';
 type OfferFilter = OfferStatus | 'all';
@@ -34,26 +40,30 @@ export default function OffersCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline flex items-center gap-2">
-            <Ticket className="h-6 w-6 text-primary" />
-            Offers
-        </CardTitle>
+        <div className="flex justify-between items-center">
+            <CardTitle className="font-headline flex items-center gap-2">
+                <Ticket className="h-6 w-6 text-primary" />
+                Offers
+            </CardTitle>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="capitalize">
+                        {filter}
+                        <ChevronDown className="h-4 w-4 ml-2" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    {filters.map(f => (
+                        <DropdownMenuItem key={f.value} onClick={() => setFilter(f.value)} className="capitalize">
+                            {f.label}
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
         <CardDescription>Exclusive deals for you</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex gap-2 mb-4 border-b pb-2">
-            {filters.map(f => (
-                 <Button 
-                    key={f.value}
-                    variant={filter === f.value ? 'default' : 'ghost'} 
-                    size="sm"
-                    onClick={() => setFilter(f.value)}
-                    className="capitalize h-8 px-3 text-xs"
-                >
-                    {f.label}
-                </Button>
-            ))}
-        </div>
         <div className="space-y-4">
           {filteredOffers.length > 0 ? filteredOffers.map((offer, index) => (
             <div key={index} className="flex items-center gap-4 cursor-pointer group">
