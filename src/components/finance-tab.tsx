@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye } from "lucide-react";
+import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye, RefreshCw } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -22,6 +22,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import { Badge } from "./ui/badge";
 import PortfolioSummaryCard from "./portfolio-summary-card";
+import SyncWithBankDialog from "./sync-with-bank-dialog";
 
 export default function FinanceTab() {
   const cards = [
@@ -49,6 +50,24 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
+      <section>
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="outline" className="w-full">
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Sync with Bank
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Sync Financial Accounts</DialogTitle>
+                    <DialogDescription>Connect with your bank to sync all your assets.</DialogDescription>
+                </DialogHeader>
+                <SyncWithBankDialog />
+            </DialogContent>
+        </Dialog>
+      </section>
+      
       <section>
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
