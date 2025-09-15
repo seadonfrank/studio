@@ -80,7 +80,7 @@ export default function FinanceTab() {
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
             <Landmark className="h-5 w-5 text-primary" />
-            Accounts
+            Bank Accounts
           </h2>
         </div>
         <Carousel opts={{align: "start",}} className="w-full">
@@ -96,12 +96,12 @@ export default function FinanceTab() {
               <Dialog>
                 <DialogTrigger asChild>
                   <div className="w-[150px] h-full">
-                    <AddAccountCard text="Add New Account" className="min-h-[105px]" />
+                    <AddAccountCard text="Add New Bank Account" className="min-h-[105px]" />
                   </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                      <DialogTitle>Add New Account</DialogTitle>
+                      <DialogTitle>Add New Bank Account</DialogTitle>
                       <DialogDescription>
                           Add a new currency account to your wallet.
                       </DialogDescription>
@@ -243,4 +243,6 @@ export default function FinanceTab() {
 }
 
     
+    
+
     
