@@ -15,12 +15,14 @@ import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import ActivityItem from "./activity-item";
 
-export default function VerifyTab({ view, setView }: { view: string, setView: (view: string) => void }) {
+export default function VerifyTab({ view, setView }: { view: string, setView: (string) => void }) {
 
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
     { id: 2, action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
     { id: 3, action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
+    { id: 4, action: "Verified", credential: "Passport", entity: "Airport Security", time: "1d ago" },
+    { id: 5, action: "Claimed", credential: "University Degree", entity: "State University", time: "2d ago" },
   ];
 
   const credentialTypes = [
@@ -47,10 +49,12 @@ export default function VerifyTab({ view, setView }: { view: string, setView: (v
               <Button variant="ghost" size="icon" onClick={() => setView('main')}>
                 <ArrowLeft />
               </Button>
-              <h2 className="text-xl font-bold font-headline">Activities</h2>
+              <h2 className="text-xl font-bold font-headline">All Activities</h2>
             </div>
-            <div className="flex-grow overflow-y-auto space-y-6 pt-6">
-              {/* Content for activities will go here */}
+            <div className="flex-grow overflow-y-auto space-y-4 pt-6">
+              {recentActivity.map((activity) => (
+                  <ActivityItem key={activity.id} activity={activity} />
+                ))}
             </div>
           </div>
         );
@@ -139,11 +143,11 @@ export default function VerifyTab({ view, setView }: { view: string, setView: (v
 
             <div>
               <div className="flex justify-between items-center mb-3">
-                <h2 className="text-lg font-headline font-semibold">Activities</h2>
-                <Button variant="link" className="text-primary pr-0">See all</Button>
+                <h2 className="text-lg font-headline font-semibold">Recent Activities</h2>
+                <Button variant="link" className="text-primary pr-0" onClick={() => setView('activities')}>See all</Button>
               </div>
               <div className="space-y-4">
-                {recentActivity.map((activity) => (
+                {recentActivity.slice(0, 3).map((activity) => (
                   <ActivityItem key={activity.id} activity={activity} />
                 ))}
               </div>
