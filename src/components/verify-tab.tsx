@@ -49,7 +49,7 @@ export default function VerifyTab({ view, setView }: { view: string, setView: (s
               <Button variant="ghost" size="icon" onClick={() => setView('main')}>
                 <ArrowLeft />
               </Button>
-              <h2 className="text-xl font-bold font-headline">All Activities</h2>
+              <h2 className="text-xl font-bold font-headline">Activities</h2>
             </div>
             <div className="flex-grow overflow-y-auto space-y-4 pt-6">
               {recentActivity.map((activity) => (
