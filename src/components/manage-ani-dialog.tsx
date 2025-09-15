@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Label } from "./ui/label";
 import { Switch } from "./ui/switch";
 import { Separator } from "./ui/separator";
-import { Wallet, Trash2, Copy } from "lucide-react";
+import { Landmark, Trash2, Copy } from "lucide-react";
 import { DialogFooter, DialogClose } from "./ui/dialog";
 import { Input } from "./ui/input";
 
@@ -28,9 +28,9 @@ export default function ManageAniDialog() {
     });
   };
 
-  const linkedWallets = [
-    { name: "Metamask", address: "0x123...456" },
-    { name: "Phantom", address: "So1...xyz" },
+  const linkedBankAccounts = [
+    { name: "Emirates NBD", details: "Account ending in 1234" },
+    { name: "Abu Dhabi Commercial Bank", details: "Account ending in 5678" },
   ];
 
   return (
@@ -58,15 +58,15 @@ export default function ManageAniDialog() {
         <Separator />
         
         <div className="space-y-4">
-            <h3 className="text-md font-medium">Linked Digital Wallets</h3>
+            <h3 className="text-md font-medium">Linked Bank Accounts</h3>
             <div className="space-y-3">
-                {linkedWallets.map(wallet => (
-                    <div key={wallet.name} className="flex items-center justify-between rounded-lg border p-3">
+                {linkedBankAccounts.map(account => (
+                    <div key={account.name} className="flex items-center justify-between rounded-lg border p-3">
                         <div className="flex items-center gap-3">
-                            <Wallet className="h-5 w-5 text-muted-foreground" />
+                            <Landmark className="h-5 w-5 text-muted-foreground" />
                             <div>
-                                <p className="text-sm font-medium">{wallet.name}</p>
-                                <p className="text-xs text-muted-foreground font-mono">{wallet.address}</p>
+                                <p className="text-sm font-medium">{account.name}</p>
+                                <p className="text-xs text-muted-foreground">{account.details}</p>
                             </div>
                         </div>
                          <Button variant="ghost" size="icon">
@@ -75,7 +75,7 @@ export default function ManageAniDialog() {
                     </div>
                 ))}
             </div>
-             <Button variant="outline" className="w-full">Link New Wallet</Button>
+             <Button variant="outline" className="w-full">Link New Bank Account</Button>
         </div>
 
         <DialogFooter>
