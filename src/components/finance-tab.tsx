@@ -74,7 +74,7 @@ export default function FinanceTab() {
             Bank Sync
           </CardTitle>
           <CardDescription>
-            Keep your financial data up-to-date.
+            Bring home your finincial
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -260,4 +260,5 @@ export default function FinanceTab() {
   );
 }
 
+    
     
