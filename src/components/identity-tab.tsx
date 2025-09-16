@@ -81,36 +81,20 @@ export default function IdentityTab() {
 
   return (
     <div className="space-y-6 p-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline flex items-center gap-2">
-            <Fingerprint className="text-primary" />
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <Fingerprint className="h-5 w-5 text-primary" />
             Your Digital ID
-          </CardTitle>
-          <CardDescription>
-            Unique and Self-sovereign ID
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center gap-2">
-            <p className="flex-1 break-all rounded-md bg-muted p-3 text-xs font-mono text-muted-foreground">
-              did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
-            </p>
-            <Button variant="ghost" size="icon">
-              <Share2 className="h-5 w-5" />
-            </Button>
-          </div>
-          
-          <Separator />
+          </h2>
            <Dialog>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="ghost" size="sm">
                     Add Credential
-                    <ChevronDown className="h-4 w-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)]">
+                <DropdownMenuContent align="end">
                   <DialogTrigger asChild>
                       <DropdownMenuItem>
                           <QrCode className="mr-2 h-4 w-4" />
@@ -139,8 +123,21 @@ export default function IdentityTab() {
               <ScanAndClaim />
             </DialogContent>
           </Dialog>
-        </CardContent>
-      </Card>
+        </div>
+        <Card className="bg-muted/50 border-none">
+          <CardContent className="p-3 flex items-center justify-between">
+            <p className="flex-1 break-all text-xs font-mono text-muted-foreground">
+              did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+            </p>
+            <Button variant="ghost" size="icon">
+              <Share2 className="h-5 w-5" />
+            </Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      <Separator />
+
 
       <section>
         <div className="flex justify-between items-center mb-3">
