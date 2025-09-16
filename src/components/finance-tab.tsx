@@ -85,7 +85,7 @@ export default function FinanceTab() {
           </h2>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="sm">Connect</Button>
+              <Button variant="default" size="sm">Connect</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
