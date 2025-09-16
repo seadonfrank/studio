@@ -109,6 +109,8 @@ export default function FinanceTab() {
         </Carousel>
       </section>
 
+      <Separator />
+
       <section>
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
