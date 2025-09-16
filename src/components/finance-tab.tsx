@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye, RefreshCw } from "lucide-react";
+import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye, RefreshCw, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -24,6 +24,7 @@ import { Badge } from "./ui/badge";
 import PortfolioSummaryCard from "./portfolio-summary-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
+import { Card, CardContent } from "./ui/card";
 
 export default function FinanceTab() {
   const accounts = [
@@ -66,21 +67,35 @@ export default function FinanceTab() {
   return (
     <div className="space-y-6 p-4">
       <section>
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button variant="outline" className="w-full">
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    Sync with Bank
-                </Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Sync Financial Accounts</DialogTitle>
-                    <DialogDescription>Connect with your bank to sync all your assets.</DialogDescription>
-                </DialogHeader>
-                <SyncWithBankDialog />
-            </DialogContent>
-        </Dialog>
+        <div className="grid grid-cols-2 gap-3">
+          <Dialog>
+              <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full h-full">
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Sync with Bank
+                  </Button>
+              </DialogTrigger>
+              <DialogContent>
+                  <DialogHeader>
+                      <DialogTitle>Sync Financial Accounts</DialogTitle>
+                      <DialogDescription>Connect with your bank to sync all your assets.</DialogDescription>
+                  </DialogHeader>
+                  <SyncWithBankDialog />
+              </DialogContent>
+          </Dialog>
+          <Card className="bg-muted/50 border-none">
+            <CardContent className="p-3 text-xs">
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-muted-foreground mt-0.5"/>
+                <div>
+                  <p className="font-semibold text-sm">Last Synced</p>
+                  <p className="text-muted-foreground">Bank of America</p>
+                  <p className="text-muted-foreground">Today at 9:41 AM</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </section>
 
       <section>
