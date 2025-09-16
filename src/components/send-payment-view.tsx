@@ -82,22 +82,26 @@ export default function SendPaymentView({ onBack }: SendPaymentViewProps) {
                 </Select>
             </div>
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="note">Note (Optional)</Label>
+            <Input id="note" placeholder="For dinner last night" />
+          </div>
           <Card className="bg-muted/50">
             <CardContent className="text-sm p-4 space-y-2">
+                 <div className="flex justify-between">
+                    <span className="text-muted-foreground">Exchange Rate:</span>
+                    <span>1 USD = 0.93 EUR</span>
+                </div>
                  <div className="flex justify-between">
                     <span className="text-muted-foreground">Fee:</span>
                     <span>$0.50</span>
                 </div>
                 <div className="flex justify-between font-semibold">
                     <span>Total:</span>
-                    <span>$0.50</span>
+                    <span>$10.50</span>
                 </div>
             </CardContent>
           </Card>
-          <div className="space-y-2">
-            <Label htmlFor="note">Note (Optional)</Label>
-            <Input id="note" placeholder="For dinner last night" />
-          </div>
         </div>
       </div>
       
