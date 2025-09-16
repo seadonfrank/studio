@@ -26,6 +26,7 @@ import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { Separator } from "./ui/separator";
+import SyncCard from "./sync-card";
 
 export default function FinanceTab() {
   const accounts = [
@@ -65,33 +66,26 @@ export default function FinanceTab() {
     { walletName: "Phantom", asset: "SOL", balance: "105.2", network: "Solana", walletAddress: "So1...xyz", gradient: "from-fuchsia-600 to-purple-700", status: "active" as const },
   ];
 
+  const syncItems = [
+    { category: "Accounts", lastSynced: "Today at 9:41 AM", icon: Landmark },
+    { category: "Cards", lastSynced: "Today at 9:41 AM", icon: CreditCard },
+    { category: "Deposits", lastSynced: "Yesterday at 3:15 PM", icon: Landmark },
+    { category: "Loans", lastSynced: "2 days ago", icon: TrendingUp },
+    { category: "Funds", lastSynced: "3 days ago", icon: Wallet },
+    { category: "Crypto", lastSynced: "Today at 11:00 AM", icon: Wallet },
+  ];
+
   return (
     <div className="space-y-6 p-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline flex items-center gap-2">
-            <RefreshCw className="text-primary" />
+       <section>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
+            <RefreshCw className="h-5 w-5 text-primary" />
             Bank Sync
-          </CardTitle>
-          <CardDescription>
-            Bring home your finincial
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center gap-2 rounded-md bg-muted p-3 text-xs">
-            <Info className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-            <div className="flex-1">
-              <p className="font-semibold text-sm text-foreground">Last Synced: Bank of America</p>
-              <p className="text-muted-foreground">Today at 9:41 AM</p>
-            </div>
-          </div>
-          <Separator />
+          </h2>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="w-full">
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Sync with Bank
-              </Button>
+              <Button variant="ghost" size="sm">Sync All</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -103,9 +97,17 @@ export default function FinanceTab() {
               <SyncWithBankDialog />
             </DialogContent>
           </Dialog>
-        </CardContent>
-      </Card>
-
+        </div>
+        <Carousel opts={{align: "start",}} className="w-full">
+          <CarouselContent>
+            {syncItems.map((item, index) => (
+              <CarouselItem key={index} className="basis-1/2">
+                <SyncCard {...item} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
 
       <section>
         <div className="flex justify-between items-center mb-3">
@@ -260,5 +262,6 @@ export default function FinanceTab() {
   );
 }
 
+    
     
     
