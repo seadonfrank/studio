@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion, PlusCircle, Edit, Share2, Scan, CircleCheckBig } from "lucide-react";
+import { ArrowLeft, CameraOff, CheckCircle, ShieldCheck, User, XCircle, Loader2, Info, FileQuestion, PlusCircle, Edit, Share2, Scan, CircleCheckBig, Ticket } from "lucide-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -24,6 +24,7 @@ import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { cn } from "@/lib/utils";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 interface ScanToPayViewProps {
   onBack: () => void;
@@ -34,6 +35,12 @@ type ScanState = 'scanning' | 'scanned' | 'payment_sent' | 'error';
 const recipientRequestedProofs = [
     { id: 'kyc', label: 'Proof of KYC' },
     { id: 'age', label: 'Proof of Age (Over 18)' },
+];
+
+const availableOffers = [
+    { id: 'offer1', title: '10% off on this purchase', description: 'Capped at $5. Best Offer!' },
+    { id: 'offer2', title: '5% cashback', description: 'Cashback credited within 24 hours' },
+    { id: 'offer3', title: 'Flat $2 discount', description: 'For payments above $10' },
 ];
 
 export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
@@ -47,6 +54,7 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
   const [providedProofs, setProvidedProofs] = useState<string[]>([]);
   const [selectedProofsToProvide, setSelectedProofsToProvide] = useState<string[]>([]);
   const [paymentDetails, setPaymentDetails] = useState({ amount: '10.00', currency: 'USD', note: 'For coffee' });
+  const [appliedOffer, setAppliedOffer] = useState<string>('offer1');
 
 
   useEffect(() => {
@@ -143,6 +151,8 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
       });
     }
   };
+  
+  const selectedOfferDetails = availableOffers.find(o => o.id === appliedOffer);
 
   const renderContent = () => {
     switch (scanState) {
@@ -287,6 +297,48 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <Label htmlFor="note">Note (Optional)</Label>
                         <Input id="note" placeholder="For coffee" value={paymentDetails.note} onChange={(e) => handleDetailsChange('note', e.target.value)} />
                     </div>
+                    
+                    <Sheet>
+                        <Card className="bg-green-50 border-green-200">
+                            <CardContent className="p-3">
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center gap-3">
+                                        <Ticket className="h-5 w-5 text-green-700" />
+                                        <div>
+                                            <p className="font-semibold text-green-800">Applied Offer</p>
+                                            <p className="text-xs text-green-700">{selectedOfferDetails?.title}</p>
+                                        </div>
+                                    </div>
+                                    <SheetTrigger asChild>
+                                        <Button variant="ghost" size="sm" className="text-green-800 hover:text-green-900 hover:bg-green-100">
+                                            Change
+                                        </Button>
+                                    </SheetTrigger>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <SheetContent>
+                            <SheetHeader className="text-left">
+                                <SheetTitle>Available Offers</SheetTitle>
+                                <SheetDescription>Select an offer to apply to this payment.</SheetDescription>
+                            </SheetHeader>
+                             <RadioGroup value={appliedOffer} onValueChange={setAppliedOffer} className="space-y-3 py-4">
+                                {availableOffers.map(offer => (
+                                    <Label key={offer.id} htmlFor={offer.id} className="flex items-start space-x-3 p-3 border rounded-md has-[:checked]:border-primary has-[:checked]:bg-primary/5 cursor-pointer">
+                                        <RadioGroupItem value={offer.id} id={offer.id} className="mt-1" />
+                                        <div className="flex-1">
+                                            <p className="font-semibold leading-tight">{offer.title}</p>
+                                            <p className="text-xs text-muted-foreground">{offer.description}</p>
+                                        </div>
+                                    </Label>
+                                ))}
+                            </RadioGroup>
+                            <SheetClose asChild>
+                                <Button className="w-full">Apply Offer</Button>
+                            </SheetClose>
+                        </SheetContent>
+                    </Sheet>
+
                     <div className="flex flex-col gap-2 pt-2">
                         <Button className="w-full" onClick={handleSendPayment}>Complete Payment</Button>
                     </div>
@@ -309,6 +361,15 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
                         <div className="flex justify-between"><span>Amount:</span> <span className="font-semibold">{paymentDetails.amount} {paymentDetails.currency}</span></div>
                         {paymentDetails.note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{paymentDetails.note}</span></div>}
                         
+                        {appliedOffer && selectedOfferDetails && (
+                             <>
+                                <Separator className="my-2"/>
+                                <div className="flex justify-between text-green-700">
+                                    <span>Offer Applied:</span>
+                                    <span className="font-semibold">{selectedOfferDetails.title}</span>
+                                </div>
+                            </>
+                        )}
                         {providedProofs.length > 0 && (
                             <>
                                 <Separator className="my-2"/>
@@ -372,7 +433,5 @@ export default function ScanToPayView({ onBack }: ScanToPayViewProps) {
     </div>
   );
 }
-
-    
 
     
