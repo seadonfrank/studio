@@ -58,10 +58,8 @@ export default function PortfolioSummaryCard() {
 
   return (
     <Card>
-      <CardHeader>
-      </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-3 gap-4 text-center mb-4">
+        <div className="grid grid-cols-3 gap-4 text-center mb-4 pt-6">
             <div>
                 <p className="text-sm text-muted-foreground">Assets</p>
                 <p className="font-bold text-lg">${totalAssets.toLocaleString()}</p>
