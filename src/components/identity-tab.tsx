@@ -90,7 +90,7 @@ export default function IdentityTab() {
            <Dialog>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm">
+                  <Button variant="default" size="sm">
                     Add Credential
                   </Button>
                 </DropdownMenuTrigger>
