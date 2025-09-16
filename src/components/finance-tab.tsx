@@ -24,7 +24,8 @@ import { Badge } from "./ui/badge";
 import PortfolioSummaryCard from "./portfolio-summary-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
+import { Separator } from "./ui/separator";
 
 export default function FinanceTab() {
   const accounts = [
@@ -66,37 +67,45 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4">
-      <section>
-        <div className="grid grid-cols-2 gap-3">
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-headline flex items-center gap-2">
+            <RefreshCw className="text-primary" />
+            Bank Sync
+          </CardTitle>
+          <CardDescription>
+            Keep your financial data up-to-date.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-2 rounded-md bg-muted p-3 text-xs">
+            <Info className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            <div className="flex-1">
+              <p className="font-semibold text-sm text-foreground">Last Synced: Bank of America</p>
+              <p className="text-muted-foreground">Today at 9:41 AM</p>
+            </div>
+          </div>
+          <Separator />
           <Dialog>
-              <DialogTrigger asChild>
-                  <Button variant="outline" className="w-full h-full">
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Sync with Bank
-                  </Button>
-              </DialogTrigger>
-              <DialogContent>
-                  <DialogHeader>
-                      <DialogTitle>Sync Financial Accounts</DialogTitle>
-                      <DialogDescription>Connect with your bank to sync all your assets.</DialogDescription>
-                  </DialogHeader>
-                  <SyncWithBankDialog />
-              </DialogContent>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="w-full">
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Sync with Bank
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Sync Financial Accounts</DialogTitle>
+                <DialogDescription>
+                  Connect with your bank to sync all your assets.
+                </DialogDescription>
+              </DialogHeader>
+              <SyncWithBankDialog />
+            </DialogContent>
           </Dialog>
-          <Card className="bg-muted/50 border-none">
-            <CardContent className="p-3 text-xs">
-              <div className="flex items-start gap-2">
-                <Info className="h-4 w-4 text-muted-foreground mt-0.5"/>
-                <div>
-                  <p className="font-semibold text-sm">Last Synced</p>
-                  <p className="text-muted-foreground">Bank of America</p>
-                  <p className="text-muted-foreground">Today at 9:41 AM</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+        </CardContent>
+      </Card>
+
 
       <section>
         <div className="flex justify-between items-center mb-3">
@@ -250,3 +259,5 @@ export default function FinanceTab() {
     </div>
   );
 }
+
+    
