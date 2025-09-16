@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye, RefreshCw, Info } from "lucide-react";
+import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye, RefreshCw, Info, Link } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import ManageCardsDialog from "./manage-cards-dialog";
@@ -80,8 +80,8 @@ export default function FinanceTab() {
        <section>
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <RefreshCw className="h-5 w-5 text-primary" />
-            Bank Sync
+            <Link className="h-5 w-5 text-primary" />
+            Connect and Sync
           </h2>
           <Dialog>
             <DialogTrigger asChild>
