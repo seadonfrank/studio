@@ -29,6 +29,12 @@ export default function Home() {
     setActivityCaller('identity');
   };
 
+  const handleTabChange = (tab: Tab) => {
+    setActiveTab(tab);
+    setVerifyView('main');
+    setPaymentsView('main');
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-muted p-4 sm:p-8">
       <div className="relative h-[844px] w-full max-w-[390px] overflow-hidden rounded-[40px] border-[8px] border-black bg-background shadow-2xl">
@@ -43,7 +49,7 @@ export default function Home() {
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
           {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} setActiveTab={setActiveTab} activityCaller={activityCaller} />}
         </div>
-        <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+        <BottomNav activeTab={activeTab} setActiveTab={handleTabChange} />
       </div>
     </main>
   );
