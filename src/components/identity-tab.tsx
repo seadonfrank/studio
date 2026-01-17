@@ -144,7 +144,7 @@ export default function IdentityTab() {
               <h2 className="text-3xl font-headline font-bold">850</h2>
               <div className="text-left">
                 <p className="font-semibold text-green-500 text-sm">High</p>
-                <p className="text-xs text-muted-foreground">Based on your credentials</p>
+                <p className="text-xs text-muted-foreground">Credibility Score</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
