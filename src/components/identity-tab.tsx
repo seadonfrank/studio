@@ -136,26 +136,28 @@ export default function IdentityTab() {
         </Card>
       </section>
 
-      <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">Credibility Score</p>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <h2 className="text-3xl font-headline font-bold">850</h2>
+      <Card className="bg-muted/50 border-none">
+        <CardContent className="p-4">
+          <p className="text-sm text-muted-foreground">Credibility Score</p>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <h2 className="text-3xl font-headline font-bold">850</h2>
               <div className="text-left">
-                  <p className="font-semibold text-green-500 text-sm">High</p>
-                  <p className="text-xs text-muted-foreground">Based on your credentials</p>
+                <p className="font-semibold text-green-500 text-sm">High</p>
+                <p className="text-xs text-muted-foreground">Based on your credentials</p>
               </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon">
+                <BarChart2 className="h-6 w-6" />
+              </Button>
+              <Button variant="ghost" size="icon" aria-label="Toggle visibility">
+                <Eye className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <BarChart2 className="h-6 w-6" />
-            </Button>
-            <Button variant="ghost" size="icon" aria-label="Toggle visibility">
-              <Eye className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       <Separator />
 
