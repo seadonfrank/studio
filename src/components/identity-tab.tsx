@@ -164,7 +164,7 @@ export default function IdentityTab({ onHistoryClick }: IdentityTabProps) {
                 <p className="text-xs text-muted-foreground">Credibility Score</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               <Button variant="ghost" size="icon">
                 <BarChart2 className="h-6 w-6" />
               </Button>
