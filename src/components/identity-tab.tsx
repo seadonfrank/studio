@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, Eye } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, Eye, Copy } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -21,6 +21,7 @@ import CryptoCredentialCard from "./crypto-credential-card";
 import ScanAndClaim from "./scan-and-claim";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
+import { useToast } from "@/hooks/use-toast";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
@@ -28,6 +29,15 @@ export default function IdentityTab() {
   const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
   const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
   const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
+  const { toast } = useToast();
+  const did = "did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d";
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(did);
+    toast({
+      title: "Copied to clipboard!",
+    });
+  };
 
   const governmentCredentials = [
     { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" as const },
@@ -126,11 +136,16 @@ export default function IdentityTab() {
         <Card className="bg-muted/50 border-none">
           <CardContent className="p-3 flex items-center justify-between">
             <p className="flex-1 break-all text-xs font-mono text-muted-foreground">
-              did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+              {did}
             </p>
-            <Button variant="ghost" size="icon">
-              <Share2 className="h-5 w-5" />
-            </Button>
+            <div className="flex items-center">
+              <Button variant="ghost" size="icon" onClick={handleCopy}>
+                <Copy className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon">
+                <Share2 className="h-5 w-5" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </section>
@@ -289,3 +304,5 @@ export default function IdentityTab() {
     </div>
   );
 }
+
+    
