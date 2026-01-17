@@ -23,13 +23,6 @@ export default function Home() {
     }
   };
 
-  const handleActivitiesClick = () => {
-    if (activeTab === 'verify') {
-      setVerifyView('activities');
-      setActivityCaller('verify');
-    }
-  };
-
   const handleHistoryClick = () => {
     setActiveTab('verify');
     setVerifyView('activities');
@@ -42,7 +35,6 @@ export default function Home() {
         <AppHeader 
           activeTab={activeTab} 
           onTransactionsClick={handleTransactionsClick}
-          onActivitiesClick={handleActivitiesClick} 
         />
         <div className="h-full overflow-y-auto pb-32 pt-20">
           {activeTab === "home" && <HomeTab />}

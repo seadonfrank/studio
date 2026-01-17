@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import type { Tab } from "@/app/page";
 import { Button } from "./ui/button";
 
-export default function AppHeader({ activeTab, onTransactionsClick, onActivitiesClick }: { activeTab: Tab, onTransactionsClick?: () => void, onActivitiesClick?: () => void }) {
+export default function AppHeader({ activeTab, onTransactionsClick }: { activeTab: Tab, onTransactionsClick?: () => void }) {
   if (activeTab === 'home') {
     return (
       <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
@@ -66,7 +66,6 @@ export default function AppHeader({ activeTab, onTransactionsClick, onActivities
           </Avatar>
         </div>
         <div className="flex items-center gap-2">
-          <Button onClick={onActivitiesClick} size="sm" className="bg-purple-100 text-purple-800 hover:bg-purple-200 h-8 rounded-full">Activities</Button>
           <NotificationMenu />
         </div>
       </header>
