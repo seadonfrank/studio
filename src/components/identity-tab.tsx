@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, Eye, Copy } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -25,7 +25,11 @@ import { useToast } from "@/hooks/use-toast";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
-export default function IdentityTab() {
+interface IdentityTabProps {
+  onHistoryClick: () => void;
+}
+
+export default function IdentityTab({ onHistoryClick }: IdentityTabProps) {
   const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
   const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
   const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
@@ -164,8 +168,8 @@ export default function IdentityTab() {
               <Button variant="ghost" size="icon">
                 <BarChart2 className="h-6 w-6" />
               </Button>
-              <Button variant="ghost" size="icon" aria-label="Toggle visibility">
-                <Eye className="h-5 w-5" />
+              <Button variant="ghost" size="icon" aria-label="View history" onClick={onHistoryClick}>
+                <History className="h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -304,5 +308,3 @@ export default function IdentityTab() {
     </div>
   );
 }
-
-    

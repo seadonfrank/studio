@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -29,6 +28,11 @@ export default function Home() {
     }
   };
 
+  const handleHistoryClick = () => {
+    setActiveTab('verify');
+    setVerifyView('activities');
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-muted p-4 sm:p-8">
       <div className="relative h-[844px] w-full max-w-[390px] overflow-hidden rounded-[40px] border-[8px] border-black bg-background shadow-2xl">
@@ -40,7 +44,7 @@ export default function Home() {
         <div className="h-full overflow-y-auto pb-32 pt-20">
           {activeTab === "home" && <HomeTab />}
           {activeTab === "finance" && <FinanceTab />}
-          {activeTab === "identity" && <IdentityTab />}
+          {activeTab === "identity" && <IdentityTab onHistoryClick={handleHistoryClick} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
           {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} />}
         </div>
