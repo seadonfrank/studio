@@ -15,6 +15,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [paymentsView, setPaymentsView] = useState('main');
   const [verifyView, setVerifyView] = useState('main');
+  const [activityCaller, setActivityCaller] = useState<'identity' | 'verify'>('verify');
 
   const handleTransactionsClick = () => {
     if (activeTab === 'payments') {
@@ -25,12 +26,14 @@ export default function Home() {
   const handleActivitiesClick = () => {
     if (activeTab === 'verify') {
       setVerifyView('activities');
+      setActivityCaller('verify');
     }
   };
 
   const handleHistoryClick = () => {
     setActiveTab('verify');
     setVerifyView('activities');
+    setActivityCaller('identity');
   };
 
   return (
@@ -46,7 +49,7 @@ export default function Home() {
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab onHistoryClick={handleHistoryClick} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
-          {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} />}
+          {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} setActiveTab={setActiveTab} activityCaller={activityCaller} />}
         </div>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>

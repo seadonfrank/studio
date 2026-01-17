@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import type { Tab } from "@/app/page";
 import { ChevronRight, Scan, QrCode, ArrowUpCircle, ArrowDownCircle, Shield, BookUser, GraduationCap, Wallet, Cake, Car, School, Badge as BadgeIcon, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import ScanToProveView from "./scan-to-prove-view";
@@ -15,7 +16,7 @@ import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import ActivityItem from "./activity-item";
 
-export default function VerifyTab({ view, setView }: { view: string, setView: (string) => void }) {
+export default function VerifyTab({ view, setView, setActiveTab, activityCaller }: { view: string; setView: (view: string) => void; setActiveTab: (tab: Tab) => void; activityCaller: 'identity' | 'verify' }) {
 
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
@@ -32,6 +33,14 @@ export default function VerifyTab({ view, setView }: { view: string, setView: (s
     { type: "Indian National", count: 1, icon: BadgeIcon },
   ];
 
+  const handleBackFromActivities = () => {
+    if (activityCaller === 'identity') {
+      setActiveTab('identity');
+    } else {
+      setView('main');
+    }
+  };
+
   const renderContent = () => {
     switch (view) {
       case "prove":
@@ -46,7 +55,7 @@ export default function VerifyTab({ view, setView }: { view: string, setView: (s
         return (
           <div className="flex flex-col h-full">
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" onClick={() => setView('main')}>
+              <Button variant="ghost" size="icon" onClick={handleBackFromActivities}>
                 <ArrowLeft />
               </Button>
               <h2 className="text-xl font-bold font-headline">Activities</h2>
