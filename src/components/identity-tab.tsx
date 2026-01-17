@@ -94,7 +94,7 @@ export default function IdentityTab() {
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
             <Fingerprint className="h-5 w-5 text-primary" />
-            Your Digital ID
+            Your ID Wallet
           </h2>
            <Dialog>
               <DropdownMenu>
