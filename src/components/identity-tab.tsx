@@ -18,7 +18,6 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import CryptoCredentialCard from "./crypto-credential-card";
-import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
 import ScanAndClaim from "./scan-and-claim";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
@@ -138,7 +137,6 @@ export default function IdentityTab() {
 
       <Card className="bg-muted/50 border-none">
         <CardContent className="p-4">
-          <p className="text-sm text-muted-foreground">Credibility Score</p>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <h2 className="text-3xl font-headline font-bold">850</h2>
