@@ -15,7 +15,7 @@ import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import ActivityItem from "./activity-item";
 
-export default function VerifyTab({ view, setView, setActiveTab, activityCaller }: { view: string; setView: (view: string) => void; setActiveTab: (tab: Tab) => void; activityCaller: 'identity' | 'verify' }) {
+export default function VerifyTab({ view, setView, setActiveTab, activityCaller, sendCaller, setSendCaller }: { view: string; setView: (view: string) => void; setActiveTab: (tab: Tab) => void; activityCaller: 'identity' | 'verify'; sendCaller: 'identity' | 'other'; setSendCaller: (caller: 'identity' | 'other') => void; }) {
 
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
@@ -40,6 +40,15 @@ export default function VerifyTab({ view, setView, setActiveTab, activityCaller 
     }
   };
 
+  const handleBackFromSend = () => {
+    if (sendCaller === 'identity') {
+      setActiveTab('identity');
+      setSendCaller('other');
+    } else {
+      setView('main');
+    }
+  };
+
   const renderContent = () => {
     switch (view) {
       case "prove":
@@ -47,7 +56,7 @@ export default function VerifyTab({ view, setView, setActiveTab, activityCaller 
       case "qr":
         return <QrToProveView onBack={() => setView("main")} />;
       case "send":
-        return <SendCredentialsView onBack={() => setView("main")} />;
+        return <SendCredentialsView onBack={handleBackFromSend} />;
       case "request":
         return <RequestCredentialsView onBack={() => setView("main")} />;
       case "activities":

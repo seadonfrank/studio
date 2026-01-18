@@ -16,6 +16,7 @@ export default function Home() {
   const [paymentsView, setPaymentsView] = useState('main');
   const [verifyView, setVerifyView] = useState('main');
   const [activityCaller, setActivityCaller] = useState<'identity' | 'verify'>('verify');
+  const [sendCaller, setSendCaller] = useState<'identity' | 'other'>('other');
 
   const handleTransactionsClick = () => {
     if (activeTab === 'payments') {
@@ -32,6 +33,7 @@ export default function Home() {
   const handleShareClick = () => {
     setActiveTab('verify');
     setVerifyView('send');
+    setSendCaller('identity');
   };
 
   const handleTabChange = (tab: Tab) => {
@@ -52,7 +54,7 @@ export default function Home() {
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab onHistoryClick={handleHistoryClick} onShareClick={handleShareClick} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
-          {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} setActiveTab={setActiveTab} activityCaller={activityCaller} />}
+          {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} setActiveTab={setActiveTab} activityCaller={activityCaller} sendCaller={sendCaller} setSendCaller={setSendCaller} />}
         </div>
         <BottomNav activeTab={activeTab} setActiveTab={handleTabChange} />
       </div>
