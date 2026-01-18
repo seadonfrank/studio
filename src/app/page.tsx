@@ -29,6 +29,11 @@ export default function Home() {
     setActivityCaller('identity');
   };
 
+  const handleShareClick = () => {
+    setActiveTab('verify');
+    setVerifyView('send');
+  };
+
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     setVerifyView('main');
@@ -45,7 +50,7 @@ export default function Home() {
         <div className="h-full overflow-y-auto pb-32 pt-20">
           {activeTab === "home" && <HomeTab />}
           {activeTab === "finance" && <FinanceTab />}
-          {activeTab === "identity" && <IdentityTab onHistoryClick={handleHistoryClick} />}
+          {activeTab === "identity" && <IdentityTab onHistoryClick={handleHistoryClick} onShareClick={handleShareClick} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
           {activeTab === "verify" && <VerifyTab view={verifyView} setView={setVerifyView} setActiveTab={setActiveTab} activityCaller={activityCaller} />}
         </div>

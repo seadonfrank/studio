@@ -27,9 +27,10 @@ type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 
 interface IdentityTabProps {
   onHistoryClick: () => void;
+  onShareClick: () => void;
 }
 
-export default function IdentityTab({ onHistoryClick }: IdentityTabProps) {
+export default function IdentityTab({ onHistoryClick, onShareClick }: IdentityTabProps) {
   const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
   const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
   const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
@@ -146,7 +147,7 @@ export default function IdentityTab({ onHistoryClick }: IdentityTabProps) {
               <Button variant="ghost" size="icon" onClick={handleCopy}>
                 <Copy className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" onClick={onShareClick}>
                 <Share2 className="h-5 w-5" />
               </Button>
             </div>
