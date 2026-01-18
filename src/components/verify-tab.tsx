@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -58,7 +57,7 @@ export default function VerifyTab({ view, setView, setActiveTab, activityCaller 
               <Button variant="ghost" size="icon" onClick={handleBackFromActivities}>
                 <ArrowLeft />
               </Button>
-              <h2 className="text-xl font-bold font-headline">Activities</h2>
+              <h2 className="text-xl font-bold font-headline">Recent activities</h2>
             </div>
             <div className="flex-grow overflow-y-auto space-y-4 pt-6">
               {recentActivity.map((activity) => (
