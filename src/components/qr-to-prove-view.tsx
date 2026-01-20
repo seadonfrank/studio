@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -129,7 +128,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                         )}
                     </CardContent>
                 </Card>
-                 <Button className="w-full" onClick={handleBack}>Done</Button>
+                 <Button className="w-full" onClick={onBack}>Done</Button>
                 <div className="grid grid-cols-2 gap-4 w-full">
                     <Button variant="outline" onClick={() => handleCopy(qrCodeUrl)}>
                         <Copy className="mr-2 h-4 w-4" />
