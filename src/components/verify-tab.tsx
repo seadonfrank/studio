@@ -52,9 +52,9 @@ export default function VerifyTab({ view, setView, setActiveTab, activityCaller,
   const renderContent = () => {
     switch (view) {
       case "prove":
-        return <ScanToProveView onBack={() => setView("main")} />;
+        return <ScanToProveView onBack={() => setActiveTab('identity')} />;
       case "qr":
-        return <QrToProveView onBack={() => setView("main")} />;
+        return <QrToProveView onBack={() => setActiveTab('identity')} />;
       case "send":
         return <SendCredentialsView onBack={handleBackFromSend} />;
       case "request":
