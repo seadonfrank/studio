@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy, Scan } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -28,9 +28,11 @@ type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 interface IdentityTabProps {
   onHistoryClick: () => void;
   onShareClick: () => void;
+  onScanToProveClick: () => void;
+  onQrToProveClick: () => void;
 }
 
-export default function IdentityTab({ onHistoryClick, onShareClick }: IdentityTabProps) {
+export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProveClick, onQrToProveClick }: IdentityTabProps) {
   const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
   const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
   const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
@@ -176,6 +178,11 @@ export default function IdentityTab({ onHistoryClick, onShareClick }: IdentityTa
           </div>
         </CardContent>
       </Card>
+      
+      <div className="flex justify-start gap-2">
+        <Button onClick={onScanToProveClick} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
+        <Button onClick={onQrToProveClick} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
+      </div>
 
       <Separator />
 

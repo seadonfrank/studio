@@ -92,11 +92,6 @@ export default function VerifyTab({ view, setView, setActiveTab, activityCaller,
                 </Carousel>
             </div>
             
-            <div className="flex justify-start gap-2">
-                <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
-                <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
-            </div>
-
             <Card>
               <CardContent className="p-0">
                 <div
