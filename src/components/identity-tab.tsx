@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy, Scan, ArrowLeft } from "lucide-react";
@@ -173,18 +172,32 @@ export default function IdentityTab() {
             </DialogContent>
           </Dialog>
         </div>
-        <Card className="bg-muted/50 border-none">
-          <CardContent className="p-3 flex items-center justify-between">
-            <p className="flex-1 break-all text-xs font-mono text-muted-foreground">
-              {did}
-            </p>
-            <div className="flex items-center">
-              <Button variant="ghost" size="icon" onClick={handleCopy}>
-                <Copy className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" onClick={() => setView('send')}>
-                <Share2 className="h-5 w-5" />
-              </Button>
+        <Card className="bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg">
+          <CardContent className="p-4 flex items-center gap-4">
+            <div className="bg-white p-1.5 rounded-md">
+                 <Image
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=64x64&data=${did}`}
+                    alt="DID QR Code"
+                    width={64}
+                    height={64}
+                    data-ai-hint="qr code"
+                 />
+            </div>
+            <div className="flex-1 space-y-1 overflow-hidden">
+                <p className="text-xs opacity-80">Your Digital Identity</p>
+                <p className="font-mono text-sm break-all">
+                    {did}
+                </p>
+                <div className="flex items-center gap-1 -ml-2 pt-1">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={handleCopy}>
+                        <Copy className="h-4 w-4" />
+                        <span className="sr-only">Copy DID</span>
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={() => setView('send')}>
+                        <Share2 className="h-4 w-4" />
+                        <span className="sr-only">Share DID</span>
+                    </Button>
+                </div>
             </div>
           </CardContent>
         </Card>
