@@ -56,22 +56,6 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
     );
   }
 
-  if (activeTab === 'verify') {
-    return (
-      <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <Avatar className="h-9 w-9">
-            <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
-        </div>
-        <div className="flex items-center gap-2">
-          <NotificationMenu />
-        </div>
-      </header>
-    );
-  }
-
   return (
     <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
       <div className="flex items-center gap-2">

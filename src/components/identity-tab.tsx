@@ -1,11 +1,10 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy, Scan } from "lucide-react";
+import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy, Scan, ArrowLeft } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import GovernmentCredentialCard from "./government-credential-card";
 import AddAccountCard from "./add-account-card";
@@ -17,22 +16,21 @@ import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialo
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import CryptoCredentialCard from "./crypto-credential-card";
 import ScanAndClaim from "./scan-and-claim";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
+import ScanToProveView from "./scan-to-prove-view";
+import QrToProveView from "./qr-to-prove-view";
+import SendCredentialsView from "./send-credentials-view";
+import ActivityItem from "./activity-item";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
+type IdentityView = 'main' | 'prove' | 'qr' | 'send' | 'activities';
 
-interface IdentityTabProps {
-  onHistoryClick: () => void;
-  onShareClick: () => void;
-  onScanToProveClick: () => void;
-  onQrToProveClick: () => void;
-}
 
-export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProveClick, onQrToProveClick }: IdentityTabProps) {
+export default function IdentityTab() {
+  const [view, setView] = useState<IdentityView>('main');
   const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
   const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
   const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
@@ -61,6 +59,14 @@ export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProv
   const academicCredentials = [
     { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500", status: "active" as const },
     { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" as const },
+  ];
+
+  const recentActivity = [
+    { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
+    { id: 2, action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
+    { id: 3, action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
+    { id: 4, action: "Verified", credential: "Passport", entity: "Airport Security", time: "1d ago" },
+    { id: 5, action: "Claimed", credential: "University Degree", entity: "State University", time: "2d ago" },
   ];
 
   const filteredGovernmentCredentials = governmentCredentials.filter(cred => {
@@ -94,6 +100,33 @@ export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProv
       </DropdownMenuContent>
     </DropdownMenu>
   );
+
+  if (view === 'prove') {
+    return <ScanToProveView onBack={() => setView('main')} />;
+  }
+  if (view === 'qr') {
+    return <QrToProveView onBack={() => setView('main')} />;
+  }
+  if (view === 'send') {
+    return <SendCredentialsView onBack={() => setView('main')} />;
+  }
+  if (view === 'activities') {
+    return (
+      <div className="p-4 h-full flex flex-col">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" onClick={() => setView('main')}>
+            <ArrowLeft />
+          </Button>
+          <h2 className="text-xl font-bold font-headline">Recent activities</h2>
+        </div>
+        <div className="flex-grow overflow-y-auto space-y-4 pt-6">
+          {recentActivity.map((activity) => (
+            <ActivityItem key={activity.id} activity={activity} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 p-4">
@@ -149,7 +182,7 @@ export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProv
               <Button variant="ghost" size="icon" onClick={handleCopy}>
                 <Copy className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" onClick={onShareClick}>
+              <Button variant="ghost" size="icon" onClick={() => setView('send')}>
                 <Share2 className="h-5 w-5" />
               </Button>
             </div>
@@ -164,14 +197,13 @@ export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProv
               <h2 className="text-3xl font-headline font-bold">850</h2>
               <div className="text-left">
                 <p className="font-semibold text-green-500 text-sm">High</p>
-                <p className="text-xs text-muted-foreground">Credibility Score</p>
               </div>
             </div>
             <div className="flex items-center">
               <Button variant="ghost" size="icon">
                 <BarChart2 className="h-6 w-6" />
               </Button>
-              <Button variant="ghost" size="icon" aria-label="View history" onClick={onHistoryClick}>
+              <Button variant="ghost" size="icon" aria-label="View history" onClick={() => setView('activities')}>
                 <History className="h-5 w-5" />
               </Button>
             </div>
@@ -180,8 +212,8 @@ export default function IdentityTab({ onHistoryClick, onShareClick, onScanToProv
       </Card>
       
       <div className="flex justify-start gap-2">
-        <Button onClick={onScanToProveClick} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
-        <Button onClick={onQrToProveClick} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
+        <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
+        <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
       </div>
 
       <Separator />

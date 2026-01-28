@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { Home, Fingerprint, Repeat, Shield, Wallet } from "lucide-react";
+import { Home, Fingerprint, Repeat, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/app/page";
 
@@ -15,7 +15,6 @@ export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
     { id: "finance", label: "Finance", icon: Wallet },
     { id: "payments", label: "Payments", icon: Repeat },
     { id: "home", label: "Home", icon: Home },
-    { id: "verify", label: "Verify", icon: Shield },
     { id: "identity", label: "Identity", icon: Fingerprint },
   ];
 
