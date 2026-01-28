@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy, Scan, ArrowLeft } from "lucide-react";
@@ -193,7 +194,7 @@ export default function IdentityTab() {
         <CardContent className="p-4">
           <div className="flex justify-between items-center mb-2">
             <h3 className="font-semibold text-base">Credibility Score</h3>
-            <div className="flex items-center">
+            <div className="flex items-center gap-0">
               <Button variant="ghost" size="icon">
                 <BarChart2 className="h-5 w-5 text-muted-foreground" />
               </Button>
@@ -204,9 +205,10 @@ export default function IdentityTab() {
           </div>
           <div className="flex items-baseline gap-2">
             <h2 className="text-4xl font-bold font-headline">850</h2>
-            <p className="font-semibold text-green-500 text-base">High</p>
+            <div className="text-left">
+              <p className="font-semibold text-green-500 text-sm">High</p>
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">Based on your verified credentials and activity.</p>
         </CardContent>
       </Card>
       
