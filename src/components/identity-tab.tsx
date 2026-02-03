@@ -197,6 +197,10 @@ export default function IdentityTab() {
                         <Share2 className="h-4 w-4" />
                         <span className="sr-only">Share DID</span>
                     </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={() => setView('activities')}>
+                        <History className="h-4 w-4" />
+                        <span className="sr-only">View history</span>
+                    </Button>
                 </div>
             </div>
           </CardContent>
@@ -210,9 +214,6 @@ export default function IdentityTab() {
             <div className="flex items-center gap-0">
               <Button variant="ghost" size="icon">
                 <BarChart2 className="h-5 w-5 text-muted-foreground" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="View history" onClick={() => setView('activities')}>
-                <History className="h-5 w-5 text-muted-foreground" />
               </Button>
             </div>
           </div>
