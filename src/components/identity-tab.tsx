@@ -146,7 +146,7 @@ export default function IdentityTab() {
                 <p className="font-mono text-sm break-all">
                     {did}
                 </p>
-                <div className="flex items-center gap-1 -ml-2 pt-1">
+                <div className="flex items-center gap-1 pt-1">
                     <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={handleCopy}>
                         <Copy className="h-4 w-4" />
                         <span className="sr-only">Copy DID</span>
