@@ -142,7 +142,7 @@ export default function IdentityTab() {
                  />
             </div>
             <div className="flex-1 space-y-1 overflow-hidden">
-                <p className="text-xs opacity-80">Your Digital Identity</p>
+                <p className="text-xs opacity-80">Your Sovereign Digital Identity</p>
                 <p className="font-mono text-sm break-all">
                     {did}
                 </p>
