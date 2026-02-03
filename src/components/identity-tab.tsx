@@ -130,48 +130,6 @@ export default function IdentityTab() {
   return (
     <div className="space-y-6 p-4">
       <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Fingerprint className="h-5 w-5 text-primary" />
-            Your ID Wallet
-          </h2>
-           <Dialog>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="default" size="sm">
-                    Add Credential
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DialogTrigger asChild>
-                      <DropdownMenuItem>
-                          <QrCode className="mr-2 h-4 w-4" />
-                          Scan and Claim
-                      </DropdownMenuItem>
-                  </DialogTrigger>
-                   <DropdownMenuItem>
-                      <Inbox className="mr-2 h-4 w-4" />
-                      Available to Claim
-                  </DropdownMenuItem>
-                  <DialogTrigger asChild>
-                    <DropdownMenuItem>
-                        <Plus className="mr-2 h-4 w-4" />
-                        Claim Manually
-                    </DropdownMenuItem>
-                  </DialogTrigger>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Scan and Claim Credential</DialogTitle>
-                <DialogDescription>
-                  Scan a QR code to claim a new credential.
-                </DialogDescription>
-              </DialogHeader>
-              <ScanAndClaim />
-            </DialogContent>
-          </Dialog>
-        </div>
         <Card className="bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg">
           <CardContent className="p-4 flex items-center gap-4">
             <div className="bg-white p-1.5 rounded-md">
@@ -201,6 +159,43 @@ export default function IdentityTab() {
                         <History className="h-4 w-4" />
                         <span className="sr-only">View history</span>
                     </Button>
+                    <Dialog>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20">
+                            <Plus className="h-4 w-4" />
+                            <span className="sr-only">Add Credentials</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DialogTrigger asChild>
+                              <DropdownMenuItem>
+                                  <QrCode className="mr-2 h-4 w-4" />
+                                  Scan and Claim
+                              </DropdownMenuItem>
+                          </DialogTrigger>
+                           <DropdownMenuItem>
+                              <Inbox className="mr-2 h-4 w-4" />
+                              Available to Claim
+                          </DropdownMenuItem>
+                          <DialogTrigger asChild>
+                            <DropdownMenuItem>
+                                <Plus className="mr-2 h-4 w-4" />
+                                Claim Manually
+                            </DropdownMenuItem>
+                          </DialogTrigger>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Add New Credential</DialogTitle>
+                          <DialogDescription>
+                            Scan a QR code or add details manually to claim a new credential.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <ScanAndClaim />
+                      </DialogContent>
+                    </Dialog>
                 </div>
             </div>
           </CardContent>
