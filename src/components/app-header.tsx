@@ -129,9 +129,9 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
         </div>
         <div className="flex items-center gap-2">
           <UserMenu>
-            <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 h-8 rounded-full px-3 font-bold flex items-center gap-1 cursor-pointer hover:bg-primary/10 active:scale-95 transition-all">
-              <Star className="h-3 w-3 fill-current" />
-              850
+            <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 h-10 rounded-full px-4 font-bold flex items-center gap-2 cursor-pointer hover:bg-primary/10 active:scale-95 transition-all">
+              <User className="h-4 w-4" />
+              <span className="text-sm">850</span>
             </Badge>
           </UserMenu>
           <NotificationMenu />
