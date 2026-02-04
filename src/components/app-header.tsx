@@ -128,15 +128,13 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
           </UserMenu>
         </div>
         <div className="flex items-center gap-2">
-          <UserMenu>
-            <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 h-10 rounded-full px-4 font-bold flex items-center gap-2 cursor-pointer hover:bg-primary/10 active:scale-95 transition-all">
-              <Avatar className="h-6 w-6">
-                <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <span className="text-sm">850</span>
-            </Badge>
-          </UserMenu>
+          <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 h-10 rounded-full px-4 font-bold flex items-center gap-2 cursor-pointer hover:bg-primary/10 active:scale-95 transition-all">
+            <Avatar className="h-6 w-6">
+              <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
+              <AvatarFallback>JD</AvatarFallback>
+            </Avatar>
+            <span className="text-sm">850</span>
+          </Badge>
           <NotificationMenu />
         </div>
       </header>
