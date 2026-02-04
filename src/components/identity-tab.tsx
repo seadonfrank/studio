@@ -161,37 +161,17 @@ export default function IdentityTab() {
                         <span className="sr-only">View history</span>
                     </Button>
                     <Dialog>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20">
-                            <Plus className="h-4 w-4" />
-                            <span className="sr-only">Add Credentials</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DialogTrigger asChild>
-                              <DropdownMenuItem>
-                                  <QrCode className="mr-2 h-4 w-4" />
-                                  Scan and Claim
-                              </DropdownMenuItem>
-                          </DialogTrigger>
-                           <DropdownMenuItem>
-                              <Inbox className="mr-2 h-4 w-4" />
-                              Available to Claim
-                          </DropdownMenuItem>
-                          <DialogTrigger asChild>
-                            <DropdownMenuItem>
-                                <Plus className="mr-2 h-4 w-4" />
-                                Claim Manually
-                            </DropdownMenuItem>
-                          </DialogTrigger>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <DialogTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20">
+                          <Plus className="h-4 w-4" />
+                          <span className="sr-only">Add Credentials</span>
+                        </Button>
+                      </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Add New Credential</DialogTitle>
+                          <DialogTitle>Scan and Claim</DialogTitle>
                           <DialogDescription>
-                            Scan a QR code or add details manually to claim a new credential.
+                            Position the QR code within the frame to claim your credential.
                           </DialogDescription>
                         </DialogHeader>
                         <ScanAndClaim />
