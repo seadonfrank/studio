@@ -24,6 +24,15 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
     });
   };
 
+  const AppLogo = () => (
+    <div className="flex items-center gap-1.5 transition-transform active:scale-95">
+      <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary shadow-sm shadow-primary/20">
+        <span className="font-headline text-lg font-bold text-primary-foreground">x</span>
+      </div>
+      <span className="font-headline text-xl font-bold tracking-tight text-foreground">IDFI</span>
+    </div>
+  );
+
   const UserMenu = ({ children }: { children: React.ReactNode }) => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -65,10 +74,7 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
       <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <UserMenu>
-            <Avatar className="h-9 w-9 ring-2 ring-primary/10 ring-offset-2 ring-offset-background hover:ring-primary/30 transition-all cursor-pointer">
-              <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
+            <AppLogo />
           </UserMenu>
         </div>
         <div className="flex items-center gap-2">
@@ -84,10 +90,7 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
       <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <UserMenu>
-            <Avatar className="h-9 w-9 ring-2 ring-primary/10 ring-offset-2 ring-offset-background hover:ring-primary/30 transition-all cursor-pointer">
-              <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
+            <AppLogo />
           </UserMenu>
         </div>
         <div className="flex items-center gap-2">
@@ -102,10 +105,7 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
       <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <UserMenu>
-            <Avatar className="h-9 w-9 ring-2 ring-primary/10 ring-offset-2 ring-offset-background hover:ring-primary/30 transition-all cursor-pointer">
-              <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
+            <AppLogo />
           </UserMenu>
         </div>
         <div className="flex items-center gap-2">
@@ -121,10 +121,7 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
       <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <UserMenu>
-            <Avatar className="h-9 w-9 ring-2 ring-primary/10 ring-offset-2 ring-offset-background hover:ring-primary/30 transition-all cursor-pointer">
-              <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
+            <AppLogo />
           </UserMenu>
         </div>
         <div className="flex items-center gap-2">
@@ -145,10 +142,7 @@ export default function AppHeader({ activeTab, onTransactionsClick }: { activeTa
     <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-2 px-4 backdrop-blur-sm">
       <div className="flex items-center gap-2">
         <UserMenu>
-          <Avatar className="h-9 w-9 ring-2 ring-primary/10 ring-offset-2 ring-offset-background hover:ring-primary/30 transition-all cursor-pointer">
-              <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-              <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
+          <AppLogo />
         </UserMenu>
       </div>
       <div className="flex items-center gap-2">
