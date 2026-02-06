@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, QrCode, Scan, ArrowLeft, Copy, Share2, History } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, QrCode, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -11,9 +11,8 @@ import LicenseCredentialCard from "./license-credential-card";
 import ManageLicensesDialog from "./manage-licenses-dialog";
 import AcademicCredentialCard from "./academic-credential-card";
 import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ScanAndClaim from "./scan-and-claim";
-import { Separator } from "./ui/separator";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import ScanToProveView from "./scan-to-prove-view";
@@ -21,11 +20,14 @@ import QrToProveView from "./qr-to-prove-view";
 import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Input } from "./ui/input";
 
 type IdentityView = 'main' | 'prove' | 'qr' | 'send' | 'activities';
 
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const { toast } = useToast();
   const did = "did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d";
 
@@ -53,6 +55,27 @@ export default function IdentityTab() {
     { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" as const },
   ];
 
+  const filteredGov = useMemo(() => 
+    governmentCredentials.filter(c => 
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      c.credentialType.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.country.toLowerCase().includes(searchQuery.toLowerCase())
+    ), [searchQuery]);
+
+  const filteredLicenses = useMemo(() => 
+    licenseCredentials.filter(c => 
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      c.licenseType.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.issuingAuthority.toLowerCase().includes(searchQuery.toLowerCase())
+    ), [searchQuery]);
+
+  const filteredAcademic = useMemo(() => 
+    academicCredentials.filter(c => 
+      c.institution.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      c.credentialType.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.fieldOfStudy.toLowerCase().includes(searchQuery.toLowerCase())
+    ), [searchQuery]);
+
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
     { id: 2, action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
@@ -60,6 +83,14 @@ export default function IdentityTab() {
     { id: 4, action: "Verified", credential: "Passport", entity: "Airport Security", time: "1d ago" },
     { id: 5, action: "Claimed", credential: "University Degree", entity: "State University", time: "2d ago" },
   ];
+
+  const toggleAll = () => {
+    if (expandedItems.length > 0) {
+      setExpandedItems([]);
+    } else {
+      setExpandedItems(['government', 'licenses', 'academic']);
+    }
+  };
 
   if (view === 'prove') {
     return <ScanToProveView onBack={() => setView('main')} />;
@@ -148,9 +179,35 @@ export default function IdentityTab() {
         <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 font-semibold"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
       </div>
 
-      <Separator />
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input 
+              placeholder="Search cards..." 
+              className="pl-9 bg-background h-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="h-10 w-10 shrink-0" 
+            onClick={toggleAll}
+            title={expandedItems.length > 0 ? "Collapse all" : "Expand all"}
+          >
+            {expandedItems.length > 0 ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+          </Button>
+        </div>
+      </section>
 
-      <Accordion type="multiple" className="w-full space-y-4">
+      <Accordion 
+        type="multiple" 
+        className="w-full space-y-4" 
+        value={expandedItems} 
+        onValueChange={setExpandedItems}
+      >
         <AccordionItem value="government" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
           <AccordionTrigger className="hover:no-underline py-4 px-4">
             <div className="flex items-center justify-between w-full">
@@ -159,15 +216,18 @@ export default function IdentityTab() {
                 <span className="text-base font-headline font-semibold">Government</span>
               </div>
               <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
-                {governmentCredentials.length}
+                {filteredGov.length}
               </Badge>
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-4 pb-4 pt-0">
             <div className="space-y-3">
-              {governmentCredentials.map((cred, index) => (
+              {filteredGov.map((cred, index) => (
                 <GovernmentCredentialCard key={index} {...cred} />
               ))}
+              {filteredGov.length === 0 && searchQuery && (
+                <p className="text-center text-sm text-muted-foreground py-4">No matching government credentials.</p>
+              )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
@@ -197,15 +257,18 @@ export default function IdentityTab() {
                 <span className="text-base font-headline font-semibold">Licenses</span>
               </div>
               <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
-                {licenseCredentials.length}
+                {filteredLicenses.length}
               </Badge>
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-4 pb-4 pt-0">
             <div className="space-y-3">
-              {licenseCredentials.map((cred, index) => (
+              {filteredLicenses.map((cred, index) => (
                 <LicenseCredentialCard key={index} {...cred} />
               ))}
+              {filteredLicenses.length === 0 && searchQuery && (
+                <p className="text-center text-sm text-muted-foreground py-4">No matching licenses.</p>
+              )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
@@ -235,15 +298,18 @@ export default function IdentityTab() {
                 <span className="text-base font-headline font-semibold">Academic</span>
               </div>
               <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
-                {academicCredentials.length}
+                {filteredAcademic.length}
               </Badge>
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-4 pb-4 pt-0">
             <div className="space-y-3">
-              {academicCredentials.map((cred, index) => (
+              {filteredAcademic.map((cred, index) => (
                 <AcademicCredentialCard key={index} {...cred} />
               ))}
+              {filteredAcademic.length === 0 && searchQuery && (
+                <p className="text-center text-sm text-muted-foreground py-4">No matching academic credentials.</p>
+              )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
