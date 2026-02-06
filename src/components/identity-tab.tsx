@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, QrCode, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -16,7 +16,6 @@ import ScanAndClaim from "./scan-and-claim";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import ScanToProveView from "./scan-to-prove-view";
-import QrToProveView from "./qr-to-prove-view";
 import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -94,9 +93,6 @@ export default function IdentityTab() {
 
   if (view === 'prove') {
     return <ScanToProveView onBack={() => setView('main')} />;
-  }
-  if (view === 'qr') {
-    return <QrToProveView onBack={() => setView('main')} />;
   }
   if (view === 'send') {
     return <SendCredentialsView onBack={() => setView('main')} />;
@@ -176,7 +172,6 @@ export default function IdentityTab() {
       
       <div className="flex justify-start gap-2">
         <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 font-semibold"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
-        <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 font-semibold"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
       </div>
 
       <section className="space-y-4">
