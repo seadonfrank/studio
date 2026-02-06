@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Bell, FileQuestion, HandCoins, Check, X } from "lucide-react";
+import { Bell, FileQuestion, HandCoins, Check, X, Share2, PlusCircle } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
@@ -20,6 +20,18 @@ const notifications = [
         title: 'Credential Request',
         description: 'Crypto Exchange Inc. is requesting your "Proof of KYC".',
         time: '5m ago'
+    },
+    {
+        type: 'share',
+        title: 'Credential Shared',
+        description: 'Alice shared a "Conference Pass" with you.',
+        time: '20m ago'
+    },
+    {
+        type: 'issue',
+        title: 'Credential Issued',
+        description: 'State University issued your "Master\'s Degree".',
+        time: '45m ago'
     },
     {
         type: 'payment',
@@ -46,12 +58,56 @@ export default function NotificationMenu() {
             description: "You have sent $25.00 to Jane Doe."
         })
     }
+
+    const handleAccept = () => {
+        toast({
+            title: "Credential Accepted",
+            description: "Your Master's Degree has been added to your wallet."
+        })
+    }
+
+    const handleView = () => {
+        toast({
+            title: "Viewing Credential",
+            description: "Opening the shared Conference Pass."
+        })
+    }
     
     const handleDecline = () => {
         toast({
             title: "Request Declined",
             variant: "destructive"
         })
+    }
+
+    const getIcon = (type: string) => {
+        switch(type) {
+            case 'credential': return <FileQuestion className="h-5 w-5 text-primary" />;
+            case 'share': return <Share2 className="h-5 w-5 text-primary" />;
+            case 'issue': return <PlusCircle className="h-5 w-5 text-primary" />;
+            case 'payment': return <HandCoins className="h-5 w-5 text-primary" />;
+            default: return <Bell className="h-5 w-5 text-primary" />;
+        }
+    }
+
+    const getActionLabel = (type: string) => {
+        switch(type) {
+            case 'credential': return 'Provide';
+            case 'share': return 'View';
+            case 'issue': return 'Accept';
+            case 'payment': return 'Pay';
+            default: return 'Action';
+        }
+    }
+
+    const getActionHandler = (type: string) => {
+        switch(type) {
+            case 'credential': return handleProvide;
+            case 'share': return handleView;
+            case 'issue': return handleAccept;
+            case 'payment': return handlePay;
+            default: return () => {};
+        }
     }
 
 
@@ -83,11 +139,7 @@ export default function NotificationMenu() {
             <div key={index}>
               <DropdownMenuItem className="flex !items-start gap-4 p-3 rounded-lg cursor-default focus:bg-primary/5 outline-none transition-colors">
                 <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    {notification.type === 'credential' ? (
-                      <FileQuestion className="h-5 w-5 text-primary" />
-                    ) : (
-                      <HandCoins className="h-5 w-5 text-primary" />
-                    )}
+                    {getIcon(notification.type)}
                 </div>
                 <div className="flex-1 space-y-1.5">
                     <div className="flex justify-between items-start">
@@ -99,10 +151,10 @@ export default function NotificationMenu() {
                         <Button 
                           size="sm" 
                           className="h-8 px-3 rounded-full text-xs font-semibold" 
-                          onClick={notification.type === 'credential' ? handleProvide : handlePay}
+                          onClick={getActionHandler(notification.type)}
                         >
                             <Check className="mr-1 h-3 w-3" />
-                            {notification.type === 'credential' ? 'Provide' : 'Pay'}
+                            {getActionLabel(notification.type)}
                         </Button>
                         <Button 
                           size="sm" 
