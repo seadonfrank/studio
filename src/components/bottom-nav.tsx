@@ -1,6 +1,7 @@
+
 "use client";
 
-import { Home, Fingerprint, Repeat, Wallet, ShieldCheck, Landmark } from "lucide-react";
+import { Home, Fingerprint, Repeat, Wallet, Landmark, Scan } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Tab, Mode } from "@/app/page";
 
@@ -20,7 +21,7 @@ export default function BottomNav({ activeTab, setActiveTab, mode, setMode }: Bo
 
   const identityTabs = [
     { id: "identity", label: "Identity", icon: Fingerprint },
-    { id: "verify", label: "Verify", icon: ShieldCheck },
+    { id: "verify", label: "Verify", icon: Scan },
   ];
 
   const currentTabs = mode === "financial" ? financialTabs : identityTabs;
