@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface SendCredentialsViewProps {
   onBack: () => void;
@@ -119,7 +120,7 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
 
           <div className="space-y-2 px-4">
             <Label htmlFor="note">Note (Optional)</Label>
-            <Input id="note" placeholder="For verification" />
+            <Textarea id="note" placeholder="Add a note to the recipient" className="min-h-[100px]" />
           </div>
         </div>
       </div>
