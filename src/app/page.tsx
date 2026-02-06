@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -8,9 +9,10 @@ import IdentityTab from "@/components/identity-tab";
 import PaymentsTab from "@/components/payments-tab";
 import HomeTab from "@/components/home-tab";
 import VerifyTab from "@/components/verify-tab";
+import ScanToProveView from "@/components/scan-to-prove-view";
 
 export type Mode = "financial" | "identity";
-export type Tab = "home" | "finance" | "payments" | "identity" | "verify";
+export type Tab = "home" | "finance" | "payments" | "identity" | "verify" | "prove";
 
 export default function Home() {
   const [mode, setMode] = useState<Mode>("financial");
@@ -42,7 +44,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-muted p-4 sm:p-8">
       <div className="relative h-[844px] w-full max-w-[390px] overflow-hidden rounded-[40px] border-[8px] border-black bg-background shadow-2xl">
         <AppHeader 
-          activeTab={activeTab} 
+          activeTab={activeTab as any} 
           onTransactionsClick={handleTransactionsClick}
         />
         <div className="h-full overflow-y-auto pb-44 pt-20">
@@ -50,6 +52,7 @@ export default function Home() {
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
           {activeTab === "verify" && <VerifyTab />}
+          {activeTab === "prove" && <ScanToProveView onBack={() => setActiveTab("identity")} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
         </div>
         <BottomNav 

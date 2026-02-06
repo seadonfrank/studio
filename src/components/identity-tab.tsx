@@ -15,13 +15,12 @@ import { useState, useMemo } from "react";
 import ScanAndClaim from "./scan-and-claim";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
-import ScanToProveView from "./scan-to-prove-view";
 import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "./ui/input";
 
-type IdentityView = 'main' | 'prove' | 'qr' | 'send' | 'activities';
+type IdentityView = 'main' | 'qr' | 'send' | 'activities';
 
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
@@ -91,9 +90,6 @@ export default function IdentityTab() {
     }
   };
 
-  if (view === 'prove') {
-    return <ScanToProveView onBack={() => setView('main')} />;
-  }
   if (view === 'send') {
     return <SendCredentialsView onBack={() => setView('main')} />;
   }
@@ -169,10 +165,6 @@ export default function IdentityTab() {
           </CardContent>
         </Card>
       </section>
-      
-      <div className="flex justify-start gap-2">
-        <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 font-semibold"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
-      </div>
 
       <section className="space-y-4">
         <div className="flex items-center gap-2">
