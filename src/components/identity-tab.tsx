@@ -152,7 +152,7 @@ export default function IdentityTab() {
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Scan and Claim</DialogTitle>
+                          <DialogTitle>Claim Credentials</DialogTitle>
                           <DialogDescription>
                             Position the QR code within the frame to claim your credential.
                           </DialogDescription>
