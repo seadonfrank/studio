@@ -20,7 +20,7 @@ import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "./ui/input";
 
-type IdentityView = 'main' | 'qr' | 'send' | 'activities';
+type IdentityView = 'main' | 'qr' | 'share' | 'activities';
 
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
@@ -90,7 +90,7 @@ export default function IdentityTab() {
     }
   };
 
-  if (view === 'send') {
+  if (view === 'share') {
     return <SendCredentialsView onBack={() => setView('main')} />;
   }
   if (view === 'activities') {
@@ -135,7 +135,7 @@ export default function IdentityTab() {
                         <Copy className="h-4 w-4" />
                         <span className="sr-only">Copy DID</span>
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20" onClick={() => setView('send')}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20" onClick={() => setView('share')}>
                         <Share2 className="h-4 w-4" />
                         <span className="sr-only">Share DID</span>
                     </Button>

@@ -33,14 +33,14 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
         if (credentials.length === 0 || credentials.some(c => c.trim() === '')) {
             toast({
                 title: "Invalid Credentials",
-                description: "Please specify which credentials you want to send.",
+                description: "Please specify which credentials you want to share.",
                 variant: "destructive",
             });
             return;
         }
         toast({
-            title: "Credentials Sent",
-            description: "Your credentials have been sent successfully."
+            title: "Credentials Shared",
+            description: "Your credentials have been shared successfully."
         });
         onBack();
     }
@@ -67,14 +67,14 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
             <Button variant="ghost" size="icon" onClick={onBack}>
             <ArrowLeft />
             </Button>
-            <h2 className="text-xl font-bold font-headline">Send Credentials</h2>
+            <h2 className="text-xl font-bold font-headline">Share Credentials</h2>
         </div>
       </div>
 
       <div className="flex-grow mt-6 space-y-6 overflow-y-auto">
         <div className="space-y-4 py-4">
           <div className="space-y-2 px-4">
-            <Label htmlFor="verifierId">To (Verifier's ID)</Label>
+            <Label htmlFor="verifierId">To (Recipient's ID)</Label>
             <div className="relative flex items-center">
               <Input id="verifierId" placeholder="did:xidfi:..." className="pr-10" />
               <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
@@ -87,7 +87,7 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
             <Card>
                 <CardContent className="p-4">
                     <div className="flex justify-between items-center mb-2">
-                        <Label>Credentials to Send</Label>
+                        <Label>Credentials to Share</Label>
                         <Button variant="ghost" size="sm" onClick={addCredentialField}>
                             <Plus className="h-4 w-4 mr-2" />
                             Add
@@ -126,7 +126,7 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
       
       <div className="mt-auto flex gap-2 p-4 border-t">
         <Button variant="outline" className="w-full" onClick={onBack}>Cancel</Button>
-        <Button className="w-full" onClick={handleSend}>Send</Button>
+        <Button className="w-full" onClick={handleSend}>Share</Button>
       </div>
     </div>
   );
