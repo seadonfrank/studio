@@ -8,11 +8,10 @@ import FinanceTab from "@/components/finance-tab";
 import IdentityTab from "@/components/identity-tab";
 import PaymentsTab from "@/components/payments-tab";
 import HomeTab from "@/components/home-tab";
-import VerifyTab from "@/components/verify-tab";
 import ScanToProveView from "@/components/scan-to-prove-view";
 
 export type Mode = "financial" | "identity";
-export type Tab = "home" | "finance" | "payments" | "identity" | "verify" | "prove";
+export type Tab = "home" | "finance" | "payments" | "identity" | "prove";
 
 export default function Home() {
   const [mode, setMode] = useState<Mode>("financial");
@@ -51,7 +50,6 @@ export default function Home() {
           {activeTab === "home" && <HomeTab />}
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
-          {activeTab === "verify" && <VerifyTab />}
           {activeTab === "prove" && <ScanToProveView onBack={() => setActiveTab("identity")} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
         </div>
