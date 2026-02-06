@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ArrowLeft, User, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, User, Plus, Trash2, Scan } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -10,6 +10,8 @@ import { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import ScanAndClaim from "./scan-and-claim";
 
 interface SendCredentialsViewProps {
   onBack: () => void;
@@ -78,9 +80,22 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
             <Label htmlFor="verifierId">To (Recipient's ID)</Label>
             <div className="relative flex items-center">
               <Input id="verifierId" placeholder="did:xidfi:..." className="pr-10" />
-              <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
-                <User className="h-4 w-4 text-muted-foreground" />
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
+                    <Scan className="h-4 w-4 text-muted-foreground" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Scan Recipient QR</DialogTitle>
+                    <DialogDescription>
+                      Scan a DID QR code to automatically fill the recipient field.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ScanAndClaim />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
           
