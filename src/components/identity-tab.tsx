@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -19,13 +19,23 @@ import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "./ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 type IdentityView = 'main' | 'qr' | 'share' | 'activities';
+type CredentialStatus = 'all' | 'active' | 'expired' | 'revoked';
 
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [filterStatus, setFilterStatus] = useState<CredentialStatus>('all');
   const { toast } = useToast();
   const did = "did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d";
 
@@ -54,25 +64,31 @@ export default function IdentityTab() {
   ];
 
   const filteredGov = useMemo(() => 
-    governmentCredentials.filter(c => 
-      c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      c.credentialType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.country.toLowerCase().includes(searchQuery.toLowerCase())
-    ), [searchQuery]);
+    governmentCredentials.filter(c => {
+      const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.credentialType.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.country.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = filterStatus === 'all' || c.status === filterStatus;
+      return matchesSearch && matchesFilter;
+    }), [searchQuery, filterStatus]);
 
   const filteredLicenses = useMemo(() => 
-    licenseCredentials.filter(c => 
-      c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      c.licenseType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.issuingAuthority.toLowerCase().includes(searchQuery.toLowerCase())
-    ), [searchQuery]);
+    licenseCredentials.filter(c => {
+      const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.licenseType.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.issuingAuthority.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = filterStatus === 'all' || c.status === filterStatus;
+      return matchesSearch && matchesFilter;
+    }), [searchQuery, filterStatus]);
 
   const filteredAcademic = useMemo(() => 
-    academicCredentials.filter(c => 
-      c.institution.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      c.credentialType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.fieldOfStudy.toLowerCase().includes(searchQuery.toLowerCase())
-    ), [searchQuery]);
+    academicCredentials.filter(c => {
+      const matchesSearch = c.institution.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.credentialType.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.fieldOfStudy.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = filterStatus === 'all' || c.status === filterStatus;
+      return matchesSearch && matchesFilter;
+    }), [searchQuery, filterStatus]);
 
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
@@ -177,6 +193,21 @@ export default function IdentityTab() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="h-10 w-10 shrink-0" title="Sort by status">
+                <Filter className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setFilterStatus('all')}>All</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setFilterStatus('active')}>Active</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setFilterStatus('expired')}>Expired</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setFilterStatus('revoked')}>Revoked</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button 
             variant="outline" 
             size="icon" 
@@ -212,7 +243,7 @@ export default function IdentityTab() {
               {filteredGov.map((cred, index) => (
                 <GovernmentCredentialCard key={index} {...cred} />
               ))}
-              {filteredGov.length === 0 && searchQuery && (
+              {filteredGov.length === 0 && (searchQuery || filterStatus !== 'all') && (
                 <p className="text-center text-sm text-muted-foreground py-4">No matching government credentials.</p>
               )}
               <Dialog>
@@ -253,7 +284,7 @@ export default function IdentityTab() {
               {filteredLicenses.map((cred, index) => (
                 <LicenseCredentialCard key={index} {...cred} />
               ))}
-              {filteredLicenses.length === 0 && searchQuery && (
+              {filteredLicenses.length === 0 && (searchQuery || filterStatus !== 'all') && (
                 <p className="text-center text-sm text-muted-foreground py-4">No matching licenses.</p>
               )}
               <Dialog>
@@ -294,7 +325,7 @@ export default function IdentityTab() {
               {filteredAcademic.map((cred, index) => (
                 <AcademicCredentialCard key={index} {...cred} />
               ))}
-              {filteredAcademic.length === 0 && searchQuery && (
+              {filteredAcademic.length === 0 && (searchQuery || filterStatus !== 'all') && (
                 <p className="text-center text-sm text-muted-foreground py-4">No matching academic credentials.</p>
               )}
               <Dialog>
