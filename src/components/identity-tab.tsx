@@ -5,7 +5,6 @@ import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserChec
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import GovernmentCredentialCard from "./government-credential-card";
 import AddAccountCard from "./add-account-card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
@@ -24,6 +23,7 @@ import ScanToProveView from "./scan-to-prove-view";
 import QrToProveView from "./qr-to-prove-view";
 import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 type IdentityView = 'main' | 'prove' | 'qr' | 'send' | 'activities';
@@ -87,12 +87,12 @@ export default function IdentityTab() {
   const FilterDropdown = ({ filter, setFilter }: { filter: FilterType, setFilter: (filter: FilterType) => void }) => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="capitalize">
+        <Button variant="ghost" size="sm" className="capitalize text-xs font-medium h-7" onClick={(e) => e.stopPropagation()}>
           {filter}
-          <ChevronDown className="h-4 w-4 ml-2" />
+          <ChevronDown className="h-3 w-3 ml-1" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setFilter('all')}>All</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setFilter('active')}>Active</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setFilter('expired')}>Expired</DropdownMenuItem>
@@ -131,9 +131,9 @@ export default function IdentityTab() {
   return (
     <div className="space-y-6 p-4">
       <section>
-        <Card className="bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg">
+        <Card className="bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg border-none">
           <CardContent className="p-4 flex items-center gap-4">
-            <div className="bg-white p-1.5 rounded-md">
+            <div className="bg-white p-1.5 rounded-md shrink-0">
                  <Image
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=64x64&data=${did}`}
                     alt="DID QR Code"
@@ -143,26 +143,26 @@ export default function IdentityTab() {
                  />
             </div>
             <div className="flex-1 space-y-1 overflow-hidden">
-                <p className="text-xs opacity-80">Your Sovereign Digital Identity</p>
-                <p className="font-mono text-sm break-all">
+                <p className="text-[10px] uppercase tracking-wider opacity-80 font-bold">Your Sovereign Digital Identity</p>
+                <p className="font-mono text-xs break-all leading-tight opacity-90">
                     {did}
                 </p>
-                <div className="flex items-center gap-1 pt-1">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={handleCopy}>
+                <div className="flex items-center gap-1 pt-1.5 -ml-1">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20" onClick={handleCopy}>
                         <Copy className="h-4 w-4" />
                         <span className="sr-only">Copy DID</span>
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={() => setView('send')}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20" onClick={() => setView('send')}>
                         <Share2 className="h-4 w-4" />
                         <span className="sr-only">Share DID</span>
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20" onClick={() => setView('activities')}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20" onClick={() => setView('activities')}>
                         <History className="h-4 w-4" />
                         <span className="sr-only">View history</span>
                     </Button>
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/20">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20">
                           <Plus className="h-4 w-4" />
                           <span className="sr-only">Add Credentials</span>
                         </Button>
@@ -184,138 +184,121 @@ export default function IdentityTab() {
       </section>
       
       <div className="flex justify-start gap-2">
-        <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
-        <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
+        <Button onClick={() => setView('prove')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 font-semibold"><Scan className="mr-1 h-4 w-4"/> Scan to Prove</Button>
+        <Button onClick={() => setView('qr')} size="sm" className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full h-9 px-4 font-semibold"><QrCode className="mr-1 h-4 w-4"/> QR to Prove</Button>
       </div>
 
       <Separator />
 
+      <Accordion type="multiple" defaultValue={["government"]} className="w-full space-y-4">
+        <AccordionItem value="government" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <div className="flex items-center justify-between px-4">
+            <AccordionTrigger className="hover:no-underline py-4 flex-1">
+              <div className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Government</span>
+              </div>
+            </AccordionTrigger>
+            <FilterDropdown filter={governmentFilter} setFilter={setGovernmentFilter} />
+          </div>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredGovernmentCredentials.length > 0 ? filteredGovernmentCredentials.map((cred, index) => (
+                <GovernmentCredentialCard key={index} {...cred} />
+              )) : <p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p>}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                    <Plus className="h-5 w-5" />
+                    <span className="text-xs font-semibold">Add Government Credential</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Government Credential</DialogTitle>
+                    <DialogDescription>
+                      Securely add your government-issued credentials.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ScanAndClaim />
+                </DialogContent>
+              </Dialog>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Shield className="h-5 w-5 text-primary" />
-            Government
-          </h2>
-          <FilterDropdown filter={governmentFilter} setFilter={setGovernmentFilter} />
-        </div>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {filteredGovernmentCredentials.length > 0 ? filteredGovernmentCredentials.map((cred, index) => (
-              <CarouselItem key={index}>
-                <GovernmentCredentialCard {...cred} />
-              </CarouselItem>
-            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add Credential" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Government Credential</DialogTitle>
-                      <DialogDescription>
-                        Securely add your government-issued credentials.
-                      </DialogDescription>
-                    </DialogHeader>
-                    {/* Placeholder for a form component */}
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section>
-        <div className="flex justify-between items-center mb-3">
-            <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-              <BookUser className="h-5 w-5 text-primary" />
-              Licenses
-            </h2>
+        <AccordionItem value="licenses" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <div className="flex items-center justify-between px-4">
+            <AccordionTrigger className="hover:no-underline py-4 flex-1">
+              <div className="flex items-center gap-2">
+                <BookUser className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Licenses</span>
+              </div>
+            </AccordionTrigger>
             <FilterDropdown filter={licensesFilter} setFilter={setLicensesFilter} />
-        </div>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {filteredLicenseCredentials.length > 0 ? filteredLicenseCredentials.map((cred, index) => (
-              <CarouselItem key={index}>
-                <LicenseCredentialCard {...cred} />
-              </CarouselItem>
-            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add License" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New License</DialogTitle>
-                      <DialogDescription>
-                        Add details for your new license credential.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageLicensesDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
+          </div>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredLicenseCredentials.length > 0 ? filteredLicenseCredentials.map((cred, index) => (
+                <LicenseCredentialCard key={index} {...cred} />
+              )) : <p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p>}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                    <Plus className="h-5 w-5" />
+                    <span className="text-xs font-semibold">Add License</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New License</DialogTitle>
+                    <DialogDescription>
+                      Add details for your new license credential.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ManageLicensesDialog />
+                </DialogContent>
+              </Dialog>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-       <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-primary" />
-            Academic
-          </h2>
-          <FilterDropdown filter={academicFilter} setFilter={setAcademicFilter} />
-        </div>
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {filteredAcademicCredentials.length > 0 ? filteredAcademicCredentials.map((cred, index) => (
-              <CarouselItem key={index}>
-                <AcademicCredentialCard {...cred} />
-              </CarouselItem>
-            )) : <CarouselItem><p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p></CarouselItem>}
-            <CarouselItem>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="h-full">
-                      <AddAccountCard text="Add Credential" />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Academic Credential</DialogTitle>
-                      <DialogDescription>
-                        Add details for your new academic credential.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ManageAcademicCredentialsDialog />
-                  </DialogContent>
-                </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
+        <AccordionItem value="academic" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <div className="flex items-center justify-between px-4">
+            <AccordionTrigger className="hover:no-underline py-4 flex-1">
+              <div className="flex items-center gap-2">
+                <GraduationCap className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Academic</span>
+              </div>
+            </AccordionTrigger>
+            <FilterDropdown filter={academicFilter} setFilter={setAcademicFilter} />
+          </div>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredAcademicCredentials.length > 0 ? filteredAcademicCredentials.map((cred, index) => (
+                <AcademicCredentialCard key={index} {...cred} />
+              )) : <p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p>}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                    <Plus className="h-5 w-5" />
+                    <span className="text-xs font-semibold">Add Academic Credential</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Academic Credential</DialogTitle>
+                    <DialogDescription>
+                      Add details for your new academic credential.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ManageAcademicCredentialsDialog />
+                </DialogContent>
+              </Dialog>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       
     </div>
   );
