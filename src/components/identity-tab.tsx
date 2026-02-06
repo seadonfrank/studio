@@ -1,20 +1,17 @@
 
 "use client";
 
-import { Award, FileText, Fingerprint, GraduationCap, Plus, PlusCircle, UserCheck, Shield, BookUser, Filter, ChevronDown, QrCode, Inbox, Share2, BarChart2, History, Copy, Scan, ArrowLeft } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, QrCode, Scan, ArrowLeft, Copy, Share2, History } from "lucide-react";
 import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import GovernmentCredentialCard from "./government-credential-card";
-import AddAccountCard from "./add-account-card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import LicenseCredentialCard from "./license-credential-card";
 import ManageLicensesDialog from "./manage-licenses-dialog";
 import AcademicCredentialCard from "./academic-credential-card";
 import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import ScanAndClaim from "./scan-and-claim";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
@@ -25,15 +22,10 @@ import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-type FilterType = 'all' | 'active' | 'expired' | 'revoked';
 type IdentityView = 'main' | 'prove' | 'qr' | 'send' | 'activities';
-
 
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
-  const [governmentFilter, setGovernmentFilter] = useState<FilterType>('all');
-  const [licensesFilter, setLicensesFilter] = useState<FilterType>('all');
-  const [academicFilter, setAcademicFilter] = useState<FilterType>('all');
   const { toast } = useToast();
   const did = "did:xidfi:1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d";
 
@@ -68,38 +60,6 @@ export default function IdentityTab() {
     { id: 4, action: "Verified", credential: "Passport", entity: "Airport Security", time: "1d ago" },
     { id: 5, action: "Claimed", credential: "University Degree", entity: "State University", time: "2d ago" },
   ];
-
-  const filteredGovernmentCredentials = governmentCredentials.filter(cred => {
-    if (governmentFilter === 'all') return true;
-    return cred.status === governmentFilter;
-  });
-
-  const filteredLicenseCredentials = licenseCredentials.filter(cred => {
-    if (licensesFilter === 'all') return true;
-    return cred.status === licensesFilter;
-  });
-
-  const filteredAcademicCredentials = academicCredentials.filter(cred => {
-    if (academicFilter === 'all') return true;
-    return cred.status === academicFilter;
-  });
-  
-  const FilterDropdown = ({ filter, setFilter }: { filter: FilterType, setFilter: (filter: FilterType) => void }) => (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="capitalize text-xs font-medium h-7" onClick={(e) => e.stopPropagation()}>
-          {filter}
-          <ChevronDown className="h-3 w-3 ml-1" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setFilter('all')}>All</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setFilter('active')}>Active</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setFilter('expired')}>Expired</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setFilter('revoked')}>Revoked</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
 
   if (view === 'prove') {
     return <ScanToProveView onBack={() => setView('main')} />;
@@ -190,22 +150,24 @@ export default function IdentityTab() {
 
       <Separator />
 
-      <Accordion type="multiple" defaultValue={["government"]} className="w-full space-y-4">
+      <Accordion type="multiple" className="w-full space-y-4">
         <AccordionItem value="government" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
-          <div className="flex items-center justify-between px-4">
-            <AccordionTrigger className="hover:no-underline py-4 flex-1">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-2">
                 <Shield className="h-5 w-5 text-primary" />
                 <span className="text-base font-headline font-semibold">Government</span>
               </div>
-            </AccordionTrigger>
-            <FilterDropdown filter={governmentFilter} setFilter={setGovernmentFilter} />
-          </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {governmentCredentials.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
           <AccordionContent className="px-4 pb-4 pt-0">
             <div className="space-y-3">
-              {filteredGovernmentCredentials.length > 0 ? filteredGovernmentCredentials.map((cred, index) => (
+              {governmentCredentials.map((cred, index) => (
                 <GovernmentCredentialCard key={index} {...cred} />
-              )) : <p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p>}
+              ))}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
@@ -228,20 +190,22 @@ export default function IdentityTab() {
         </AccordionItem>
 
         <AccordionItem value="licenses" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
-          <div className="flex items-center justify-between px-4">
-            <AccordionTrigger className="hover:no-underline py-4 flex-1">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-2">
                 <BookUser className="h-5 w-5 text-primary" />
                 <span className="text-base font-headline font-semibold">Licenses</span>
               </div>
-            </AccordionTrigger>
-            <FilterDropdown filter={licensesFilter} setFilter={setLicensesFilter} />
-          </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {licenseCredentials.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
           <AccordionContent className="px-4 pb-4 pt-0">
             <div className="space-y-3">
-              {filteredLicenseCredentials.length > 0 ? filteredLicenseCredentials.map((cred, index) => (
+              {licenseCredentials.map((cred, index) => (
                 <LicenseCredentialCard key={index} {...cred} />
-              )) : <p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p>}
+              ))}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
@@ -264,20 +228,22 @@ export default function IdentityTab() {
         </AccordionItem>
 
         <AccordionItem value="academic" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
-          <div className="flex items-center justify-between px-4">
-            <AccordionTrigger className="hover:no-underline py-4 flex-1">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-2">
                 <GraduationCap className="h-5 w-5 text-primary" />
                 <span className="text-base font-headline font-semibold">Academic</span>
               </div>
-            </AccordionTrigger>
-            <FilterDropdown filter={academicFilter} setFilter={setAcademicFilter} />
-          </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {academicCredentials.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
           <AccordionContent className="px-4 pb-4 pt-0">
             <div className="space-y-3">
-              {filteredAcademicCredentials.length > 0 ? filteredAcademicCredentials.map((cred, index) => (
+              {academicCredentials.map((cred, index) => (
                 <AcademicCredentialCard key={index} {...cred} />
-              )) : <p className="text-sm text-muted-foreground text-center py-4">No credentials match the filter.</p>}
+              ))}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
