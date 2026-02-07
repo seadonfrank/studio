@@ -67,7 +67,8 @@ export default function NotificationsView({ onBack }: { onBack: () => void }) {
     
     const handleDecline = () => {
         toast({
-            title: "Request Declined",
+            title: "Action Recorded",
+            description: "The request has been dismissed.",
             variant: "destructive"
         })
     }
@@ -89,6 +90,16 @@ export default function NotificationsView({ onBack }: { onBack: () => void }) {
             case 'issue': return 'Accept';
             case 'payment': return 'Pay';
             default: return 'Action';
+        }
+    }
+
+    const getSecondaryActionLabel = (type: string) => {
+        switch(type) {
+            case 'credential': return 'Reject';
+            case 'share': return 'Ignore';
+            case 'issue': return 'Reject';
+            case 'payment': return 'Decline';
+            default: return 'Dismiss';
         }
     }
 
@@ -134,7 +145,7 @@ export default function NotificationsView({ onBack }: { onBack: () => void }) {
                                           onClick={handleDecline}
                                         >
                                           <X className="mr-1.5 h-3.5 w-3.5" />
-                                          Decline
+                                          {getSecondaryActionLabel(notification.type)}
                                         </Button>
                                     </div>
                                 </div>

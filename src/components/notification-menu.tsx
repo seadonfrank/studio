@@ -75,7 +75,8 @@ export default function NotificationMenu() {
     
     const handleDecline = () => {
         toast({
-            title: "Request Declined",
+            title: "Action Recorded",
+            description: "The request has been dismissed.",
             variant: "destructive"
         })
     }
@@ -97,6 +98,16 @@ export default function NotificationMenu() {
             case 'issue': return 'Accept';
             case 'payment': return 'Pay';
             default: return 'Action';
+        }
+    }
+
+    const getSecondaryActionLabel = (type: string) => {
+        switch(type) {
+            case 'credential': return 'Reject';
+            case 'share': return 'Ignore';
+            case 'issue': return 'Reject';
+            case 'payment': return 'Decline';
+            default: return 'Dismiss';
         }
     }
 
@@ -163,7 +174,7 @@ export default function NotificationMenu() {
                           onClick={handleDecline}
                         >
                           <X className="mr-1 h-3 w-3" />
-                          Decline
+                          {getSecondaryActionLabel(notification.type)}
                         </Button>
                     </div>
                 </div>
