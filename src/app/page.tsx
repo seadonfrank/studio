@@ -9,10 +9,11 @@ import IdentityTab from "@/components/identity-tab";
 import PaymentsTab from "@/components/payments-tab";
 import HomeTab from "@/components/home-tab";
 import ScanToProveView from "@/components/scan-to-prove-view";
+import QrToProveView from "@/components/qr-to-prove-view";
 import NotificationsView from "@/components/notifications-view";
 
 export type Mode = "financial" | "identity";
-export type Tab = "home" | "finance" | "payments" | "identity" | "prove" | "notifications";
+export type Tab = "home" | "finance" | "payments" | "identity" | "prove" | "qr-to-prove" | "notifications";
 
 export default function Home() {
   const [mode, setMode] = useState<Mode>("financial");
@@ -60,6 +61,7 @@ export default function Home() {
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
           {activeTab === "prove" && <ScanToProveView onBack={() => setActiveTab("identity")} />}
+          {activeTab === "qr-to-prove" && <QrToProveView onBack={() => setActiveTab("identity")} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
           {activeTab === "notifications" && <NotificationsView onBack={() => setActiveTab(previousTab)} />}
         </div>
