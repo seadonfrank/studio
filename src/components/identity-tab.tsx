@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal, Sparkles, Send } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -18,6 +18,7 @@ import SendCredentialsView from "./send-credentials-view";
 import ActivityItem from "./activity-item";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
+import { cn } from "@/lib/utils";
 
 type IdentityView = 'main' | 'qr' | 'share' | 'activities';
 type CredentialStatus = 'all' | 'active' | 'expired' | 'revoked';
@@ -34,6 +36,8 @@ type CredentialStatus = 'all' | 'active' | 'expired' | 'revoked';
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAiMode, setIsAiMode] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [filterStatus, setFilterStatus] = useState<CredentialStatus>('all');
   const { toast } = useToast();
@@ -103,6 +107,15 @@ export default function IdentityTab() {
       setExpandedItems([]);
     } else {
       setExpandedItems(['government', 'licenses', 'academic']);
+    }
+  };
+
+  const handleAiModeToggle = () => {
+    setIsAiMode(!isAiMode);
+    if (!isAiMode) {
+      setSearchQuery('');
+    } else {
+      setAiPrompt('');
     }
   };
 
@@ -183,30 +196,75 @@ export default function IdentityTab() {
       </section>
 
       <section className="space-y-4">
-        <div className="flex items-center bg-background rounded-full border border-primary/5 shadow-sm px-4 h-11 ring-1 ring-black/5">
-          <Terminal className="h-4 w-4 text-muted-foreground/60 shrink-0" />
-          <Input 
-            placeholder="Search credentials" 
-            className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-muted shrink-0 transition-colors" title="Sort by status">
-                <Filter className="h-4 w-4 text-muted-foreground/60" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setFilterStatus('all')}>All</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilterStatus('active')}>Active</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilterStatus('expired')}>Expired</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilterStatus('revoked')}>Revoked</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div className={cn(
+          "flex bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 transition-all duration-300",
+          isAiMode ? "rounded-2xl py-3 flex-col gap-3" : "items-center rounded-full h-11"
+        )}>
+          <div className="flex items-center gap-2 w-full">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className={cn(
+                "h-8 px-2 rounded-full shrink-0 transition-colors flex items-center gap-1", 
+                isAiMode ? "text-primary bg-primary/10 hover:bg-primary/20" : "text-muted-foreground/60 hover:text-primary hover:bg-primary/5"
+              )}
+              onClick={handleAiModeToggle}
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              <span className="text-[10px] font-bold">AI</span>
+            </Button>
+            
+            {!isAiMode && (
+              <Input 
+                placeholder="Search credentials" 
+                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 p-0 ml-1 h-8"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            )}
+            
+            {isAiMode && (
+              <p className="text-[10px] font-bold text-primary uppercase tracking-wider">AI Prompt Mode</p>
+            )}
+
+            {!isAiMode && (
+              <>
+                <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-muted shrink-0 transition-colors" title="Sort by status">
+                      <Filter className="h-4 w-4 text-muted-foreground/60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setFilterStatus('all')}>All</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterStatus('active')}>Active</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterStatus('expired')}>Expired</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterStatus('revoked')}>Revoked</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            )}
+          </div>
+
+          {isAiMode && (
+            <div className="flex flex-col gap-2 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+              <Textarea 
+                placeholder="Ask AI to find specific credentials or summarize your identity..." 
+                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[80px] resize-none p-0"
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+              />
+              <div className="flex justify-end">
+                <Button size="sm" className="h-8 rounded-full gap-2 text-xs font-bold" disabled={!aiPrompt.trim()}>
+                  <Send className="h-3.5 w-3.5" />
+                  Generate
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -218,7 +276,7 @@ export default function IdentityTab() {
           onClick={toggleAll}
           className="text-primary text-xs font-semibold hover:underline"
         >
-          View All
+          {expandedItems.length > 0 ? 'Hide All' : 'View All'}
         </button>
       </div>
 
