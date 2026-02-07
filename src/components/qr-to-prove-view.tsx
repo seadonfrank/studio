@@ -149,7 +149,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
     }
 
     return (
-      <div className="flex-grow flex flex-col justify-between">
+      <div className="flex-grow flex flex-col space-y-6">
         <div className="space-y-4">
           <Sheet>
               <Card>
@@ -250,9 +250,9 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
             </div>
         </div>
 
-        <div className="mt-auto pt-4">
+        <div className="pt-2">
           <Button className="w-full" onClick={handleGenerateQr} disabled={selectedProofs.length === 0}>
-            Generate QR Code
+            Complete Verification
           </Button>
         </div>
       </div>
