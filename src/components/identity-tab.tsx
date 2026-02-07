@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -27,6 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Separator } from "./ui/separator";
 
 type IdentityView = 'main' | 'qr' | 'share' | 'activities';
 type CredentialStatus = 'all' | 'active' | 'expired' | 'revoked';
@@ -183,20 +184,19 @@ export default function IdentityTab() {
       </section>
 
       <section className="space-y-4">
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input 
-              placeholder="Search cards..." 
-              className="pl-9 bg-background h-10"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        <div className="flex items-center bg-background rounded-full border border-primary/5 shadow-sm px-4 h-14 ring-1 ring-black/5">
+          <Terminal className="h-5 w-5 text-muted-foreground/60 shrink-0" />
+          <Input 
+            placeholder="Type command or search vault..." 
+            className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Separator orientation="vertical" className="h-6 mx-1 bg-border/60" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="h-10 w-10 shrink-0" title="Sort by status">
-                <Filter className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-muted shrink-0 transition-colors" title="Sort by status">
+                <Filter className="h-5 w-5 text-muted-foreground/60" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -211,15 +211,15 @@ export default function IdentityTab() {
         </div>
       </section>
 
-      <div className="flex items-center justify-between px-1">
-        <h3 className="text-lg font-headline font-bold flex items-center gap-2">
-          Your Secured Credentials
+      <div className="flex items-center justify-between px-2">
+        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">
+          SECURE VAULTS
         </h3>
         <button 
           onClick={toggleAll}
-          className="text-primary text-xs font-bold hover:underline"
+          className="text-primary text-xs font-semibold hover:underline"
         >
-          {expandedItems.length > 0 ? "Hide all" : "Show all"}
+          View All
         </button>
       </div>
 
