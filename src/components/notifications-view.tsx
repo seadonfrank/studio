@@ -67,7 +67,7 @@ export default function NotificationsView({ onBack }: { onBack: () => void }) {
     
     const handleDecline = () => {
         toast({
-            title: "Request Declined",
+            title: "Request Rejected",
             variant: "destructive"
         })
     }
@@ -134,7 +134,7 @@ export default function NotificationsView({ onBack }: { onBack: () => void }) {
                                           onClick={handleDecline}
                                         >
                                           <X className="mr-1.5 h-3.5 w-3.5" />
-                                          Decline
+                                          Reject
                                         </Button>
                                     </div>
                                 </div>
