@@ -132,16 +132,6 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     </CardContent>
                 </Card>
                  <Button className="w-full" onClick={onBack}>Done</Button>
-                <div className="grid grid-cols-2 gap-4 w-full">
-                    <Button variant="outline" onClick={() => handleCopy(qrCodeUrl)}>
-                        <Copy className="mr-2 h-4 w-4" />
-                        Copy
-                    </Button>
-                    <Button variant="outline" onClick={() => handleShare(qrCodeUrl)}>
-                        <Share2 className="mr-2 h-4 w-4" />
-                        Share
-                    </Button>
-                </div>
             </div>
         )
     }
