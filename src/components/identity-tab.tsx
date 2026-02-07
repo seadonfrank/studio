@@ -161,9 +161,9 @@ export default function IdentityTab() {
                     </Button>
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20">
-                          <Plus className="h-4 w-4" />
-                          <span className="sr-only">Add Credentials</span>
+                        <Button variant="ghost" size="sm" className="h-8 bg-white/10 hover:bg-white/20 text-white rounded-full px-3 flex items-center gap-1.5 border border-white/10">
+                          <Plus className="h-3.5 w-3.5" />
+                          <span className="text-xs font-bold whitespace-nowrap">Add Credential</span>
                         </Button>
                       </DialogTrigger>
                       <DialogContent>
