@@ -111,26 +111,24 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                     Position the QR code within the frame to scan.
                 </p>
                 <Card className="w-full text-left">
-                    <CardContent className="p-4">
-                         <div className="flex flex-col items-center space-y-3">
-                            <Avatar className="h-20 w-20">
-                                <AvatarImage src="https://picsum.photos/id/1005/200/200" data-ai-hint="person portrait" />
-                                <AvatarFallback>JD</AvatarFallback>
-                            </Avatar>
-                            <div className="text-center">
-                                <h3 className="text-xl font-bold font-headline">John Doe</h3>
-                                <p className="text-xs text-muted-foreground font-mono break-all px-4">{did}</p>
-                            </div>
-                            {note && (
-                                <>
-                                    <Separator className="my-1" />
-                                    <div className="w-full flex justify-between text-xs">
-                                        <span className="text-muted-foreground">Note:</span>
-                                        <span className="font-semibold">{note}</span>
-                                    </div>
-                                </>
-                            )}
-                         </div>
+                    <CardContent className="p-3 text-sm">
+                        {note && <div className="flex justify-between"><span>Note:</span> <span className="font-semibold">{note}</span></div>}
+                        
+                        {selectedProofs.length > 0 && (
+                            <>
+                                {note && <Separator className="my-2"/>}
+                                <div className="flex items-center gap-2 font-semibold">
+                                    <FileQuestion className="h-4 w-4" />
+                                    <span>Credentials Provided:</span>
+                                </div>
+                                <ul className="text-xs text-muted-foreground list-disc pl-5 mt-1">
+                                    {selectedProofs.map(proofId => {
+                                        const proof = availableProofs.find(p => p.id === proofId);
+                                        return <li key={proofId}>{proof?.label}</li>
+                                    })}
+                                </ul>
+                            </>
+                        )}
                     </CardContent>
                 </Card>
                  <Button className="w-full" onClick={onBack}>Done</Button>
