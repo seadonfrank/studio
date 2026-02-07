@@ -9,14 +9,16 @@ import IdentityTab from "@/components/identity-tab";
 import PaymentsTab from "@/components/payments-tab";
 import HomeTab from "@/components/home-tab";
 import ScanToProveView from "@/components/scan-to-prove-view";
+import NotificationsView from "@/components/notifications-view";
 
 export type Mode = "financial" | "identity";
-export type Tab = "home" | "finance" | "payments" | "identity" | "prove";
+export type Tab = "home" | "finance" | "payments" | "identity" | "prove" | "notifications";
 
 export default function Home() {
   const [mode, setMode] = useState<Mode>("financial");
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [paymentsView, setPaymentsView] = useState('main');
+  const [previousTab, setPreviousTab] = useState<Tab>("home");
 
   const handleTransactionsClick = () => {
     if (activeTab === 'payments') {
@@ -27,6 +29,11 @@ export default function Home() {
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     setPaymentsView('main');
+  };
+
+  const handleNotificationClick = () => {
+    setPreviousTab(activeTab);
+    setActiveTab("notifications");
   };
 
   const handleModeChange = (newMode: Mode) => {
@@ -45,6 +52,8 @@ export default function Home() {
         <AppHeader 
           activeTab={activeTab as any} 
           onTransactionsClick={handleTransactionsClick}
+          onNotificationClick={handleNotificationClick}
+          onBack={() => setActiveTab(previousTab)}
         />
         <div className="h-full overflow-y-auto pb-44 pt-20">
           {activeTab === "home" && <HomeTab />}
@@ -52,13 +61,16 @@ export default function Home() {
           {activeTab === "identity" && <IdentityTab />}
           {activeTab === "prove" && <ScanToProveView onBack={() => setActiveTab("identity")} />}
           {activeTab === "payments" && <PaymentsTab view={paymentsView} setView={setPaymentsView} />}
+          {activeTab === "notifications" && <NotificationsView onBack={() => setActiveTab(previousTab)} />}
         </div>
-        <BottomNav 
-          activeTab={activeTab} 
-          setActiveTab={handleTabChange} 
-          mode={mode}
-          setMode={handleModeChange}
-        />
+        {activeTab !== "notifications" && (
+          <BottomNav 
+            activeTab={activeTab} 
+            setActiveTab={handleTabChange} 
+            mode={mode}
+            setMode={handleModeChange}
+          />
+        )}
       </div>
     </main>
   );
