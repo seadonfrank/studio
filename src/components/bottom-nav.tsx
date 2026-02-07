@@ -22,7 +22,7 @@ export default function BottomNav({ activeTab, setActiveTab, mode, setMode }: Bo
   const identityTabs = [
     { id: "identity", label: "Credentials", icon: IdCard },
     { id: "prove", label: "Scan to Prove", icon: Scan },
-    { id: "qr-to-prove", label: "Proofs", icon: QrCode },
+    { id: "qr-to-prove", label: "QR to Prove", icon: QrCode },
   ];
 
   const currentTabs = mode === "financial" ? financialTabs : identityTabs;
