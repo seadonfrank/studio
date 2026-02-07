@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -151,7 +152,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
                 <CardContent className="p-3">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                      <FileQuestion className="h-5 w-5" />
+                      <FileQuestion className="h-5 w-5 mt-0.5" />
                       <div>
                         <p className="font-semibold">Request Credentials</p>
                         <p className="text-xs text-muted-foreground">
@@ -256,7 +257,7 @@ export default function QrToProveView({ onBack }: QrToProveViewProps) {
 
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full p-4">
       <div className="flex items-center gap-2 mb-6">
         <Button variant="ghost" size="icon" onClick={handleBack}>
           <ArrowLeft />
