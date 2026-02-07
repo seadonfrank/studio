@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import { User, Calendar, FileText, Hash } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -22,50 +22,37 @@ const statusConfig = {
   revoked: { label: 'Revoked', variant: 'destructive' as const },
 };
 
-export default function LicenseCredentialCard({ licenseType, issuingAuthority, name, issueDate, expiryDate, licenseNumber, details, gradient, status }: LicenseCredentialCardProps) {
+export default function LicenseCredentialCard({ 
+  licenseType, issuingAuthority, name, issueDate, expiryDate, licenseNumber, details, gradient, status 
+}: LicenseCredentialCardProps) {
   const config = statusConfig[status];
 
   return (
-    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
-      <CardHeader className="flex flex-row justify-between items-start pb-2 p-5">
-        <div className="space-y-1">
-          <CardTitle className="font-headline text-md">{licenseType}</CardTitle>
-          <Badge variant={config.variant} className="bg-white/20 hover:bg-white/30 text-white border-white/40 backdrop-blur-sm px-2 py-0 text-[10px] uppercase font-bold">
+    <Card className={cn("overflow-hidden text-primary-foreground shadow-md border-none bg-gradient-to-br transition-all hover:scale-[1.01]", gradient)}>
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">{licenseType}</span>
+            <p className="text-base font-bold font-headline leading-tight">{name}</p>
+          </div>
+          <Badge variant={config.variant} className="bg-white/20 hover:bg-white/30 text-white border-white/40 backdrop-blur-sm px-2 py-0 text-[9px] uppercase font-bold">
             {config.label}
           </Badge>
         </div>
-        <FileText className="h-7 w-7 opacity-70" />
-      </CardHeader>
-      <CardContent className="p-5 pt-0 space-y-3">
-        <div className="flex items-center gap-3">
-            <User className="h-4 w-4 opacity-80" />
-            <p className="text-lg font-bold font-headline">{name}</p>
-        </div>
         
-        <div className="grid grid-cols-2 gap-2 text-xs opacity-90 border-t border-white/20 pt-3">
-            <div className="flex items-center gap-1.5 truncate col-span-2">
-                <p className="truncate">Authority: {issuingAuthority}</p>
-            </div>
-            <div className="flex items-center gap-1.5 truncate">
-                <Hash className="h-3 w-3" />
-                <span className="truncate">Number: {licenseNumber}</span>
-            </div>
-            {details && details.length > 0 && (
-                <div className="flex items-center gap-1.5 truncate">
-                    <span className="truncate">{details.join(', ')}</span>
-                </div>
-            )}
-        </div>
-
-        <div className="flex justify-between items-center text-[10px] opacity-80 pt-1">
-            <div className="flex items-center gap-1.5">
-                <Calendar className="h-3 w-3" />
-                <span>Issued: {format(new Date(issueDate), "MMM d, yyyy")}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-                <Calendar className="h-3 w-3" />
-                <span>Expires: {format(new Date(expiryDate), "MMM d, yyyy")}</span>
-            </div>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] opacity-90 border-t border-white/10 pt-2.5">
+          <div className="flex items-center gap-1.5 truncate">
+            <FileText className="h-3 w-3 opacity-70" />
+            <span className="truncate">{issuingAuthority}</span>
+          </div>
+          <div className="flex items-center gap-1.5 truncate">
+            <Hash className="h-3 w-3 opacity-70" />
+            <span className="truncate">#{licenseNumber}</span>
+          </div>
+          <div className="flex items-center gap-1.5 col-span-2 text-[10px] opacity-70">
+            <Calendar className="h-3 w-3" />
+            <span>Expires: {format(new Date(expiryDate), "MMM d, yyyy")}</span>
+          </div>
         </div>
       </CardContent>
     </Card>
