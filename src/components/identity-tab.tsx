@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal, Sparkles, Send } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal, Sparkles, Send, Ticket } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import LicenseCredentialCard from "./license-credential-card";
 import ManageLicensesDialog from "./manage-licenses-dialog";
 import AcademicCredentialCard from "./academic-credential-card";
+import PassCredentialCard from "./pass-credential-card";
 import ManageAcademicCredentialsDialog from "./manage-academic-credentials-dialog";
 import { useState, useMemo } from "react";
 import ScanAndClaim from "./scan-and-claim";
@@ -53,18 +54,19 @@ export default function IdentityTab() {
   const governmentCredentials = [
     { credentialType: "Passport", country: "USA", name: "John Doe", dob: "1990-05-15", issueDate: "2020-01-20", expiryDate: "2030-01-19", passportNumber: "A1B2C3D4", gradient: "from-blue-600 to-sky-500", status: "active" as const },
     { credentialType: "National ID", country: "Canada", name: "Jane Smith", dob: "1988-09-22", issueDate: "2017-03-10", expiryDate: "2022-03-09", nationalIdNumber: "123-456-789", gradient: "from-red-600 to-rose-500", status: "expired" as const },
-    { credentialType: "Passport", country: "UK", name: "Peter Jones", dob: "1985-11-02", issueDate: "2015-06-01", expiryDate: "2020-05-31", passportNumber: "X9Y8Z7W6", gradient: "from-gray-600 to-slate-500", status: "revoked" as const },
   ];
 
   const licenseCredentials = [
     { licenseType: "Driver's License", issuingAuthority: "State of CA", name: "John Doe", issueDate: "2021-08-15", expiryDate: "2029-08-15", licenseNumber: "D1234567", details: ["Class: C"], gradient: "from-green-600 to-emerald-500", status: "active" as const },
-    { licenseType: "Boating License", issuingAuthority: "Maritime Authority", name: "Jane Smith", issueDate: "2018-06-01", expiryDate: "2023-06-01", licenseNumber: "B9876543", gradient: "from-cyan-600 to-teal-500", status: "expired" as const },
-    { licenseType: "Medical License", issuingAuthority: "Medical Board", name: "Dr. Emily White", issueDate: "2019-07-20", expiryDate: "2025-07-20", licenseNumber: "M555444", gradient: "from-rose-600 to-pink-500", status: "revoked" as const },
   ];
 
   const academicCredentials = [
     { credentialType: "Bachelor's Degree", institution: "State University", fieldOfStudy: "Computer Science", graduationDate: "2022-05-20", gradient: "from-purple-600 to-indigo-500", status: "active" as const },
-    { credentialType: "Professional Certificate", institution: "Tech Institute", fieldOfStudy: "Project Management", graduationDate: "2019-05-20", gradient: "from-fuchsia-600 to-pink-500", status: "active" as const },
+  ];
+
+  const passCredentials = [
+    { passType: "VIP Ticket", organizer: "TechSummit", eventName: "Global Tech Summit 2024", eventDate: "2024-11-15", venue: "Grand Convention Center", gradient: "from-amber-600 to-orange-500", status: "active" as const },
+    { passType: "Membership", organizer: "FitLife Gym", eventName: "Premium Annual Member", eventDate: "2024-12-31", venue: "Downtown Branch", gradient: "from-teal-600 to-emerald-500", status: "active" as const },
   ];
 
   const filteredGov = useMemo(() => 
@@ -94,19 +96,27 @@ export default function IdentityTab() {
       return matchesSearch && matchesFilter;
     }), [searchQuery, filterStatus]);
 
+  const filteredPasses = useMemo(() => 
+    passCredentials.filter(c => {
+      const matchesSearch = c.eventName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.passType.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.organizer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.venue.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = filterStatus === 'all' || c.status === filterStatus;
+      return matchesSearch && matchesFilter;
+    }), [searchQuery, filterStatus]);
+
   const recentActivity = [
     { id: 1, action: "Verified", credential: "Proof of Age", entity: "Online Store", time: "2m ago" },
     { id: 2, action: "Claimed", credential: "Conference Pass", entity: "Tech Summit '24", time: "1h ago" },
     { id: 3, action: "Generated", credential: "ZK Proof for KYC", entity: "Crypto Exchange", time: "3h ago" },
-    { id: 4, action: "Verified", credential: "Passport", entity: "Airport Security", time: "1d ago" },
-    { id: 5, action: "Claimed", credential: "University Degree", entity: "State University", time: "2d ago" },
   ];
 
   const toggleAll = () => {
     if (expandedItems.length > 0) {
       setExpandedItems([]);
     } else {
-      setExpandedItems(['government', 'licenses', 'academic']);
+      setExpandedItems(['government', 'licenses', 'academic', 'leisure']);
     }
   };
 
@@ -403,6 +413,47 @@ export default function IdentityTab() {
                     </DialogDescription>
                   </DialogHeader>
                   <ManageAcademicCredentialsDialog />
+                </DialogContent>
+              </Dialog>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="leisure" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <Ticket className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Leisure &amp; Events</span>
+              </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {filteredPasses.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredPasses.map((cred, index) => (
+                <PassCredentialCard key={index} {...cred} />
+              ))}
+              {filteredPasses.length === 0 && (searchQuery || filterStatus !== 'all') && (
+                <p className="text-center text-sm text-muted-foreground py-4">No matching leisure passes.</p>
+              )}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                    <Plus className="h-5 w-5" />
+                    <span className="text-xs font-semibold">Add Leisure Pass</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Leisure Pass</DialogTitle>
+                    <DialogDescription>
+                      Add details for your new event ticket or membership pass.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ScanAndClaim />
                 </DialogContent>
               </Dialog>
             </div>
