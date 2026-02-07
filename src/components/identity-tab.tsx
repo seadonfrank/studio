@@ -210,8 +210,8 @@ export default function IdentityTab() {
               )}
               onClick={handleAiModeToggle}
             >
-              <Sparkles className="h-3.5 w-3.5" />
-              <span className="text-[10px] font-bold">AI</span>
+              {isAiMode ? <ArrowLeft className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5" />}
+              <span className="text-[10px] font-bold">{isAiMode ? 'Back' : 'AI'}</span>
             </Button>
             
             {!isAiMode && (
