@@ -109,12 +109,6 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
     setNote('');
   }
 
-  const handleCheckboxChange = (proofId: string, checked: boolean) => {
-    setSelectedProofsToProvide(prev => 
-        checked ? [...prev, proofId] : prev.filter(id => id !== proofId)
-    );
-  }
-
   const handleShare = () => {
     const receiptText = `Proof provided to ${verifier.name}.`;
     if (navigator.share) {
@@ -281,16 +275,6 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
                 </CardContent>
             </Card>
             <Button className="w-full" onClick={onBack}>Done</Button>
-            <div className="grid grid-cols-2 gap-4 w-full">
-                <Button variant="outline" onClick={handleShare}>
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Share Receipt
-                </Button>
-                <Button variant="outline" onClick={handleReset}>
-                    <Scan className="mr-2 h-4 w-4" />
-                    Scan Another
-                </Button>
-            </div>
         </div>
         );
       case "error":
