@@ -16,12 +16,6 @@ import { useToast } from "@/hooks/use-toast";
 
 const notifications = [
     {
-        type: 'credential',
-        title: 'Credential Request',
-        description: 'Crypto Exchange Inc. is requesting your "Proof of KYC".',
-        time: '5m ago'
-    },
-    {
         type: 'share',
         title: 'Credential Shared',
         description: 'Alice shared a "Conference Pass" with you.',
