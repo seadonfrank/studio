@@ -208,17 +208,20 @@ export default function IdentityTab() {
               <DropdownMenuItem onClick={() => setFilterStatus('revoked')}>Revoked</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button 
-            variant="outline" 
-            size="icon" 
-            className="h-10 w-10 shrink-0" 
-            onClick={toggleAll}
-            title={expandedItems.length > 0 ? "Collapse all" : "Expand all"}
-          >
-            {expandedItems.length > 0 ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-          </Button>
         </div>
       </section>
+
+      <div className="flex items-center justify-between px-1">
+        <h3 className="text-lg font-headline font-bold flex items-center gap-2">
+          Credentials Secure
+        </h3>
+        <button 
+          onClick={toggleAll}
+          className="text-primary text-xs font-bold hover:underline"
+        >
+          {expandedItems.length > 0 ? "Hide all" : "Show all"}
+        </button>
+      </div>
 
       <Accordion 
         type="multiple" 
