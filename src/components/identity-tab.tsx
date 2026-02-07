@@ -184,19 +184,19 @@ export default function IdentityTab() {
       </section>
 
       <section className="space-y-4">
-        <div className="flex items-center bg-background rounded-full border border-primary/5 shadow-sm px-4 h-14 ring-1 ring-black/5">
-          <Terminal className="h-5 w-5 text-muted-foreground/60 shrink-0" />
+        <div className="flex items-center bg-background rounded-full border border-primary/5 shadow-sm px-4 h-11 ring-1 ring-black/5">
+          <Terminal className="h-4 w-4 text-muted-foreground/60 shrink-0" />
           <Input 
-            placeholder="Type command or search vault..." 
+            placeholder="Search credentials" 
             className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Separator orientation="vertical" className="h-6 mx-1 bg-border/60" />
+          <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-muted shrink-0 transition-colors" title="Sort by status">
-                <Filter className="h-5 w-5 text-muted-foreground/60" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-muted shrink-0 transition-colors" title="Sort by status">
+                <Filter className="h-4 w-4 text-muted-foreground/60" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
