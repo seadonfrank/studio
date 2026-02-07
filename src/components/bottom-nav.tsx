@@ -21,7 +21,7 @@ export default function BottomNav({ activeTab, setActiveTab, mode, setMode }: Bo
 
   const identityTabs = [
     { id: "identity", label: "Credentials", icon: IdCard },
-    { id: "prove", label: "Verify", icon: Scan },
+    { id: "prove", label: "Scan to Prove", icon: Scan },
     { id: "qr-to-prove", label: "Proofs", icon: QrCode },
   ];
 
