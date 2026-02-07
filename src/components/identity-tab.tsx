@@ -213,7 +213,7 @@ export default function IdentityTab() {
 
       <div className="flex items-center justify-between px-1">
         <h3 className="text-lg font-headline font-bold flex items-center gap-2">
-          Credentials Secure
+          Your Secured Credentials
         </h3>
         <button 
           onClick={toggleAll}
