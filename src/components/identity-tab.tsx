@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal } from "lucide-react";
@@ -213,7 +212,7 @@ export default function IdentityTab() {
 
       <div className="flex items-center justify-between px-2">
         <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">
-          SECURE VAULTS
+          Your Secured Credentials
         </h3>
         <button 
           onClick={toggleAll}
