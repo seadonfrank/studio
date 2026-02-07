@@ -244,7 +244,7 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
                 </div>
 
                 <div className="flex flex-col gap-2 pt-2">
-                    <Button className="w-full" onClick={handleSendProof}>Complete Proof</Button>
+                    <Button className="w-full" onClick={handleSendProof}>Complete Verification</Button>
                 </div>
             </div>
         );
@@ -329,7 +329,3 @@ export default function ScanToProveView({ onBack }: ScanToProveViewProps) {
     </div>
   );
 }
-
-    
-
-    
