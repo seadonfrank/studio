@@ -11,7 +11,7 @@ import { Card, CardContent } from "./ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import ScanAndClaim from "./scan-and-claim";
+import DidScanner from "./did-scanner";
 
 interface SendCredentialsViewProps {
   onBack: () => void;
@@ -31,8 +31,18 @@ const availableCredentials = [
 export default function SendCredentialsView({ onBack }: SendCredentialsViewProps) {
     const { toast } = useToast();
     const [credentials, setCredentials] = useState<string[]>(['']);
+    const [verifierId, setVerifierId] = useState('');
+    const [isScannerOpen, setIsScannerOpen] = useState(false);
 
     const handleSend = () => {
+        if (!verifierId.trim()) {
+            toast({
+                title: "Recipient Required",
+                description: "Please enter or scan a recipient DID.",
+                variant: "destructive",
+            });
+            return;
+        }
         if (credentials.length === 0 || credentials.some(c => c.trim() === '')) {
             toast({
                 title: "Invalid Credentials",
@@ -63,6 +73,15 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
         setCredentials(newCredentials);
     }
 
+    const handleScan = (did: string) => {
+        setVerifierId(did);
+        setIsScannerOpen(false);
+        toast({
+            title: "DID Scanned",
+            description: "Recipient ID has been automatically populated.",
+        });
+    }
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between">
@@ -79,8 +98,14 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
           <div className="space-y-2 px-4">
             <Label htmlFor="verifierId">To (Recipient's ID)</Label>
             <div className="relative flex items-center">
-              <Input id="verifierId" placeholder="did:xidfi:..." className="pr-10" />
-              <Dialog>
+              <Input 
+                id="verifierId" 
+                placeholder="did:xidfi:..." 
+                className="pr-10" 
+                value={verifierId}
+                onChange={(e) => setVerifierId(e.target.value)}
+              />
+              <Dialog open={isScannerOpen} onOpenChange={setIsScannerOpen}>
                 <DialogTrigger asChild>
                   <Button variant="ghost" size="icon" className="absolute right-1 h-8 w-8">
                     <Scan className="h-4 w-4 text-muted-foreground" />
@@ -88,12 +113,12 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Scan Recipient QR</DialogTitle>
+                    <DialogTitle>Scan Recipient DID</DialogTitle>
                     <DialogDescription>
-                      Scan a DID QR code to automatically fill the recipient field.
+                      Point your camera at a DID QR code to automatically fill the recipient field.
                     </DialogDescription>
                   </DialogHeader>
-                  <ScanAndClaim />
+                  <DidScanner onScan={handleScan} />
                 </DialogContent>
               </Dialog>
             </div>
@@ -140,7 +165,7 @@ export default function SendCredentialsView({ onBack }: SendCredentialsViewProps
         </div>
       </div>
       
-      <div className="mt-auto flex gap-2 p-4 border-t">
+      <div className="mt-auto flex gap-2 p-4 border-t bg-background">
         <Button variant="outline" className="w-full" onClick={onBack}>Cancel</Button>
         <Button className="w-full" onClick={handleSend}>Share</Button>
       </div>
