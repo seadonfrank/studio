@@ -21,7 +21,6 @@ export default function AppHeader({
       <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary shadow-sm shadow-primary/20">
         <span className="font-headline text-base font-bold text-primary-foreground">x</span>
       </div>
-      <span className="font-headline text-lg font-bold tracking-tight text-foreground">IDFI</span>
     </div>
   );
 
