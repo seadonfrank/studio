@@ -131,17 +131,43 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4 pb-32">
-      {/* AI Search Section */}
+      {/* Sync Section */}
+      <section>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">Connect & Sync</h3>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-7 text-xs font-bold text-primary">Add Connection</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Sync Financial Accounts</DialogTitle>
+                <DialogDescription>Connect with your bank to sync assets.</DialogDescription>
+              </DialogHeader>
+              <SyncWithBankDialog />
+            </DialogContent>
+          </Dialog>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {syncItems.map((item, index) => (
+            <SyncCard key={index} {...item} />
+          ))}
+        </div>
+      </section>
+
+      <Separator />
+
+      {/* AI Search Section - MOVED HERE */}
       <section className="space-y-4">
         <div className={cn(
           "flex transition-all duration-300",
           isAiMode 
-            ? "flex-col gap-4 bg-transparent border-none shadow-none ring-0" 
+            ? "flex-col gap-2 bg-transparent border-none shadow-none ring-0" 
             : "bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 items-center rounded-full h-11"
         )}>
           <div className={cn(
             "flex items-center gap-2 w-full",
-            isAiMode && "border-b border-primary/10 pb-3 px-1"
+            isAiMode && "border-b border-primary/10 pb-2 px-1"
           )}>
             <Button 
               variant="ghost" 
@@ -188,7 +214,7 @@ export default function FinanceTab() {
           </div>
 
           {isAiMode && (
-            <div className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex flex-col gap-4 w-full animate-in fade-in slide-in-from-top-2 duration-300">
               {chatHistory.length > 0 && (
                 <ScrollArea className="h-48 w-full px-1">
                   <div className="space-y-6 pb-2">
@@ -221,7 +247,7 @@ export default function FinanceTab() {
                 </ScrollArea>
               )}
 
-              <div className="space-y-1 pt-4 px-1">
+              <div className="space-y-1 pt-2 px-1">
                 <Textarea 
                   placeholder="Ask about your assets, debts, or spending..." 
                   className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
@@ -268,34 +294,8 @@ export default function FinanceTab() {
         </div>
       </section>
 
-      {/* Sync Section */}
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">Connect & Sync</h3>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-7 text-xs font-bold text-primary">Add Connection</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Sync Financial Accounts</DialogTitle>
-                <DialogDescription>Connect with your bank to sync assets.</DialogDescription>
-              </DialogHeader>
-              <SyncWithBankDialog />
-            </DialogContent>
-          </Dialog>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          {syncItems.map((item, index) => (
-            <SyncCard key={index} {...item} />
-          ))}
-        </div>
-      </section>
-
-      <Separator />
-
       {/* Accordion Categories */}
-      <div className="flex items-center justify-between px-2 mb-3">
+      <div className="flex items-center justify-between px-2">
         <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">
           Your Financial Assets
         </h3>
