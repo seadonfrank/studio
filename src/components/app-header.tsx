@@ -1,5 +1,4 @@
-
-import { Bell, Cog, User, Star, Settings, LogOut, ChevronRight, ArrowLeft } from "lucide-react";
+import { Bell, ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import type { Tab } from "@/app/page";
 import { Button } from "./ui/button";
@@ -49,20 +48,6 @@ export default function AppHeader({
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h1 className="font-headline text-lg font-bold">Inbox</h1>
-      </header>
-    );
-  }
-
-  if (activeTab === 'home') {
-    return (
-      <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-background/80 py-1.5 px-3 backdrop-blur-sm">
-        <div className="flex items-center gap-1.5">
-          <AppLogo />
-        </div>
-        <div className="flex items-center gap-1.5">
-           <Button size="sm" className="bg-green-100 text-green-800 hover:bg-green-200 h-8 rounded-full">Earn £50</Button>
-           <NotificationButton />
-        </div>
       </header>
     );
   }

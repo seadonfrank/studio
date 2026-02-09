@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,19 +6,18 @@ import BottomNav from "@/components/bottom-nav";
 import FinanceTab from "@/components/finance-tab";
 import IdentityTab from "@/components/identity-tab";
 import PaymentsTab from "@/components/payments-tab";
-import HomeTab from "@/components/home-tab";
 import ScanToProveView from "@/components/scan-to-prove-view";
 import QrToProveView from "@/components/qr-to-prove-view";
 import NotificationsView from "@/components/notifications-view";
 
 export type Mode = "financial" | "identity";
-export type Tab = "home" | "finance" | "payments" | "identity" | "prove" | "qr-to-prove" | "notifications";
+export type Tab = "finance" | "payments" | "identity" | "prove" | "qr-to-prove" | "notifications";
 
 export default function Home(props: { params: Promise<any>; searchParams: Promise<any> }) {
   const [mode, setMode] = useState<Mode>("financial");
-  const [activeTab, setActiveTab] = useState<Tab>("home");
+  const [activeTab, setActiveTab] = useState<Tab>("finance");
   const [paymentsView, setPaymentsView] = useState('main');
-  const [previousTab, setPreviousTab] = useState<Tab>("home");
+  const [previousTab, setPreviousTab] = useState<Tab>("finance");
 
   const handleTransactionsClick = () => {
     if (activeTab === 'payments') {
@@ -41,7 +39,7 @@ export default function Home(props: { params: Promise<any>; searchParams: Promis
     setMode(newMode);
     // Set default tab for the selected mode
     if (newMode === "financial") {
-      setActiveTab("home");
+      setActiveTab("finance");
     } else {
       setActiveTab("identity");
     }
@@ -57,7 +55,6 @@ export default function Home(props: { params: Promise<any>; searchParams: Promis
           onBack={() => setActiveTab(previousTab)}
         />
         <div className="h-full overflow-y-auto pb-44 pt-20">
-          {activeTab === "home" && <HomeTab />}
           {activeTab === "finance" && <FinanceTab />}
           {activeTab === "identity" && <IdentityTab />}
           {activeTab === "prove" && <ScanToProveView onBack={() => setActiveTab("identity")} />}
