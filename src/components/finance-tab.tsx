@@ -2,7 +2,7 @@
 
 import { 
   ArrowLeft, Sparkles, Filter, Send, RotateCcw, Loader2, Bot, 
-  Search, Landmark, CreditCard, TrendingUp, Wallet, Plus
+  Landmark, CreditCard, TrendingUp, Wallet, Plus
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
@@ -230,7 +230,7 @@ export default function FinanceTab() {
                 />
                 
                 <Separator className="bg-primary/10" />
-                <div className="flex justify-end gap-2 py-2">
+                <div className="flex justify-end gap-2 py-1">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 

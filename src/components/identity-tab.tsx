@@ -326,7 +326,7 @@ export default function IdentityTab() {
                 />
                 
                 <Separator className="bg-primary/10" />
-                <div className="flex justify-end gap-2 py-2">
+                <div className="flex justify-end gap-2 py-1">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 
