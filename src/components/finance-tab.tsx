@@ -2,7 +2,7 @@
 
 import { 
   ArrowLeft, Sparkles, Filter, Send, RotateCcw, Loader2, Bot, 
-  Landmark, CreditCard, TrendingUp, Wallet, Plus
+  Landmark, CreditCard, TrendingUp, Wallet, Plus, History, Link as LinkIcon
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
@@ -20,6 +20,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
@@ -29,10 +30,15 @@ import FundCard from "./fund-card";
 import CryptoCredentialCard from "./crypto-credential-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
-import SyncCard from "./sync-card";
 import ManageCardsDialog from "./manage-cards-dialog";
+import TransactionList from "./transaction-list";
 
 type ChatMessage = { role: 'user' | 'ai'; content: string };
+
+const debtCreditData = [
+  { name: 'Credits', value: 57100, color: 'hsl(var(--primary))' },
+  { name: 'Debts', value: 25000, color: 'hsl(var(--destructive))' },
+];
 
 export default function FinanceTab() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -67,11 +73,6 @@ export default function FinanceTab() {
 
   const crypto = [
     { walletName: "Metamask", asset: "ETH", balance: "2.5", network: "Ethereum", walletAddress: "0x123...456", gradient: "from-slate-700 to-gray-600", status: "active" as const },
-  ];
-
-  const syncItems = [
-    { category: "Accounts", lastSynced: "Today 9:41 AM", icon: Landmark },
-    { category: "Cards", lastSynced: "Today 9:41 AM", icon: CreditCard },
   ];
 
   const filteredAccounts = useMemo(() => 
@@ -131,43 +132,95 @@ export default function FinanceTab() {
 
   return (
     <div className="space-y-6 p-4 pb-32">
-      {/* Sync Section */}
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">Connect & Sync</h3>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-7 text-xs font-bold text-primary">Add Connection</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Sync Financial Accounts</DialogTitle>
-                <DialogDescription>Connect with your bank to sync assets.</DialogDescription>
-              </DialogHeader>
-              <SyncWithBankDialog />
-            </DialogContent>
-          </Dialog>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          {syncItems.map((item, index) => (
-            <SyncCard key={index} {...item} />
-          ))}
+      {/* Financial Health Overview */}
+      <section className="bg-background rounded-2xl p-4 shadow-sm border border-border/40">
+        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-4">Financial Overview</h3>
+        <div className="flex gap-4 items-center">
+          <div className="w-1/2 h-[120px] relative">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={debtCreditData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={35}
+                  outerRadius={55}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {debtCreditData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-[10px] font-bold text-muted-foreground uppercase leading-none">Net</span>
+              <span className="text-sm font-bold text-primary">$32k</span>
+            </div>
+          </div>
+          
+          <div className="flex-1 grid grid-cols-1 gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="h-12 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group">
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <LinkIcon className="h-4 w-4" />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs font-bold leading-none">Connect Banks</span>
+                    <span className="text-[10px] text-muted-foreground">Sync your assets</span>
+                  </div>
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Sync Financial Accounts</DialogTitle>
+                  <DialogDescription>Connect with your bank to sync assets.</DialogDescription>
+                </DialogHeader>
+                <SyncWithBankDialog />
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="h-12 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group">
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <History className="h-4 w-4" />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs font-bold leading-none">History</span>
+                    <span className="text-[10px] text-muted-foreground">Recent transactions</span>
+                  </div>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
+                <DialogHeader className="p-6 pb-0">
+                  <DialogTitle>Transaction History</DialogTitle>
+                  <DialogDescription>Your latest financial activities across all linked accounts.</DialogDescription>
+                </DialogHeader>
+                <ScrollArea className="h-[400px] px-6 py-4">
+                  <TransactionList />
+                </ScrollArea>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
       </section>
 
       <Separator />
 
-      {/* AI Search Section - MOVED HERE */}
+      {/* AI Search Section */}
       <section className="space-y-4">
         <div className={cn(
           "flex transition-all duration-300",
           isAiMode 
-            ? "flex-col gap-2 bg-transparent border-none shadow-none ring-0" 
+            ? "flex-col gap-1 bg-transparent border-none shadow-none ring-0" 
             : "bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 items-center rounded-full h-11"
         )}>
           <div className={cn(
             "flex items-center gap-2 w-full",
-            isAiMode && "border-b border-primary/10 pb-2 px-1"
+            isAiMode && "border-b border-primary/10 pb-1 px-1"
           )}>
             <Button 
               variant="ghost" 
@@ -214,13 +267,13 @@ export default function FinanceTab() {
           </div>
 
           {isAiMode && (
-            <div className="flex flex-col gap-4 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex flex-col gap-1 w-full animate-in fade-in slide-in-from-top-2 duration-300">
               {chatHistory.length > 0 && (
                 <ScrollArea className="h-48 w-full px-1">
-                  <div className="space-y-6 pb-2">
+                  <div className="space-y-4 pb-2">
                     {chatHistory.map((msg, idx) => (
                       <div key={idx} className={cn(
-                        "flex flex-col gap-1.5",
+                        "flex flex-col gap-1",
                         msg.role === 'user' ? "items-end" : "items-start"
                       )}>
                         <div className="flex items-center gap-1.5 mb-0.5">
@@ -247,7 +300,7 @@ export default function FinanceTab() {
                 </ScrollArea>
               )}
 
-              <div className="space-y-1 pt-2 px-1">
+              <div className="space-y-1 pt-1 px-1">
                 <Textarea 
                   placeholder="Ask about your assets, debts, or spending..." 
                   className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
