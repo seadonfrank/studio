@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal, Sparkles, Send, Ticket } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal, Sparkles, Send, Ticket, Bot, Loader2, RotateCcw } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -39,6 +39,8 @@ export default function IdentityTab() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAiMode, setIsAiMode] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [filterStatus, setFilterStatus] = useState<CredentialStatus>('all');
   const { toast } = useToast();
@@ -124,9 +126,23 @@ export default function IdentityTab() {
     setIsAiMode(!isAiMode);
     if (!isAiMode) {
       setSearchQuery('');
+      setAiResponse(null);
     } else {
       setAiPrompt('');
     }
+  };
+
+  const handleGenerate = async () => {
+    if (!aiPrompt.trim()) return;
+    
+    setIsGenerating(true);
+    setAiResponse(null);
+    
+    // Simulate AI logic
+    setTimeout(() => {
+      setIsGenerating(false);
+      setAiResponse(`Based on your secured credentials, you have ${governmentCredentials.length} active government documents, including a USA Passport. You also hold a Bachelor's Degree in Computer Science. You currently have ${passCredentials.length} upcoming events.`);
+    }, 1500);
   };
 
   if (view === 'share') {
@@ -267,15 +283,65 @@ export default function IdentityTab() {
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
               />
-              <div className="flex justify-end">
-                <Button size="sm" className="h-8 rounded-full gap-2 text-xs font-bold" disabled={!aiPrompt.trim()}>
-                  <Send className="h-3.5 w-3.5" />
-                  Generate
+              <div className="flex justify-end gap-2">
+                {(aiResponse || aiPrompt) && (
+                   <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-8 rounded-full text-xs font-bold text-muted-foreground"
+                    onClick={() => { setAiPrompt(''); setAiResponse(null); }}
+                  >
+                    <RotateCcw className="h-3 w-3 mr-1.5" />
+                    Reset
+                  </Button>
+                )}
+                <Button 
+                  size="sm" 
+                  className="h-8 rounded-full gap-2 text-xs font-bold min-w-[100px]" 
+                  disabled={!aiPrompt.trim() || isGenerating}
+                  onClick={handleGenerate}
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Thinking...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-3.5 w-3.5" />
+                      Generate
+                    </>
+                  )}
                 </Button>
               </div>
             </div>
           )}
         </div>
+
+        {/* AI Response Area */}
+        {isAiMode && aiResponse && (
+          <div className="animate-in fade-in slide-in-from-top-4 duration-500">
+            <Card className="bg-primary/5 border-primary/10 shadow-sm rounded-2xl overflow-hidden">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Bot className="h-3.5 w-3.5 text-primary" />
+                  </div>
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest">AI Insights</span>
+                </div>
+                <p className="text-sm leading-relaxed text-foreground/90 font-medium italic">
+                  "{aiResponse}"
+                </p>
+                <div className="flex justify-end border-t border-primary/5 pt-2">
+                  <Button variant="ghost" size="sm" className="h-7 text-[10px] font-bold text-primary hover:bg-primary/10 gap-1.5" onClick={() => toast({ title: "Analysis saved to history" })}>
+                    <History className="h-3 w-3" />
+                    Save Insight
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </section>
 
       <div className="flex items-center justify-between px-2">
