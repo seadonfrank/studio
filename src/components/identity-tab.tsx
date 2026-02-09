@@ -34,13 +34,14 @@ import { ScrollArea } from "./ui/scroll-area";
 
 type IdentityView = 'main' | 'qr' | 'share' | 'activities';
 type CredentialStatus = 'all' | 'active' | 'expired' | 'revoked';
+type ChatMessage = { role: 'user' | 'ai'; content: string };
 
 export default function IdentityTab() {
   const [view, setView] = useState<IdentityView>('main');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAiMode, setIsAiMode] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
-  const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [filterStatus, setFilterStatus] = useState<CredentialStatus>('all');
@@ -127,7 +128,6 @@ export default function IdentityTab() {
     setIsAiMode(!isAiMode);
     if (!isAiMode) {
       setSearchQuery('');
-      setAiResponse(null);
     } else {
       setAiPrompt('');
     }
@@ -136,13 +136,15 @@ export default function IdentityTab() {
   const handleGenerate = async () => {
     if (!aiPrompt.trim()) return;
     
+    const userQuery = aiPrompt;
+    setAiPrompt('');
     setIsGenerating(true);
-    setAiResponse(null);
     
     // Simulate AI logic
     setTimeout(() => {
       setIsGenerating(false);
-      setAiResponse(`Based on your secured credentials, you have ${governmentCredentials.length} active government documents, including a USA Passport. You also hold a Bachelor's Degree in Computer Science. You currently have ${passCredentials.length} upcoming events.`);
+      const response = `Based on your secured credentials, you have ${governmentCredentials.length} active government documents, including a USA Passport. You also hold a Bachelor's Degree in Computer Science. You currently have ${passCredentials.length} upcoming events.`;
+      setChatHistory(prev => [...prev, { role: 'user', content: userQuery }, { role: 'ai', content: response }]);
     }, 1500);
   };
 
@@ -278,17 +280,35 @@ export default function IdentityTab() {
 
           {isAiMode && (
             <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-top-2 duration-300">
-              {aiResponse && (
-                <ScrollArea className="h-32 w-full bg-primary/5 rounded-xl border border-primary/10 p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center">
-                      <Bot className="h-3 w-3 text-primary" />
-                    </div>
-                    <span className="text-[9px] font-bold text-primary uppercase tracking-widest">Latest Insight</span>
+              {chatHistory.length > 0 && (
+                <ScrollArea className="h-48 w-full bg-primary/5 rounded-xl border border-primary/10 p-3">
+                  <div className="space-y-4">
+                    {chatHistory.map((msg, idx) => (
+                      <div key={idx} className={cn(
+                        "flex flex-col gap-1.5",
+                        msg.role === 'user' ? "items-end" : "items-start"
+                      )}>
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                           {msg.role === 'ai' && (
+                             <div className="h-4 w-4 rounded-full bg-primary/20 flex items-center justify-center">
+                               <Bot className="h-2.5 w-2.5 text-primary" />
+                             </div>
+                           )}
+                           <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">
+                             {msg.role === 'ai' ? 'AI Assistant' : 'You'}
+                           </span>
+                        </div>
+                        <div className={cn(
+                          "text-xs p-2.5 rounded-xl max-w-[90%] leading-relaxed",
+                          msg.role === 'user' 
+                            ? "bg-primary text-primary-foreground rounded-tr-none shadow-sm" 
+                            : "bg-background/80 border border-primary/10 rounded-tl-none text-foreground/90 font-medium italic"
+                        )}>
+                          {msg.content}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <p className="text-xs leading-relaxed text-foreground/90 italic font-medium">
-                    "{aiResponse}"
-                  </p>
                 </ScrollArea>
               )}
 
@@ -300,15 +320,15 @@ export default function IdentityTab() {
               />
               
               <div className="flex justify-end gap-2 border-t border-primary/5 pt-2">
-                {(aiResponse || aiPrompt) && (
+                {chatHistory.length > 0 && (
                    <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="h-8 rounded-full text-xs font-bold text-muted-foreground"
-                    onClick={() => { setAiPrompt(''); setAiResponse(null); }}
+                    className="h-8 rounded-full text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5"
+                    onClick={() => { setChatHistory([]); }}
                   >
                     <RotateCcw className="h-3 w-3 mr-1.5" />
-                    Clear
+                    Clear History
                   </Button>
                 )}
                 <Button 
