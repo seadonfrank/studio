@@ -23,6 +23,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
@@ -163,64 +164,72 @@ export default function FinanceTab() {
             </div>
           </div>
           
-          <div className="flex-1 flex flex-col gap-2">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="h-10 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group px-2">
-                  <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                    <LinkIcon className="h-3.5 w-3.5" />
-                  </div>
-                  <span className="text-[11px] font-bold leading-none">Connections</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Link Financial Accounts</DialogTitle>
-                  <DialogDescription>Securely connect your bank accounts to sync assets.</DialogDescription>
-                </DialogHeader>
-                <SyncWithBankDialog />
-              </DialogContent>
-            </Dialog>
+          <div className="flex-1 flex justify-between items-center px-2">
+            <TooltipProvider>
+              <Dialog>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
+                        <LinkIcon className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                      </Button>
+                    </DialogTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent><p>Connections</p></TooltipContent>
+                </Tooltip>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Link Financial Accounts</DialogTitle>
+                    <DialogDescription>Securely connect your bank accounts to sync assets.</DialogDescription>
+                  </DialogHeader>
+                  <SyncWithBankDialog />
+                </DialogContent>
+              </Dialog>
 
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="h-10 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group px-2">
-                  <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                    <History className="h-3.5 w-3.5" />
-                  </div>
-                  <span className="text-[11px] font-bold leading-none">History</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
-                <DialogHeader className="p-6 pb-0">
-                  <DialogTitle>Transaction History</DialogTitle>
-                  <DialogDescription>Latest activities across all linked accounts.</DialogDescription>
-                </DialogHeader>
-                <ScrollArea className="h-[400px] px-6 py-4">
-                  <TransactionList />
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
+              <Dialog>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
+                        <History className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                      </Button>
+                    </DialogTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent><p>History</p></TooltipContent>
+                </Tooltip>
+                <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
+                  <DialogHeader className="p-6 pb-0">
+                    <DialogTitle>Transaction History</DialogTitle>
+                    <DialogDescription>Latest activities across all linked accounts.</DialogDescription>
+                  </DialogHeader>
+                  <ScrollArea className="h-[400px] px-6 py-4">
+                    <TransactionList />
+                  </ScrollArea>
+                </DialogContent>
+              </Dialog>
 
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="h-10 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group px-2">
-                  <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                    <Ticket className="h-3.5 w-3.5" />
+              <Dialog>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
+                        <Ticket className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                      </Button>
+                    </DialogTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent><p>Offers</p></TooltipContent>
+                </Tooltip>
+                <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
+                  <DialogHeader className="p-6 pb-0">
+                    <DialogTitle>Exclusive Offers</DialogTitle>
+                    <DialogDescription>Personalized financial rewards for you.</DialogDescription>
+                  </DialogHeader>
+                  <div className="p-6">
+                    <OffersCard />
                   </div>
-                  <span className="text-[11px] font-bold leading-none">Offers</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
-                <DialogHeader className="p-6 pb-0">
-                  <DialogTitle>Exclusive Offers</DialogTitle>
-                  <DialogDescription>Personalized financial rewards for you.</DialogDescription>
-                </DialogHeader>
-                <div className="p-6">
-                  <OffersCard />
-                </div>
-              </DialogContent>
-            </Dialog>
+                </DialogContent>
+              </Dialog>
+            </TooltipProvider>
           </div>
         </div>
       </section>
