@@ -1,42 +1,35 @@
+
 "use client";
 
 import { 
   ArrowLeft, Sparkles, Filter, Send, RotateCcw, Loader2, Bot, 
   Search, Landmark, CreditCard, TrendingUp, Wallet, Link, Plus, ChevronDown, 
-  ArrowUp, BarChart2, Eye, RefreshCw, Info 
+  ArrowUp, BarChart2, Eye, RefreshCw, Info, Ticket
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import { Separator } from "./ui/separator";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { ScrollArea } from "./ui/scroll-area";
 import { Badge } from "./ui/badge";
-import { Card, CardContent } from "./ui/card";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 import ManageCardsDialog from "./manage-cards-dialog";
 import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
-import AddAccountCard from "./add-account-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
-import ManageDepositsDialog from "./manage-deposits-dialog";
 import LoanCard from "./loan-card";
-import ManageLoansDialog from "./manage-loans-dialog";
 import FundCard from "./fund-card";
-import ManageFundsDialog from "./manage-funds-dialog";
 import CryptoCredentialCard from "./crypto-credential-card";
-import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
 import SyncCard from "./sync-card";
@@ -49,6 +42,7 @@ export default function FinanceTab() {
   const [aiPrompt, setAiPrompt] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const carouselAccounts = [
     { currency: "USD", accountType: "Primary Checking", balance: "1,250.00", fees: "0.00", gradient: "from-blue-600 to-indigo-500" },
@@ -82,6 +76,30 @@ export default function FinanceTab() {
     { category: "Cards", lastSynced: "Today 9:41 AM", icon: CreditCard },
   ];
 
+  const filteredAccounts = useMemo(() => 
+    carouselAccounts.filter(a => a.accountType.toLowerCase().includes(searchQuery.toLowerCase()) || a.currency.toLowerCase().includes(searchQuery.toLowerCase())), 
+  [searchQuery]);
+
+  const filteredCards = useMemo(() => 
+    cards.filter(c => c.cardType.toLowerCase().includes(searchQuery.toLowerCase()) || c.cardNumber.includes(searchQuery)), 
+  [searchQuery]);
+
+  const filteredDeposits = useMemo(() => 
+    deposits.filter(d => d.currency.toLowerCase().includes(searchQuery.toLowerCase())), 
+  [searchQuery]);
+
+  const filteredLoans = useMemo(() => 
+    loans.filter(l => l.interestType.toLowerCase().includes(searchQuery.toLowerCase()) || l.currency.toLowerCase().includes(searchQuery.toLowerCase())), 
+  [searchQuery]);
+
+  const filteredFunds = useMemo(() => 
+    funds.filter(f => f.currency.toLowerCase().includes(searchQuery.toLowerCase())), 
+  [searchQuery]);
+
+  const filteredCrypto = useMemo(() => 
+    crypto.filter(c => c.walletName.toLowerCase().includes(searchQuery.toLowerCase()) || c.network.toLowerCase().includes(searchQuery.toLowerCase())), 
+  [searchQuery]);
+
   const handleAiModeToggle = () => {
     setIsAiMode(!isAiMode);
     if (!isAiMode) {
@@ -103,6 +121,14 @@ export default function FinanceTab() {
       const response = `Your total net worth across all linked accounts is approximately $57,100. You have a well-diversified portfolio with 17.3% returns on your Funds. Your largest liability is a $25,000 USD loan at 8.5% fixed interest.`;
       setChatHistory(prev => [...prev, { role: 'user', content: userQuery }, { role: 'ai', content: response }]);
     }, 1500);
+  };
+
+  const toggleAll = () => {
+    if (expandedItems.length > 0) {
+      setExpandedItems([]);
+    } else {
+      setExpandedItems(['accounts', 'cards', 'deposits-loans', 'funds-crypto']);
+    }
   };
 
   return (
@@ -263,15 +289,43 @@ export default function FinanceTab() {
 
       <Separator />
 
-      {/* Main Financial Sections */}
-      <section className="space-y-6">
-        <div>
-          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Accounts</h3>
-          <div className="space-y-3">
-            {carouselAccounts.map((account, index) => (
-              <AccountCarouselCard key={index} {...account} />
-            ))}
-             <Dialog>
+      {/* Accordion Categories */}
+      <div className="flex items-center justify-between px-2 mb-3">
+        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">
+          Your Financial Assets
+        </h3>
+        <button 
+          onClick={toggleAll}
+          className="text-primary text-xs font-semibold hover:underline"
+        >
+          {expandedItems.length > 0 ? 'Hide All' : 'View All'}
+        </button>
+      </div>
+
+      <Accordion 
+        type="multiple" 
+        className="w-full space-y-4" 
+        value={expandedItems} 
+        onValueChange={setExpandedItems}
+      >
+        <AccordionItem value="accounts" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <Landmark className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Accounts</span>
+              </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {filteredAccounts.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredAccounts.map((account, index) => (
+                <AccountCarouselCard key={index} {...account} />
+              ))}
+              <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
                     <Plus className="h-5 w-5" />
@@ -283,16 +337,28 @@ export default function FinanceTab() {
                   <ManageAccountsDialog />
                 </DialogContent>
               </Dialog>
-          </div>
-        </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div>
-          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Cards</h3>
-          <div className="space-y-3">
-            {cards.map((card, index) => (
-              <PaymentCard key={index} {...card} />
-            ))}
-             <Dialog>
+        <AccordionItem value="cards" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Cards</span>
+              </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {filteredCards.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredCards.map((card, index) => (
+                <PaymentCard key={index} {...card} />
+              ))}
+              <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
                     <Plus className="h-5 w-5" />
@@ -304,25 +370,56 @@ export default function FinanceTab() {
                   <ManageCardsDialog />
                 </DialogContent>
               </Dialog>
-          </div>
-        </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div>
-          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Deposits & Loans</h3>
-          <div className="space-y-3">
-            {deposits.map((deposit, index) => <DepositCard key={index} {...deposit} />)}
-            {loans.map((loan, index) => <LoanCard key={index} {...loan} />)}
-          </div>
-        </div>
+        <AccordionItem value="deposits-loans" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Deposits & Loans</span>
+              </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {filteredDeposits.length + filteredLoans.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredDeposits.map((deposit, index) => <DepositCard key={index} {...deposit} />)}
+              {filteredLoans.map((loan, index) => <LoanCard key={index} {...loan} />)}
+              {(filteredDeposits.length + filteredLoans.length === 0) && (
+                <p className="text-center text-sm text-muted-foreground py-4">No matching deposits or loans.</p>
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div>
-          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Funds & Crypto</h3>
-          <div className="space-y-3">
-            {funds.map((fund, index) => <FundCard key={index} {...fund} />)}
-            {crypto.map((cred, index) => <CryptoCredentialCard key={index} {...cred} />)}
-          </div>
-        </div>
-      </section>
+        <AccordionItem value="funds-crypto" className="border-none bg-background rounded-xl shadow-sm border overflow-hidden">
+          <AccordionTrigger className="hover:no-underline py-4 px-4">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <Wallet className="h-5 w-5 text-primary" />
+                <span className="text-base font-headline font-semibold">Funds & Crypto</span>
+              </div>
+              <Badge variant="secondary" className="mr-2 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] font-bold">
+                {filteredFunds.length + filteredCrypto.length}
+              </Badge>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4 pt-0">
+            <div className="space-y-3">
+              {filteredFunds.map((fund, index) => <FundCard key={index} {...fund} />)}
+              {filteredCrypto.map((cred, index) => <CryptoCredentialCard key={index} {...cred} />)}
+              {(filteredFunds.length + filteredCrypto.length === 0) && (
+                <p className="text-center text-sm text-muted-foreground py-4">No matching funds or crypto wallets.</p>
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
