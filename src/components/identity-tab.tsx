@@ -30,6 +30,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "./ui/scroll-area";
 
 type IdentityView = 'main' | 'qr' | 'share' | 'activities';
 type CredentialStatus = 'all' | 'active' | 'expired' | 'revoked';
@@ -250,7 +251,7 @@ export default function IdentityTab() {
             )}
             
             {isAiMode && (
-              <p className="text-[10px] font-bold text-primary uppercase tracking-wider">AI Prompt Mode</p>
+              <p className="text-[10px] font-bold text-primary uppercase tracking-wider">AI Insight Engine</p>
             )}
 
             {!isAiMode && (
@@ -276,14 +277,29 @@ export default function IdentityTab() {
           </div>
 
           {isAiMode && (
-            <div className="flex flex-col gap-2 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+              {aiResponse && (
+                <ScrollArea className="h-32 w-full bg-primary/5 rounded-xl border border-primary/10 p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Bot className="h-3 w-3 text-primary" />
+                    </div>
+                    <span className="text-[9px] font-bold text-primary uppercase tracking-widest">Latest Insight</span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-foreground/90 italic font-medium">
+                    "{aiResponse}"
+                  </p>
+                </ScrollArea>
+              )}
+
               <Textarea 
-                placeholder="Ask AI to find specific credentials or summarize your identity..." 
-                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[80px] resize-none p-0"
+                placeholder="Ask AI about your identity..." 
+                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
               />
-              <div className="flex justify-end gap-2">
+              
+              <div className="flex justify-end gap-2 border-t border-primary/5 pt-2">
                 {(aiResponse || aiPrompt) && (
                    <Button 
                     variant="ghost" 
@@ -292,7 +308,7 @@ export default function IdentityTab() {
                     onClick={() => { setAiPrompt(''); setAiResponse(null); }}
                   >
                     <RotateCcw className="h-3 w-3 mr-1.5" />
-                    Reset
+                    Clear
                   </Button>
                 )}
                 <Button 
@@ -317,31 +333,6 @@ export default function IdentityTab() {
             </div>
           )}
         </div>
-
-        {/* AI Response Area */}
-        {isAiMode && aiResponse && (
-          <div className="animate-in fade-in slide-in-from-top-4 duration-500">
-            <Card className="bg-primary/5 border-primary/10 shadow-sm rounded-2xl overflow-hidden">
-              <CardContent className="p-4 space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Bot className="h-3.5 w-3.5 text-primary" />
-                  </div>
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest">AI Insights</span>
-                </div>
-                <p className="text-sm leading-relaxed text-foreground/90 font-medium italic">
-                  "{aiResponse}"
-                </p>
-                <div className="flex justify-end border-t border-primary/5 pt-2">
-                  <Button variant="ghost" size="sm" className="h-7 text-[10px] font-bold text-primary hover:bg-primary/10 gap-1.5" onClick={() => toast({ title: "Analysis saved to history" })}>
-                    <History className="h-3 w-3" />
-                    Save Insight
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
       </section>
 
       <div className="flex items-center justify-between px-2">
