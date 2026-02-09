@@ -135,21 +135,21 @@ export default function FinanceTab() {
   };
 
   return (
-    <div className="space-y-6 p-4 pb-32">
-      {/* Financial Health Overview */}
-      <section className="bg-background rounded-2xl p-4 shadow-sm border border-border/40">
-        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-4">Financial Overview</h3>
-        <div className="flex gap-4 items-center">
-          <div className="w-[45%] h-[130px] relative">
+    <div className="space-y-4 p-4 pb-32">
+      {/* Financial Health Overview - Compact */}
+      <section className="bg-background rounded-2xl p-3 shadow-sm border border-border/40">
+        <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500/80 mb-2">Financial Overview</h3>
+        <div className="flex gap-2 items-center">
+          <div className="w-[40%] h-[100px] relative">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={debtCreditData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={35}
-                  outerRadius={55}
-                  paddingAngle={5}
+                  innerRadius={28}
+                  outerRadius={42}
+                  paddingAngle={4}
                   dataKey="value"
                 >
                   {debtCreditData.map((entry, index) => (
@@ -159,23 +159,23 @@ export default function FinanceTab() {
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase leading-none">Net</span>
-              <span className="text-sm font-bold text-primary">$32k</span>
+              <span className="text-[8px] font-bold text-muted-foreground uppercase leading-none">Net</span>
+              <span className="text-xs font-bold text-primary">$32k</span>
             </div>
           </div>
           
-          <div className="flex-1 flex justify-between items-center px-2">
+          <div className="flex-1 flex justify-around items-center">
             <TooltipProvider>
               <Dialog>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
-                        <LinkIcon className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                      <Button variant="outline" size="icon" className="h-10 w-10 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
+                        <LinkIcon className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
                       </Button>
                     </DialogTrigger>
                   </TooltipTrigger>
-                  <TooltipContent><p>Connections</p></TooltipContent>
+                  <TooltipContent><p className="text-[10px]">Connections</p></TooltipContent>
                 </Tooltip>
                 <DialogContent>
                   <DialogHeader>
@@ -190,12 +190,12 @@ export default function FinanceTab() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
-                        <History className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                      <Button variant="outline" size="icon" className="h-10 w-10 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
+                        <History className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
                       </Button>
                     </DialogTrigger>
                   </TooltipTrigger>
-                  <TooltipContent><p>History</p></TooltipContent>
+                  <TooltipContent><p className="text-[10px]">History</p></TooltipContent>
                 </Tooltip>
                 <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
                   <DialogHeader className="p-6 pb-0">
@@ -212,12 +212,12 @@ export default function FinanceTab() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
-                        <Ticket className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                      <Button variant="outline" size="icon" className="h-10 w-10 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group transition-all">
+                        <Ticket className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
                       </Button>
                     </DialogTrigger>
                   </TooltipTrigger>
-                  <TooltipContent><p>Offers</p></TooltipContent>
+                  <TooltipContent><p className="text-[10px]">Offers</p></TooltipContent>
                 </Tooltip>
                 <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
                   <DialogHeader className="p-6 pb-0">
