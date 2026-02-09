@@ -1,3 +1,4 @@
+
 "use client";
 
 import { 
@@ -223,8 +224,6 @@ export default function FinanceTab() {
           </div>
         </div>
       </section>
-
-      <Separator />
 
       {/* AI Search Section */}
       <section className="space-y-4">
