@@ -111,7 +111,7 @@ export default function FinanceTab() {
       <section className="space-y-4">
         <div className={cn(
           "flex bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 transition-all duration-300",
-          isAiMode ? "rounded-2xl py-3 flex-col gap-3" : "items-center rounded-full h-11"
+          isAiMode ? "rounded-2xl py-3 flex-col gap-4" : "items-center rounded-full h-11"
         )}>
           <div className="flex items-center gap-2 w-full">
             <Button 
@@ -159,10 +159,10 @@ export default function FinanceTab() {
           </div>
 
           {isAiMode && (
-            <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-top-2 duration-300">
               {chatHistory.length > 0 && (
-                <ScrollArea className="h-48 w-full bg-primary/5 rounded-xl border border-primary/10 p-3">
-                  <div className="space-y-4">
+                <ScrollArea className="h-48 w-full px-1">
+                  <div className="space-y-6 pb-2">
                     {chatHistory.map((msg, idx) => (
                       <div key={idx} className={cn(
                         "flex flex-col gap-1.5",
@@ -182,7 +182,7 @@ export default function FinanceTab() {
                           "text-xs p-2.5 rounded-xl max-w-[90%] leading-relaxed",
                           msg.role === 'user' 
                             ? "bg-primary text-primary-foreground rounded-tr-none shadow-sm" 
-                            : "bg-background/80 border border-primary/10 rounded-tl-none text-foreground/90 font-medium italic"
+                            : "bg-muted/50 border border-primary/5 rounded-tl-none text-foreground/90 font-medium italic"
                         )}>
                           {msg.content}
                         </div>
@@ -192,43 +192,45 @@ export default function FinanceTab() {
                 </ScrollArea>
               )}
 
-              <Textarea 
-                placeholder="Ask about your assets, debts, or spending..." 
-                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
-                value={aiPrompt}
-                onChange={(e) => setAiPrompt(e.target.value)}
-              />
-              
-              <div className="flex justify-end gap-2 border-t border-primary/5 pt-2">
-                {chatHistory.length > 0 && (
-                   <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="h-8 rounded-full text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5"
-                    onClick={() => { setChatHistory([]); }}
-                  >
-                    <RotateCcw className="h-3 w-3 mr-1.5" />
-                    Clear History
-                  </Button>
-                )}
-                <Button 
-                  size="sm" 
-                  className="h-8 rounded-full gap-2 text-xs font-bold min-w-[100px]" 
-                  disabled={!aiPrompt.trim() || isGenerating}
-                  onClick={handleGenerate}
-                >
-                  {isGenerating ? (
-                    <>
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      Thinking...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-3.5 w-3.5" />
-                      Analyze
-                    </>
+              <div className="space-y-4">
+                <Textarea 
+                  placeholder="Ask about your assets, debts, or spending..." 
+                  className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
+                  value={aiPrompt}
+                  onChange={(e) => setAiPrompt(e.target.value)}
+                />
+                
+                <div className="flex justify-end gap-2 border-t border-primary/5 pt-4">
+                  {chatHistory.length > 0 && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-8 rounded-full text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5"
+                      onClick={() => { setChatHistory([]); }}
+                    >
+                      <RotateCcw className="h-3 w-3 mr-1.5" />
+                      Clear History
+                    </Button>
                   )}
-                </Button>
+                  <Button 
+                    size="sm" 
+                    className="h-8 rounded-full gap-2 text-xs font-bold min-w-[100px]" 
+                    disabled={!aiPrompt.trim() || isGenerating}
+                    onClick={handleGenerate}
+                  >
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        Thinking...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-3.5 w-3.5" />
+                        Analyze
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
           )}
