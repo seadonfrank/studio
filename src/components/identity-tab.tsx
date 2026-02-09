@@ -1,6 +1,7 @@
+
 "use client";
 
-import { Shield, BookUser, GraduationCap, Plus, Scan, ArrowLeft, Copy, Share2, History, Search, ChevronDown, ChevronUp, Filter, Terminal, Sparkles, Send, Ticket, Bot, Loader2, RotateCcw } from "lucide-react";
+import { Shield, BookUser, GraduationCap, Plus, ArrowLeft, Copy, Share2, History, Filter, Sparkles, Send, Ticket, Bot, Loader2, RotateCcw } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -226,10 +227,15 @@ export default function IdentityTab() {
 
       <section className="space-y-4">
         <div className={cn(
-          "flex bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 transition-all duration-300",
-          isAiMode ? "rounded-2xl py-3 flex-col gap-4" : "items-center rounded-full h-11"
+          "flex transition-all duration-300",
+          isAiMode 
+            ? "flex-col gap-4 bg-transparent border-none shadow-none ring-0" 
+            : "bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 items-center rounded-full h-11"
         )}>
-          <div className="flex items-center gap-2 w-full">
+          <div className={cn(
+            "flex items-center gap-2 w-full",
+            isAiMode && "border-b border-primary/10 pb-3 px-1"
+          )}>
             <Button 
               variant="ghost" 
               size="sm" 
@@ -312,7 +318,7 @@ export default function IdentityTab() {
                 </ScrollArea>
               )}
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-t border-primary/10 pt-4 px-1">
                 <Textarea 
                   placeholder="Ask AI about your identity..." 
                   className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
@@ -320,7 +326,7 @@ export default function IdentityTab() {
                   onChange={(e) => setAiPrompt(e.target.value)}
                 />
                 
-                <div className="flex justify-end gap-2 border-t border-primary/5 pt-4">
+                <div className="flex justify-end gap-2 pt-2">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 
@@ -397,7 +403,7 @@ export default function IdentityTab() {
               )}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
                     <Plus className="h-5 w-5" />
                     <span className="text-xs font-semibold">Add Government Credential</span>
                   </Button>
@@ -438,7 +444,7 @@ export default function IdentityTab() {
               )}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
                     <Plus className="h-5 w-5" />
                     <span className="text-xs font-semibold">Add License</span>
                   </Button>
@@ -479,7 +485,7 @@ export default function IdentityTab() {
               )}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
                     <Plus className="h-5 w-5" />
                     <span className="text-xs font-semibold">Add Academic Credential</span>
                   </Button>
@@ -520,7 +526,7 @@ export default function IdentityTab() {
               )}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
                     <Plus className="h-5 w-5" />
                     <span className="text-xs font-semibold">Add Leisure Pass</span>
                   </Button>

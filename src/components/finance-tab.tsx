@@ -3,12 +3,10 @@
 
 import { 
   ArrowLeft, Sparkles, Filter, Send, RotateCcw, Loader2, Bot, 
-  Search, Landmark, CreditCard, TrendingUp, Wallet, Link, Plus, ChevronDown, 
-  ArrowUp, BarChart2, Eye, RefreshCw, Info, Ticket
+  Search, Landmark, CreditCard, TrendingUp, Wallet, Plus
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Separator } from "./ui/separator";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { ScrollArea } from "./ui/scroll-area";
@@ -22,8 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Separator } from "@/components/ui/separator";
 
-import ManageCardsDialog from "./manage-cards-dialog";
 import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
 import ManageAccountsDialog from "./manage-accounts-dialog";
@@ -33,6 +31,7 @@ import CryptoCredentialCard from "./crypto-credential-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
 import SyncCard from "./sync-card";
+import ManageCardsDialog from "./manage-cards-dialog";
 
 type ChatMessage = { role: 'user' | 'ai'; content: string };
 
@@ -136,10 +135,15 @@ export default function FinanceTab() {
       {/* AI Search Section */}
       <section className="space-y-4">
         <div className={cn(
-          "flex bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 transition-all duration-300",
-          isAiMode ? "rounded-2xl py-3 flex-col gap-4" : "items-center rounded-full h-11"
+          "flex transition-all duration-300",
+          isAiMode 
+            ? "flex-col gap-4 bg-transparent border-none shadow-none ring-0" 
+            : "bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 items-center rounded-full h-11"
         )}>
-          <div className="flex items-center gap-2 w-full">
+          <div className={cn(
+            "flex items-center gap-2 w-full",
+            isAiMode && "border-b border-primary/10 pb-3 px-1"
+          )}>
             <Button 
               variant="ghost" 
               size="sm" 
@@ -168,7 +172,7 @@ export default function FinanceTab() {
 
             {!isAiMode && (
               <>
-                <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
+                <div className="h-5 mx-1 w-px bg-border/60" />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-muted shrink-0 transition-colors">
@@ -218,7 +222,7 @@ export default function FinanceTab() {
                 </ScrollArea>
               )}
 
-              <div className="space-y-4">
+              <div className="space-y-4 border-t border-primary/10 pt-4 px-1">
                 <Textarea 
                   placeholder="Ask about your assets, debts, or spending..." 
                   className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
@@ -226,7 +230,7 @@ export default function FinanceTab() {
                   onChange={(e) => setAiPrompt(e.target.value)}
                 />
                 
-                <div className="flex justify-end gap-2 border-t border-primary/5 pt-4">
+                <div className="flex justify-end gap-2 pt-2">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 
