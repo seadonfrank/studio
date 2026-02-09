@@ -1,5 +1,6 @@
+
 import { Card, CardContent } from "./ui/card";
-import { Wallet, Globe, Link as LinkIcon } from "lucide-react";
+import { Wallet, Link as LinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 
@@ -38,12 +39,12 @@ export default function CryptoCredentialCard({
         </div>
         
         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] opacity-90 border-t border-white/10 pt-2.5">
-          <div className="flex items-center gap-1.5">
-            <LinkIcon className="h-3 w-3 opacity-70" />
-            <span className="truncate font-mono">{walletAddress}</span>
-          </div>
-          <div className="flex items-center gap-1.5 justify-end font-bold text-sm">
+          <div className="flex items-center gap-1.5 font-bold text-sm">
             <span>{balance} {asset}</span>
+          </div>
+          <div className="flex items-center gap-1.5 justify-end text-[10px] opacity-70">
+            <LinkIcon className="h-3 w-3" />
+            <span className="truncate max-w-[80px] font-mono">{walletAddress}</span>
           </div>
         </div>
       </CardContent>

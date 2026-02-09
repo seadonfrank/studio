@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { TrendingUp, Calendar, PiggyBank, Repeat, FileStack, ArrowRight } from "lucide-react";
+
+import { Card, CardContent } from "./ui/card";
+import { TrendingUp, Calendar, PiggyBank } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -9,58 +10,31 @@ interface FundCardProps {
     pnlAmount: string;
     pnlPercentage: string;
     investedAmount: string;
-    sipNumber?: string;
-    swpNumber?: string;
     startDate: string;
     gradient: string;
 }
 
-export default function FundCard({ currency, fundBalance, pnlAmount, pnlPercentage, investedAmount, sipNumber, swpNumber, startDate, gradient }: FundCardProps) {
-  const isProfit = parseFloat(pnlAmount) >= 0;
+export default function FundCard({ currency, fundBalance, pnlAmount, pnlPercentage, investedAmount, startDate, gradient }: FundCardProps) {
+  const isProfit = parseFloat(pnlAmount) >= 0 || pnlAmount.includes('+');
 
   return (
-    <Card className={cn("overflow-hidden text-primary-foreground shadow-lg bg-gradient-to-br", gradient)}>
-      <CardHeader className="flex flex-row justify-between items-start pb-2 p-5">
-        <CardTitle className="font-headline text-md">Fund ({currency})</CardTitle>
-        <TrendingUp className="h-7 w-7 opacity-70" />
-      </CardHeader>
-      <CardContent className="p-5 pt-0 space-y-3">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs opacity-80">Fund Balance</p>
-            <p className="text-lg font-bold font-headline">{fundBalance}</p>
+    <Card className={cn("overflow-hidden text-primary-foreground shadow-md border-none bg-gradient-to-br transition-all hover:scale-[1.01]", gradient)}>
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">Mutual Fund &bull; Invested {investedAmount}</span>
+            <p className="text-base font-bold font-headline leading-tight">{currency} Portfolio</p>
           </div>
-          <div>
-            <p className="text-xs opacity-80">P&L</p>
-            <p className={cn("text-lg font-bold font-headline", isProfit ? "text-green-300" : "text-red-300")}>
-                {pnlAmount} ({pnlPercentage}%)
-            </p>
+          <TrendingUp className="h-5 w-5 opacity-70" />
+        </div>
+        
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] opacity-90 border-t border-white/10 pt-2.5">
+          <div className="flex items-center gap-1.5 font-bold text-sm">
+            <span>{fundBalance}</span>
           </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2 text-xs opacity-90 border-t border-white/20 pt-3">
-            <div className="flex items-center gap-1.5">
-                <PiggyBank className="h-3 w-3" />
-                <span>Invested: {investedAmount}</span>
-            </div>
-             {sipNumber && (
-                <div className="flex items-center gap-1.5">
-                    <Repeat className="h-3 w-3" />
-                    <span>SIP: {sipNumber}</span>
-                </div>
-            )}
-            {swpNumber && (
-                <div className="flex items-center gap-1.5">
-                    <FileStack className="h-3 w-3" />
-                    <span>SWP: {swpNumber}</span>
-                </div>
-            )}
-        </div>
-        <div className="flex justify-start items-center text-[10px] opacity-80 pt-2">
-            <div className="flex items-center gap-1.5">
-                <Calendar className="h-3 w-3" />
-                <span>Start Date: {format(new Date(startDate), "MMM d, yyyy")}</span>
-            </div>
+          <div className={cn("flex items-center gap-1.5 justify-end font-bold", isProfit ? "text-green-300" : "text-red-300")}>
+            <span>{pnlAmount} ({pnlPercentage}%)</span>
+          </div>
         </div>
       </CardContent>
     </Card>

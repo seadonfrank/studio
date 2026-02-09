@@ -1,11 +1,32 @@
 
 "use client";
 
-import { ArrowUp, Plus, ChevronDown, BarChart2, CreditCard, Landmark, TrendingUp, Wallet, Eye, RefreshCw, Info, Link } from "lucide-react";
+import { 
+  ArrowLeft, Sparkles, Filter, Send, RotateCcw, Loader2, Bot, 
+  Search, Landmark, CreditCard, TrendingUp, Wallet, Link, Plus, ChevronDown, 
+  ArrowUp, BarChart2, Eye, RefreshCw, Info 
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import ManageCardsDialog from "./manage-cards-dialog";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { Separator } from "./ui/separator";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { ScrollArea } from "./ui/scroll-area";
+import { Badge } from "./ui/badge";
+import { Card, CardContent } from "./ui/card";
+import { useState, useMemo } from "react";
+import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+
+import ManageCardsDialog from "./manage-cards-dialog";
 import PaymentCard from "./payment-card";
 import DepositCard from "./deposit-card";
 import AddAccountCard from "./add-account-card";
@@ -17,255 +38,267 @@ import FundCard from "./fund-card";
 import ManageFundsDialog from "./manage-funds-dialog";
 import CryptoCredentialCard from "./crypto-credential-card";
 import ManageCryptoCredentialsDialog from "./manage-crypto-credentials-dialog";
-import AccountCard from "./account-card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
-import { Badge } from "./ui/badge";
-import PortfolioSummaryCard from "./portfolio-summary-card";
 import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { Separator } from "./ui/separator";
 import SyncCard from "./sync-card";
 
 export default function FinanceTab() {
-  const accounts = [
-    { currency: "USD", balance: "1,250.00", type: "primary" as const, gradient: "from-blue-500 to-indigo-500" },
-    { currency: "EUR", balance: "800.00", type: "secondary" as const, gradient: "from-green-500 to-emerald-500" },
-    { currency: "GBP", balance: "500.00", type: "secondary" as const, gradient: "from-purple-500 to-violet-500" },
-    { currency: "BTC", balance: "0.05", type: "secondary" as const, gradient: "from-yellow-500 to-orange-500" },
-    { currency: "ETH", balance: "1.5", type: "secondary" as const, gradient: "from-slate-500 to-gray-600" },
-  ];
-  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isAiMode, setIsAiMode] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
   const carouselAccounts = [
-    { currency: "USD", accountType: "Primary Checking", balance: "1,250.00", fees: "0.00", gradient: "from-blue-500 to-indigo-600" },
-    { currency: "EUR", accountType: "Secondary Savings", balance: "800.00", fees: "1.00", gradient: "from-green-500 to-emerald-600" },
-    { currency: "GBP", accountType: "Travel Account", balance: "500.00", fees: "2.50", gradient: "from-purple-500 to-violet-600" },
+    { currency: "USD", accountType: "Primary Checking", balance: "1,250.00", fees: "0.00", gradient: "from-blue-600 to-indigo-500" },
+    { currency: "EUR", accountType: "Secondary Savings", balance: "800.00", fees: "1.00", gradient: "from-green-600 to-emerald-500" },
+    { currency: "GBP", accountType: "Travel Account", balance: "500.00", fees: "2.50", gradient: "from-purple-600 to-violet-500" },
   ];
 
   const cards = [
-    { cardType: "Debit Card", balance: "€1,234.56", cardNumber: "1234", gradient: "from-blue-500 to-indigo-600" },
-    { cardType: "Credit Card", balance: "€5,000.00", cardNumber: "5678", limit: "€10,000", gradient: "from-purple-500 to-violet-600" },
+    { cardType: "Debit Card", balance: "€1,234.56", cardNumber: "1234", gradient: "from-blue-600 to-indigo-500" },
+    { cardType: "Credit Card", balance: "€5,000.00", cardNumber: "5678", limit: "€10,000", gradient: "from-purple-600 to-violet-500" },
   ];
 
   const deposits = [
-    { currency: "USD", principalAmount: "$10,000", maturityAmount: "$10,500", interestRate: "5.00", tenure: "1 Year", startDate: "2023-08-01", endDate: "2024-08-01", gradient: "from-green-500 to-emerald-600" },
-    { currency: "EUR", principalAmount: "€5,000", maturityAmount: "€5,150", interestRate: "3.00", tenure: "6 Months", startDate: "2024-02-15", endDate: "2024-08-15", gradient: "from-teal-500 to-cyan-600" },
+    { currency: "USD", principalAmount: "$10,000", maturityAmount: "$10,500", interestRate: "5.00", tenure: "1 Year", startDate: "2023-08-01", endDate: "2024-08-01", gradient: "from-green-600 to-emerald-500" },
   ];
 
   const loans = [
-     { currency: "USD", loanAmount: "$50,000", outstandingAmount: "$25,000", interestRate: "8.5", interestType: "Fixed", tenure: "5 Years", installments: "30/60", emi: "$900.50", disbursedDate: "2022-01-15", gradient: "from-red-500 to-orange-600" },
+     { currency: "USD", loanAmount: "$50,000", outstandingAmount: "$25,000", interestRate: "8.5", interestType: "Fixed", tenure: "5 Years", installments: "30/60", emi: "$900.50", disbursedDate: "2022-01-15", gradient: "from-red-600 to-orange-500" },
   ];
 
   const funds = [
-    { currency: "USD", fundBalance: "$15,250", pnlAmount: "+$2,250", pnlPercentage: "17.3", investedAmount: "$13,000", sipNumber: "12345", startDate: "2021-06-01", gradient: "from-yellow-500 to-amber-600" },
+    { currency: "USD", fundBalance: "$15,250", pnlAmount: "+$2,250", pnlPercentage: "17.3", investedAmount: "$13,000", startDate: "2021-06-01", gradient: "from-yellow-600 to-amber-500" },
   ];
 
   const crypto = [
-    { walletName: "Metamask", asset: "ETH", balance: "2.5", network: "Ethereum", walletAddress: "0x123...456", gradient: "from-slate-600 to-gray-700", status: "active" as const },
-    { walletName: "Phantom", asset: "SOL", balance: "105.2", network: "Solana", walletAddress: "So1...xyz", gradient: "from-fuchsia-600 to-purple-700", status: "active" as const },
+    { walletName: "Metamask", asset: "ETH", balance: "2.5", network: "Ethereum", walletAddress: "0x123...456", gradient: "from-slate-700 to-gray-600", status: "active" as const },
   ];
 
   const syncItems = [
-    { category: "Accounts", lastSynced: "Today at 9:41 AM", icon: Landmark },
-    { category: "Cards", lastSynced: "Today at 9:41 AM", icon: CreditCard },
-    { category: "Deposits", lastSynced: "Yesterday at 3:15 PM", icon: Landmark },
-    { category: "Loans", lastSynced: "2 days ago", icon: TrendingUp },
-    { category: "Funds", lastSynced: "3 days ago", icon: Wallet },
-    { category: "Crypto", lastSynced: "Today at 11:00 AM", icon: Wallet },
+    { category: "Accounts", lastSynced: "Today 9:41 AM", icon: Landmark },
+    { category: "Cards", lastSynced: "Today 9:41 AM", icon: CreditCard },
   ];
 
+  const handleAiModeToggle = () => {
+    setIsAiMode(!isAiMode);
+    if (!isAiMode) {
+      setSearchQuery('');
+      setAiResponse(null);
+    } else {
+      setAiPrompt('');
+    }
+  };
+
+  const handleGenerate = async () => {
+    if (!aiPrompt.trim()) return;
+    setIsGenerating(true);
+    setAiResponse(null);
+    setTimeout(() => {
+      setIsGenerating(false);
+      setAiResponse(`Your total net worth across all linked accounts is approximately $57,100. You have a well-diversified portfolio with 17.3% returns on your Funds. Your largest liability is a $25,000 USD loan at 8.5% fixed interest.`);
+    }, 1500);
+  };
+
   return (
-    <div className="space-y-6 p-4">
-       <section>
+    <div className="space-y-6 p-4 pb-32">
+      {/* AI Search Section */}
+      <section className="space-y-4">
+        <div className={cn(
+          "flex bg-background border border-primary/5 shadow-sm px-4 ring-1 ring-black/5 transition-all duration-300",
+          isAiMode ? "rounded-2xl py-3 flex-col gap-3" : "items-center rounded-full h-11"
+        )}>
+          <div className="flex items-center gap-2 w-full">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className={cn(
+                "h-8 px-2 rounded-full shrink-0 transition-colors flex items-center gap-1", 
+                isAiMode ? "text-primary bg-primary/10 hover:bg-primary/20" : "text-muted-foreground/60 hover:text-primary hover:bg-primary/5"
+              )}
+              onClick={handleAiModeToggle}
+            >
+              {isAiMode ? <ArrowLeft className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5" />}
+              <span className="text-[10px] font-bold">{isAiMode ? 'Back' : 'AI'}</span>
+            </Button>
+            
+            {!isAiMode && (
+              <Input 
+                placeholder="Search accounts & cards" 
+                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 p-0 ml-1 h-8"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            )}
+            
+            {isAiMode && (
+              <p className="text-[10px] font-bold text-primary uppercase tracking-wider">Financial Insight Engine</p>
+            )}
+
+            {!isAiMode && (
+              <>
+                <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-muted shrink-0 transition-colors">
+                      <Filter className="h-4 w-4 text-muted-foreground/60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>Sort by Balance</DropdownMenuItem>
+                    <DropdownMenuItem>Filter by Asset Type</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            )}
+          </div>
+
+          {isAiMode && (
+            <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-top-2 duration-300">
+              {aiResponse && (
+                <ScrollArea className="h-32 w-full bg-primary/5 rounded-xl border border-primary/10 p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Bot className="h-3 w-3 text-primary" />
+                    </div>
+                    <span className="text-[9px] font-bold text-primary uppercase tracking-widest">Financial Insight</span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-foreground/90 italic font-medium">
+                    "{aiResponse}"
+                  </p>
+                </ScrollArea>
+              )}
+
+              <Textarea 
+                placeholder="Ask about your assets, debts, or spending..." 
+                className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+              />
+              
+              <div className="flex justify-end gap-2 border-t border-primary/5 pt-2">
+                {(aiResponse || aiPrompt) && (
+                   <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-8 rounded-full text-xs font-bold text-muted-foreground"
+                    onClick={() => { setAiPrompt(''); setAiResponse(null); }}
+                  >
+                    <RotateCcw className="h-3 w-3 mr-1.5" />
+                    Clear
+                  </Button>
+                )}
+                <Button 
+                  size="sm" 
+                  className="h-8 rounded-full gap-2 text-xs font-bold min-w-[100px]" 
+                  disabled={!aiPrompt.trim() || isGenerating}
+                  onClick={handleGenerate}
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Thinking...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-3.5 w-3.5" />
+                      Analyze
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Sync Section */}
+      <section>
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Link className="h-5 w-5 text-primary" />
-            Connect and Sync
-          </h2>
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80">Connect & Sync</h3>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="default" size="sm">Connect</Button>
+              <Button variant="ghost" size="sm" className="h-7 text-xs font-bold text-primary">Add Connection</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Sync Financial Accounts</DialogTitle>
-                <DialogDescription>
-                  Connect with your bank to sync all your assets.
-                </DialogDescription>
+                <DialogDescription>Connect with your bank to sync assets.</DialogDescription>
               </DialogHeader>
               <SyncWithBankDialog />
             </DialogContent>
           </Dialog>
         </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
-            {syncItems.map((item, index) => (
-              <CarouselItem key={index} className="basis-1/2">
-                <SyncCard {...item} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+        <div className="grid grid-cols-2 gap-3">
+          {syncItems.map((item, index) => (
+            <SyncCard key={index} {...item} />
+          ))}
+        </div>
       </section>
 
       <Separator />
 
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Landmark className="h-5 w-5 text-primary" />
-            Accounts
-          </h2>
-        </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
+      {/* Main Financial Sections */}
+      <section className="space-y-6">
+        <div>
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Accounts</h3>
+          <div className="space-y-3">
             {carouselAccounts.map((account, index) => (
-              <CarouselItem key={index}><AccountCarouselCard {...account} /></CarouselItem>
+              <AccountCarouselCard key={index} {...account} />
             ))}
-            <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Account" /></div></DialogTrigger>
+             <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
+                    <Plus className="h-5 w-5" />
+                    <span className="text-xs font-semibold">Link New Bank Account</span>
+                  </Button>
+                </DialogTrigger>
                 <DialogContent>
                   <DialogHeader><DialogTitle>Add New Bank Account</DialogTitle><DialogDescription>Add a new bank account.</DialogDescription></DialogHeader>
                   <ManageAccountsDialog />
                 </DialogContent>
               </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
-      
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-primary" />
-            Cards
-          </h2>
+          </div>
         </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
+
+        <div>
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Cards</h3>
+          <div className="space-y-3">
             {cards.map((card, index) => (
-              <CarouselItem key={index}><PaymentCard {...card} /></CarouselItem>
+              <PaymentCard key={index} {...card} />
             ))}
-            <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Card" /></div></DialogTrigger>
+             <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full border-dashed border-2 py-8 flex flex-col gap-1 text-muted-foreground hover:text-primary hover:border-primary transition-all rounded-xl">
+                    <Plus className="h-5 w-5" />
+                    <span className="text-xs font-semibold">Add New Card</span>
+                  </Button>
+                </DialogTrigger>
                 <DialogContent>
-                  <DialogHeader><DialogTitle>Manage Payment Cards</DialogTitle><DialogDescription>Add or remove your debit/credit cards.</DialogDescription></DialogHeader>
+                  <DialogHeader><DialogTitle>Manage Payment Cards</DialogTitle><DialogDescription>Add or remove cards.</DialogDescription></DialogHeader>
                   <ManageCardsDialog />
                 </DialogContent>
               </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Landmark className="h-5 w-5 text-primary" />
-            Deposits
-          </h2>
+          </div>
         </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
-            {deposits.map((deposit, index) => (
-              <CarouselItem key={index}><DepositCard {...deposit} /></CarouselItem>
-            ))}
-            <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Deposit" /></div></DialogTrigger>
-                <DialogContent>
-                  <DialogHeader><DialogTitle>Add New Deposit</DialogTitle><DialogDescription>Create a new fixed or recurring deposit.</DialogDescription></DialogHeader>
-                  <ManageDepositsDialog />
-                </DialogContent>
-              </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
 
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            Loans
-          </h2>
+        <div>
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Deposits & Loans</h3>
+          <div className="space-y-3">
+            {deposits.map((deposit, index) => <DepositCard key={index} {...deposit} />)}
+            {loans.map((loan, index) => <LoanCard key={index} {...loan} />)}
+          </div>
         </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
-            {loans.map((loan, index) => (
-              <CarouselItem key={index}><LoanCard {...loan} /></CarouselItem>
-            ))}
-            <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Apply for Loan" /></div></DialogTrigger>
-                <DialogContent>
-                  <DialogHeader><DialogTitle>Apply for New Loan</DialogTitle><DialogDescription>Submit an application for a new personal or business loan.</DialogDescription></DialogHeader>
-                  <ManageLoansDialog />
-                </DialogContent>
-              </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
 
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Wallet className="h-5 w-5 text-primary" />
-            Funds
-          </h2>
+        <div>
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-3">Funds & Crypto</h3>
+          <div className="space-y-3">
+            {funds.map((fund, index) => <FundCard key={index} {...fund} />)}
+            {crypto.map((cred, index) => <CryptoCredentialCard key={index} {...cred} />)}
+          </div>
         </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
-            {funds.map((fund, index) => (
-              <CarouselItem key={index}><FundCard {...fund} /></CarouselItem>
-            ))}
-            <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add New Investment" /></div></DialogTrigger>
-                <DialogContent>
-                  <DialogHeader><DialogTitle>Add New Fund Investment</DialogTitle><DialogDescription>Invest in a new mutual fund.</DialogDescription></DialogHeader>
-                  <ManageFundsDialog />
-                </DialogContent>
-              </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-headline font-semibold flex items-center gap-2">
-            <Wallet className="h-5 w-5 text-primary" />
-            Crypto
-          </h2>
-        </div>
-        <Carousel opts={{align: "start",}} className="w-full">
-          <CarouselContent>
-            {crypto.map((cred, index) => (
-              <CarouselItem key={index}><CryptoCredentialCard {...cred} /></CarouselItem>
-            ))}
-            <CarouselItem>
-              <Dialog>
-                <DialogTrigger asChild><div className="h-full"><AddAccountCard text="Add Crypto Wallet" /></div></DialogTrigger>
-                <DialogContent>
-                  <DialogHeader><DialogTitle>Add Crypto Wallet</DialogTitle><DialogDescription>Add a new crypto wallet to your identity.</DialogDescription></DialogHeader>
-                  <ManageCryptoCredentialsDialog />
-                </DialogContent>
-              </Dialog>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
       </section>
     </div>
   );
 }
-
-    
-    
-    
-
-    
