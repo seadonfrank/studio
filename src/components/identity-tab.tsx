@@ -357,6 +357,7 @@ export default function IdentityTab() {
                     )}
                   </Button>
                 </div>
+                <Separator className="opacity-20" />
               </div>
             </div>
           )}
