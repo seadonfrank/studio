@@ -15,7 +15,7 @@ import NotificationsView from "@/components/notifications-view";
 export type Mode = "financial" | "identity";
 export type Tab = "home" | "finance" | "payments" | "identity" | "prove" | "qr-to-prove" | "notifications";
 
-export default function Home() {
+export default function Home(props: { params: Promise<any>; searchParams: Promise<any> }) {
   const [mode, setMode] = useState<Mode>("financial");
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [paymentsView, setPaymentsView] = useState('main');

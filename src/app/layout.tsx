@@ -7,11 +7,13 @@ export const metadata: Metadata = {
   description: 'Trustless Ecosystem ​for ​Financial Empowerment and ​Self-Sovereign Identity',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+export default async function RootLayout(props: {
   children: React.ReactNode;
-}>) {
+  params: Promise<any>;
+}) {
+  const params = await props.params;
+  const children = props.children;
+
   return (
     <html lang="en">
       <head>

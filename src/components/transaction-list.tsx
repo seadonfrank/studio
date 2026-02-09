@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -20,7 +19,7 @@ export default function TransactionList() {
   const sortedTransactions = [...transactions].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
-    return sortOrder === "asc" ? dateA - dateB : dateB - a.date;
+    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
   });
 
   return (
