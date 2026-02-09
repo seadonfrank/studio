@@ -317,7 +317,7 @@ export default function IdentityTab() {
                 </ScrollArea>
               )}
 
-              <div className="space-y-4 border-t border-primary/10 pt-4 px-1">
+              <div className="space-y-4 pt-4 px-1">
                 <Textarea 
                   placeholder="Ask AI about your identity..." 
                   className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
