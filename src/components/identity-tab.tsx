@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Shield, BookUser, GraduationCap, Plus, ArrowLeft, Copy, Share2, History, Filter, Sparkles, Send, Ticket, Bot, Loader2, RotateCcw } from "lucide-react";
@@ -326,7 +325,8 @@ export default function IdentityTab() {
                   onChange={(e) => setAiPrompt(e.target.value)}
                 />
                 
-                <div className="flex justify-end gap-2 pt-2">
+                <Separator className="bg-primary/10" />
+                <div className="flex justify-end gap-2 py-2">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 
@@ -357,6 +357,7 @@ export default function IdentityTab() {
                     )}
                   </Button>
                 </div>
+                <Separator className="bg-primary/10" />
               </div>
             </div>
           )}

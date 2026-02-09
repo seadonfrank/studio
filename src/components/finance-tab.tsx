@@ -1,4 +1,3 @@
-
 "use client";
 
 import { 
@@ -230,7 +229,8 @@ export default function FinanceTab() {
                   onChange={(e) => setAiPrompt(e.target.value)}
                 />
                 
-                <div className="flex justify-end gap-2 pt-2">
+                <Separator className="bg-primary/10" />
+                <div className="flex justify-end gap-2 py-2">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 
@@ -261,6 +261,7 @@ export default function FinanceTab() {
                     )}
                   </Button>
                 </div>
+                <Separator className="bg-primary/10" />
               </div>
             </div>
           )}
