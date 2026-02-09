@@ -221,7 +221,7 @@ export default function FinanceTab() {
                 </ScrollArea>
               )}
 
-              <div className="space-y-4 pt-4 px-1">
+              <div className="space-y-1 pt-4 px-1">
                 <Textarea 
                   placeholder="Ask about your assets, debts, or spending..." 
                   className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm flex-1 placeholder:text-muted-foreground/40 min-h-[60px] resize-none p-0"
@@ -230,7 +230,7 @@ export default function FinanceTab() {
                 />
                 
                 <Separator className="bg-primary/10" />
-                <div className="flex justify-end gap-2 py-1">
+                <div className="flex justify-end gap-2 py-0.5">
                   {chatHistory.length > 0 && (
                     <Button 
                       variant="ghost" 
