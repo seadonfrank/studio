@@ -2,7 +2,8 @@
 
 import { 
   ArrowLeft, Sparkles, Filter, Send, RotateCcw, Loader2, Bot, 
-  Landmark, CreditCard, TrendingUp, Wallet, Plus, History, Link as LinkIcon
+  Landmark, CreditCard, TrendingUp, Wallet, Plus, History, Link as LinkIcon,
+  Ticket
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
@@ -32,6 +33,7 @@ import SyncWithBankDialog from "./sync-with-bank-dialog";
 import AccountCarouselCard from "./account-carousel-card";
 import ManageCardsDialog from "./manage-cards-dialog";
 import TransactionList from "./transaction-list";
+import OffersCard from "./offers-card";
 
 type ChatMessage = { role: 'user' | 'ai'; content: string };
 
@@ -136,7 +138,7 @@ export default function FinanceTab() {
       <section className="bg-background rounded-2xl p-4 shadow-sm border border-border/40">
         <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500/80 mb-4">Financial Overview</h3>
         <div className="flex gap-4 items-center">
-          <div className="w-1/2 h-[120px] relative">
+          <div className="w-[45%] h-[130px] relative">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -160,23 +162,20 @@ export default function FinanceTab() {
             </div>
           </div>
           
-          <div className="flex-1 grid grid-cols-1 gap-2">
+          <div className="flex-1 flex flex-col gap-2">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="h-12 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group">
-                  <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                    <LinkIcon className="h-4 w-4" />
+                <Button variant="outline" size="sm" className="h-10 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group px-2">
+                  <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <LinkIcon className="h-3.5 w-3.5" />
                   </div>
-                  <div className="flex flex-col items-start">
-                    <span className="text-xs font-bold leading-none">Connect Banks</span>
-                    <span className="text-[10px] text-muted-foreground">Sync your assets</span>
-                  </div>
+                  <span className="text-[11px] font-bold leading-none">Connections</span>
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Sync Financial Accounts</DialogTitle>
-                  <DialogDescription>Connect with your bank to sync assets.</DialogDescription>
+                  <DialogTitle>Link Financial Accounts</DialogTitle>
+                  <DialogDescription>Securely connect your bank accounts to sync assets.</DialogDescription>
                 </DialogHeader>
                 <SyncWithBankDialog />
               </DialogContent>
@@ -184,24 +183,41 @@ export default function FinanceTab() {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="h-12 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group">
-                  <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                    <History className="h-4 w-4" />
+                <Button variant="outline" size="sm" className="h-10 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group px-2">
+                  <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <History className="h-3.5 w-3.5" />
                   </div>
-                  <div className="flex flex-col items-start">
-                    <span className="text-xs font-bold leading-none">History</span>
-                    <span className="text-[10px] text-muted-foreground">Recent transactions</span>
-                  </div>
+                  <span className="text-[11px] font-bold leading-none">History</span>
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
                 <DialogHeader className="p-6 pb-0">
                   <DialogTitle>Transaction History</DialogTitle>
-                  <DialogDescription>Your latest financial activities across all linked accounts.</DialogDescription>
+                  <DialogDescription>Latest activities across all linked accounts.</DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="h-[400px] px-6 py-4">
                   <TransactionList />
                 </ScrollArea>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="h-10 justify-start gap-3 rounded-xl border-dashed hover:border-primary hover:bg-primary/5 group px-2">
+                  <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                    <Ticket className="h-3.5 w-3.5" />
+                  </div>
+                  <span className="text-[11px] font-bold leading-none">Offers</span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-[360px] p-0 overflow-hidden rounded-3xl">
+                <DialogHeader className="p-6 pb-0">
+                  <DialogTitle>Exclusive Offers</DialogTitle>
+                  <DialogDescription>Personalized financial rewards for you.</DialogDescription>
+                </DialogHeader>
+                <div className="p-6">
+                  <OffersCard />
+                </div>
               </DialogContent>
             </Dialog>
           </div>
