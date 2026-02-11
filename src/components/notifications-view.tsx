@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Bell, FileQuestion, HandCoins, Check, X, Share2, PlusCircle, ArrowLeft } from "lucide-react";
@@ -95,9 +94,9 @@ export default function NotificationsView({ onBack }: { onBack: () => void }) {
 
     const getSecondaryActionLabel = (type: string) => {
         switch(type) {
-            case 'credential': return 'Reject';
+            case 'credential': return 'Cancel';
             case 'share': return 'Ignore';
-            case 'issue': return 'Reject';
+            case 'issue': return 'Cancel';
             case 'payment': return 'Decline';
             default: return 'Dismiss';
         }

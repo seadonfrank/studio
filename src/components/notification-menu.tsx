@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -103,9 +102,9 @@ export default function NotificationMenu() {
 
     const getSecondaryActionLabel = (type: string) => {
         switch(type) {
-            case 'credential': return 'Reject';
+            case 'credential': return 'Cancel';
             case 'share': return 'Ignore';
-            case 'issue': return 'Reject';
+            case 'issue': return 'Cancel';
             case 'payment': return 'Decline';
             default: return 'Dismiss';
         }
