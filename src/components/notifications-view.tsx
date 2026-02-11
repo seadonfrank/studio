@@ -9,6 +9,12 @@ import { Separator } from "./ui/separator";
 
 const notifications = [
     {
+        type: 'credential',
+        title: 'Verification Request',
+        description: 'Crypto Exchange Inc. is requesting "Proof of KYC" for account verification.',
+        time: '5m ago'
+    },
+    {
         type: 'share',
         title: 'Credential Shared',
         description: 'Alice shared a "Conference Pass" with you.',
